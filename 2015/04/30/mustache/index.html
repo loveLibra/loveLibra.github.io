@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Mustache使用指南 | Sagittarius Love Libra</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="先拐远一点：mustache，读[ˈmʌsˌtæʃ]，而不是[ˈmʌstˌek]，胡子的意思，取这名字大概是将模板引擎中的{顺时针转个90度就像个人的胡子了，嗯，大概是这样…
+再进入正题：mustache是一个轻逻辑的模板引擎（为啥叫“轻逻辑”呢，因为没有if else for等逻辑语句，取而代之的是只用标签实现 ）
+mustache.js是mustache模板系统的js实现，或者叫解析器。下面介">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mustache使用指南">
+<meta property="og:url" content="http://www.i0011.com/2015/04/30/mustache/index.html">
+<meta property="og:site_name" content="Sagittarius Love Libra">
+<meta property="og:description" content="先拐远一点：mustache，读[ˈmʌsˌtæʃ]，而不是[ˈmʌstˌek]，胡子的意思，取这名字大概是将模板引擎中的{顺时针转个90度就像个人的胡子了，嗯，大概是这样…
+再进入正题：mustache是一个轻逻辑的模板引擎（为啥叫“轻逻辑”呢，因为没有if else for等逻辑语句，取而代之的是只用标签实现 ）
+mustache.js是mustache模板系统的js实现，或者叫解析器。下面介">
+<meta property="og:updated_time" content="2016-11-25T00:34:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mustache使用指南">
+<meta name="twitter:description" content="先拐远一点：mustache，读[ˈmʌsˌtæʃ]，而不是[ˈmʌstˌek]，胡子的意思，取这名字大概是将模板引擎中的{顺时针转个90度就像个人的胡子了，嗯，大概是这样…
+再进入正题：mustache是一个轻逻辑的模板引擎（为啥叫“轻逻辑”呢，因为没有if else for等逻辑语句，取而代之的是只用标签实现 ）
+mustache.js是mustache模板系统的js实现，或者叫解析器。下面介">
+  
+  
+    <link rel="icon" href="favicon.png">
+  
+  
+ <link href='//fonts.useso.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i><span class="site-title">Sagittarius Love Libra</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://dn-xuqi.qbox.me/avatar.jpg"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://www.i0011.com"></form>
+        
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+        <td>
+          
+            <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://www.i0011.com"></form>
+          
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://dn-xuqi.qbox.me/avatar.jpg">
+      <h2 id="name">徐祁</h2>
+      <h3 id="title">Enjoy</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>YOHO.cn, NanJing, China</span>
+      <a id="follow" href="https://github.com/loveLibra/">关注我</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        14
+        <span>文章</span>
+      </div>
+      <div class="article-info-block">
+        18
+        <span>标签</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="http://weibo.com/u/2287068735" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+          
+          <td><a href="https://cn.linkedin.com/in/祁-徐-3ba230ab" target="_blank" title="linkedin"><i class="fa fa-linkedin"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-mustache" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Mustache使用指南
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/04/30/mustache/">
+      <time datetime="2015-04-30T05:59:45.000Z" itemprop="datePublished">2015-04-30</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>先拐远一点：mustache，读[ˈmʌsˌtæʃ]，而不是[ˈmʌstˌek]，胡子的意思，取这名字大概是将模板引擎中的<code>{</code>顺时针转个90度就像个人的胡子了，嗯，大概是这样…</p>
+<p>再进入正题：mustache是一个轻逻辑的模板引擎（为啥叫“轻逻辑”呢，因为没有if else for等逻辑语句，取而代之的是只用标签实现 ）</p>
+<p>mustache.js是mustache模板系统的js实现，或者叫解析器。下面介绍下使用方法，很简单的语法~<br><a id="more"></a></p>
+<h2 id="quick-example"><a href="#quick-example" class="headerlink" title="quick example"></a>quick example</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Mustache.render(<span class="string">'&lt;p&gt;I am &#123;&#123;name&#125;&#125;, I am &#123;&#123;age&#125;&#125; years old&lt;/p&gt;'</span>, &#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'xuqi'</span>,</div><div class="line">    <span class="attr">age</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">24</span>;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>上述例子输出一段HTML片段：<code>&lt;p&gt;I am xuqi, I am 24 years old&lt;/p&gt;</code>。</p>
+<p>首先上述例子给我们最直观的印象就是：templates + data =&gt; html-partials。使用render(tpls, dataObj)。使用dataObj去渲染tpls得到html片段。</p>
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>模板就是一段包含任意数目{{keyname}}的字符串~<br>{{keyname}}中的包裹的keyname即为mustache模板的键名（稍微了解下就好）。下面介绍三种加载模板的方法<br>1 直接在js中声明模板字符串，如quick example所示<br>2 从HTML中读取模板<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">id</span>=<span class="string">"ex-tpl"</span> <span class="attr">type</span>=<span class="string">"x-tmpl-mustache"</span>&gt;</span><span class="undefined"></span></div><div class="line">    My name is &#123;&#123;name&#125;&#125;, I am &#123;&#123;age&#125;&#125; years old</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">    <span class="comment">//example.js</span></div><div class="line">    <span class="keyword">var</span> tpl = $(<span class="string">'#ex-tpl'</span>).html(),</div><div class="line">        html;</div><div class="line">    html = Mustache.render(tpl, data);</div><div class="line"><span class="string">`</span></div></pre></td></tr></table></figure>
+<p>3 从.mst文件中读取/通过ajax异步渲染<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadTpl</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    $.get(<span class="string">'tpl.mst'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">tpl</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> html = Mustache.render(tpl, data);</div><div class="line">        <span class="comment">//Operation of html</span></div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>最简单的标签就是一个变量{{key}}…使用当前上下文环境中的key值替换标签，如果key不存在，则不会被渲染。</p>
+{{key}}会默认转义一些HTML标记，如果不想使用转义， 可以使用{{{}}}或者{{&}}。<br><br>另外，JS中的<code>.</code>也可以在mustache中使用，比如：{{person.name}}
+<h2 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;&#123;#section&#125;&#125;</div><div class="line">    &#123;&#123;name&#125;&#125;</div><div class="line">    //other code</div><div class="line">&#123;&#123;/section&#125;&#125;</div></pre></td></tr></table></figure>
+<p>根据上下文环境中的section的值去渲染区块内的代码。如果section键名不存在或者存在但是值为’false’值（null，undefined，false，0，NaN，’’，[]），区块内代码不会被渲染。</p>
+<p>键名存在也为’true’值的情况下，区块内代码被渲染1+次。比如：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//view</div><div class="line">&#123;</div><div class="line">    section: [</div><div class="line">        &#123;name: 'xuqi'&#125;,</div><div class="line">        &#123;name: 'xuqi2'&#125;</div><div class="line">    ]</div><div class="line">&#125;</div><div class="line"></div><div class="line">//template</div><div class="line">&#123;&#123;#section&#125;&#125;</div><div class="line">    <span class="tag">&lt;<span class="name">b</span>&gt;</span>&#123;&#123;name&#125;&#125;<span class="tag">&lt;/<span class="name">b</span>&gt;</span></div><div class="line">&#123;&#123;/section&#125;&#125;</div><div class="line"></div><div class="line">//output</div><div class="line"><span class="tag">&lt;<span class="name">b</span>&gt;</span>xuqi<span class="tag">&lt;/<span class="name">b</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">b</span>&gt;</span>xuqi2<span class="tag">&lt;/<span class="name">b</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>我们把上面的view简化一下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">section</span>: [<span class="string">'xuqi'</span>, <span class="string">'xuqi2'</span>]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>对，就是把section的元素由对象简化为了字符串，那键名没了我怎么去渲染？{{.}}来帮你~<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;&#123;#section&#125;&#125;<span class="tag">&lt;<span class="name">b</span>&gt;</span>&#123;&#123;.&#125;&#125;<span class="tag">&lt;/<span class="name">b</span>&gt;</span>&#123;&#123;/section&#125;&#125;</div></pre></td></tr></table></figure></p>
+<p>这样就可以得到同样的output啦。</p>
+<p>再来看一种稍微复杂一点的情况：外国人都有firstname和lastname，如果按照上面的情况去实现就得{{firstname}}.{{lastname}}去手动拼接。所以现在要引入函数来帮我们实现拼接了，而不是把逻辑扔在template中去实现。</p>
+<p>如果section中有个变量是一个函数，那么会遍历对应上下文中的各个项并执行，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">//view</div><div class="line">&#123;</div><div class="line">    &apos;section&apos;: [</div><div class="line">        &#123; &apos;firstName&apos;: &apos;qi&apos;, &apos;lastName&apos;: &apos;xu&apos; &#125;,</div><div class="line">        &#123; &apos;firstName&apos;: &apos;qi2&apos;, &apos;lastName&apos;: &apos;xu&apos; &#125;</div><div class="line">    ],</div><div class="line">    &apos;name&apos;: function () &#123;</div><div class="line">        return this.firstName + &apos;.&apos; + this.lastName;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//template</div><div class="line">&#123;&#123;#section&#125;&#125;</div><div class="line">    &lt;b&gt;&#123;&#123;name&#125;&#125;&lt;/b&gt;</div><div class="line">&#123;&#123;/section&#125;&#125;</div><div class="line"></div><div class="line">//output</div><div class="line">&lt;b&gt;qi.xu&lt;/b&gt;</div><div class="line">&lt;b&gt;qi2.xu&lt;/b&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="取反区块"><a href="#取反区块" class="headerlink" title="取反区块"></a>取反区块</h2>{{^section}}与区块的情况相反，section的值为’false’值时执行，否则不执行<br><br>## 区块函数<br>如果section键名为函数，即{{#sectionFn}}{{/sectionFn}}中sectionFn为函数时，是个奇葩，官方文档看不懂是什么意思，直接来看例子吧~~<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//view</div><div class="line">&#123;</div><div class="line">    name: 'xuqi',</div><div class="line">    bold: function() &#123;</div><div class="line">        return function(text, render) &#123;</div><div class="line">            return '<span class="tag">&lt;<span class="name">b</span>&gt;</span>' + render(text) + '<span class="tag">&lt;/<span class="name">b</span>&gt;</span>';</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//tpl</div><div class="line">&#123;&#123;#bold&#125;&#125;Hi &#123;&#123;name&#125;&#125;&#123;&#123;/bold&#125;&#125;</div><div class="line"></div><div class="line">//output</div><div class="line"><span class="tag">&lt;<span class="name">b</span>&gt;</span>Hi xuqi<span class="tag">&lt;/<span class="name">b</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>function里面的实现意思就是：render(text)替换{{bold}}块中的内容并将数据渲染进去，然后把{{bold}}替换成<code>&lt;b&gt;</code>标签就行了</p>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2>{{!}}内容不显示<br><br>## Partials<br>{{> partial-name}}引入某个小部件到模板中，比如<br><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//base.mst</div><div class="line">&#123;&#123;#name&#125;&#125;</div><div class="line">    &#123;&#123;&gt; user&#125;&#125;</div><div class="line">&#123;&#123;/name&#125;&#125;</div><div class="line"></div><div class="line">//user.mst</div><div class="line"><span class="tag">&lt;<span class="name">b</span>&gt;</span>&#123;&#123;name&#125;&#125;<span class="tag">&lt;/<span class="name">b</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>mustache将user.mst的内容插入到base.mst中{{> user}}的位置。</p>
+<p>如果在Mustache.render中使用partials的话，将partials当做render的第三个参数即可，即：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Mustache.render(tpl, data, &#123;</div><div class="line">    <span class="attr">user</span>: userTplText,</div><div class="line">    ...</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h2 id="预编译和缓存模板"><a href="#预编译和缓存模板" class="headerlink" title="预编译和缓存模板"></a>预编译和缓存模板</h2><p>默认情况下Mustache在第一次编译模板后会缓存起来，如果第二次的模板没有变化，就直接从缓存中取编译后的模板去渲染，加快了渲染速度。如果你需要提前预编译和缓存，可调用Mustache.parse(tpl);…..一会儿以后，你就可以享受预编译模板带来的渲染快感了</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2015/04/30/mustache/" data-id="ciw5nnjs8000ee58an8p36n4k" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2015/04/30/mustache/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HandBook/">HandBook</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/04/30/handlebars/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          Handlebars使用指南
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/04/13/compatibility-case/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">兼容性解决方案</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="http://www.i0011.com/2015/04/30/mustache/" data-title="Mustache使用指南" data-url="http://www.i0011.com/2015/04/30/mustache/">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by DuoShuo.</a></noscript>
+      </div>
+  </section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/10/09/https-config/" class="thumbnail">
+  
+    <span style="background-image:url(https://dn-xuqi.qbox.me/https.png
+)" alt="Https养成手记" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/10/09/https-config/" class="title">Https养成手记</a></p>
+              <p class="item-date"><time datetime="2016-10-09T09:48:42.000Z" itemprop="datePublished">2016-10-09</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/09/25/destructuring/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/09/25/destructuring/" class="title">destructuring</a></p>
+              <p class="item-date"><time datetime="2016-09-25T03:48:01.000Z" itemprop="datePublished">2016-09-25</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/28/what-the-fuck-of-postcss/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/28/what-the-fuck-of-postcss/" class="title">What the f**k of Postcss</a></p>
+              <p class="item-date"><time datetime="2016-01-28T05:37:31.000Z" itemprop="datePublished">2016-01-28</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/24/react-ssr/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/24/react-ssr/" class="title">React server side render</a></p>
+              <p class="item-date"><time datetime="2016-01-24T12:20:17.000Z" itemprop="datePublished">2016-01-24</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/11/js-oop/" class="thumbnail">
+  
+    <span style="background-image:url(https://dn-xuqi.qbox.me/proto.jpg
+)" alt="js-oop" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/11/js-oop/" class="title">js-oop</a></p>
+              <p class="item-date"><time datetime="2016-01-11T07:50:22.000Z" itemprop="datePublished">2016-01-11</time></p>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browserify/">Browserify</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Es6/">Es6</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HandBook/">HandBook</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IE8/">IE8</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Js-Basic/">Js Basic</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Koa/">Koa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Life/">Life</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OOP/">OOP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plugin/">Plugin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postcss/">Postcss</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Solution/">Solution</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ssr/">Ssr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/兼容性/">兼容性</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browserify/" style="font-size: 10px;">Browserify</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Es6/" style="font-size: 16.67px;">Es6</a> <a href="/tags/HandBook/" style="font-size: 20px;">HandBook</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/IE8/" style="font-size: 13.33px;">IE8</a> <a href="/tags/Js-Basic/" style="font-size: 13.33px;">Js Basic</a> <a href="/tags/Koa/" style="font-size: 10px;">Koa</a> <a href="/tags/Life/" style="font-size: 10px;">Life</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/OOP/" style="font-size: 10px;">OOP</a> <a href="/tags/Plugin/" style="font-size: 10px;">Plugin</a> <a href="/tags/Postcss/" style="font-size: 13.33px;">Postcss</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Solution/" style="font-size: 20px;">Solution</a> <a href="/tags/Ssr/" style="font-size: 10px;">Ssr</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/兼容性/" style="font-size: 10px;">兼容性</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 徐祁<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"xuqi"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+
+
+ <script src="//ajax.useso.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

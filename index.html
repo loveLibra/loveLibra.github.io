@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Sagittarius Love Libra</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="xuqi&apos;s Blog">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sagittarius Love Libra">
+<meta property="og:url" content="http://www.i0011.com/index.html">
+<meta property="og:site_name" content="Sagittarius Love Libra">
+<meta property="og:description" content="xuqi&apos;s Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sagittarius Love Libra">
+<meta name="twitter:description" content="xuqi&apos;s Blog">
+  
+  
+    <link rel="icon" href="favicon.png">
+  
+  
+ <link href='//fonts.useso.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i><span class="site-title">Sagittarius Love Libra</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://dn-xuqi.qbox.me/avatar.jpg"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://www.i0011.com"></form>
+        
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+        <td>
+          
+            <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://www.i0011.com"></form>
+          
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://dn-xuqi.qbox.me/avatar.jpg">
+      <h2 id="name">徐祁</h2>
+      <h3 id="title">Enjoy</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>YOHO.cn, NanJing, China</span>
+      <a id="follow" href="https://github.com/loveLibra/">关注我</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        14
+        <span>文章</span>
+      </div>
+      <div class="article-info-block">
+        18
+        <span>标签</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="http://weibo.com/u/2287068735" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+          
+          <td><a href="https://cn.linkedin.com/in/祁-徐-3ba230ab" target="_blank" title="linkedin"><i class="fa fa-linkedin"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main">
+      <article id="post-https-config" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/https-config/">Https养成手记</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/10/09/https-config/">
+      <time datetime="2016-10-09T09:48:42.000Z" itemprop="datePublished">2016-10-09</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>把大象放进冰箱分三步，那么实现https化你的网站也可以分三步：</p>
+<ol>
+<li><code>openssl req -newkey rsa:2048 -keyout server.key -out server.csr</code>在服务器上生成key和csr，可以直接扔在nginx目录，方便。此处需要<strong>注意</strong>的是，生成的private key需要移除passphrase，就是运行前面命令时让输入的<code>PEM</code>的值，否则nginx error。<br>执行<code>openssl rsa -in server.key -out unencripted-server.key</code>就OK了，我们在nginx配置中就使用未加密的key文件</li>
+<li>去<a href="www.startssl.com/Certificates/ApplySSLCert?level=1">Startssl</a>，将刚才得到的server.csr文件内容填入表单中，Submit！<br><img src="https://dn-xuqi.qbox.me/https.png" alt="Startssl配置"><br>然后下载生成的证书，因为我用的是nginx，就将NginxServer下面的的crt文件scp到服务器中</li>
+<li>配置nginx并将http80重定向到443即可<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 443 ssl;</div><div class="line">    ssl_certificate /path/to/crt;</div><div class="line">    ssl_certificate_key /path/to/unencripted/key;</div><div class="line">    ssl_session_tickets off;</div><div class="line">    ssl_session_cache   shared:SSL:10m;</div><div class="line">    server_name  yourdomain;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        proxy_redirect off;</div><div class="line">        proxy_pass  http://yourUpstream;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    server_name yourdomain;</div><div class="line">    return 301 https://yourdomain$request_uri;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>Got it… nginx reload就可以了</p>
+<p>Thanks to:<br><a href="https://segmentfault.com/a/1190000007024673?utm_source=weekly&amp;utm_medium=email&amp;utm_campaign=email_weekly" target="_blank" rel="external">给你的网站穿上外衣 － HTTPS 免费部署指南</a><br><a href="http://stackoverflow.com/questions/18101217/error-102-nginx-ssl" target="_blank" rel="external">Nginx 102 error ssl</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2016/10/09/https-config/" data-id="ciw5nnjs30009e58azhkl8e4y" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2016/10/09/https-config/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Https/">Https</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-destructuring" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/25/destructuring/">destructuring</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/09/25/destructuring/">
+      <time datetime="2016-09-25T03:48:01.000Z" itemprop="datePublished">2016-09-25</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>destructuring</strong>，解构，可以方便coder们从Object/Array中提取想要的数据，Es6大杀器…</p>
+<p>按照阮老师的说法，解构其实就属于一种数据结构的模式匹配，匹配上的模式对应的值会从表达式右侧赋值给表达式左侧，比如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> &#123;name, <span class="attr">info</span>: &#123;age&#125;&#125; = &#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'xuqi'</span>,</div><div class="line">    <span class="attr">info</span>: &#123;</div><div class="line">        <span class="attr">age</span>: <span class="number">27</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">name; <span class="comment">// 'xuqi'</span></div><div class="line">age; <span class="comment">// 27</span></div></pre></td></tr></table></figure></p>
+<p>我们就能直接获取<strong>模式</strong>name和age的值，赋值给<strong>变量</strong>name和age，需要注意的是模式和变量的概念，这是理解解构的基础，<br><code>{mode: var}</code>，<code>：</code>左侧为模式，右侧为变量，上述例子是当模式和变量名相同时的缩写，实际上是：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> &#123;<span class="attr">name</span>: name, <span class="attr">info</span>: &#123;</div><div class="line">    <span class="attr">age</span>: age</div><div class="line">&#125;&#125; = ...</div></pre></td></tr></table></figure></p>
+<p>这样理解起来就清楚了。解构可以从数组和对象中提取值，分别来说明…<br>
+        
+          <p class="article-more-link">
+            <a href="/2016/09/25/destructuring/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2016/09/25/destructuring/" data-id="ciw5nnjs20008e58a9r5ktqkg" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2016/09/25/destructuring/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Es6/">Es6</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-what-the-fuck-of-postcss" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/28/what-the-fuck-of-postcss/">What the f**k of Postcss</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/01/28/what-the-fuck-of-postcss/">
+      <time datetime="2016-01-28T05:37:31.000Z" itemprop="datePublished">2016-01-28</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>PostCSS is a tool for transforming styles with JS plugins. These plugins can lint your CSS, support variables and mixins, transpile future CSS syntax, inline images, and more.</p>
+</blockquote>
+<p>对于Postcss，这样介绍来开启话题最合适不过。大部分人对Postcss的认知还是CSS pre-preprocessor，因此经常会有将Postcss和Sass/Less/Stylus进行对比的情况。那Postcss到底是什么？</p>
+<p>Postcss只是一个工具，获取CSS内容并将其转化成JS插件可以处理的数据，如此基于Postcss的JS插件便可基于Postcss提供的数据进行对应的处理。目前Postcss Plugin的列表数目已经200+，提供诸于：auto-prefix、next-css、linter、short-name等功能。另外，由于Postcss的职能是类似于工具箱，用户可以选择自己的工具放进去，所以你可以根据自身的开发喜好和需求去开发自己的“工具”扔到工具箱里去，心有多大，世界就有多大，勇敢的少年啊，快去创造奇迹~<br>
+        
+          <p class="article-more-link">
+            <a href="/2016/01/28/what-the-fuck-of-postcss/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2016/01/28/what-the-fuck-of-postcss/" data-id="ciw5nnjsc000ke58ajzn08nva" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2016/01/28/what-the-fuck-of-postcss/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HandBook/">HandBook</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Postcss/">Postcss</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-react-ssr" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/24/react-ssr/">React server side render</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/01/24/react-ssr/">
+      <time datetime="2016-01-24T12:20:17.000Z" itemprop="datePublished">2016-01-24</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>如何使用React开发高效可<del>装B</del>用的WEB应用:) … 融合React以及React-ssr、koa、Es6、Postcss，绽放吧，骚年…</p>
+<p><a href="https://github.com/loveLibra/React-ssr-demo" target="_blank" rel="external">DEMO传送门&gt;&gt;&gt;&gt;</a></p>
+<ol>
+<li><p>JSX支持Runtime<br><code>require(&#39;node-jsx&#39;).install({harmony: true});</code>。添加harmony选项可在JSX中使用部分ES6的特性，但是未完全支持.</p>
+</li>
+<li><p>browserify打包客户端脚本</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">browserify(<span class="string">'./js/index.js'</span>)</div><div class="line">    .transform(babelify, &#123;</div><div class="line">        <span class="attr">presets</span>: [<span class="string">'es2015'</span>, <span class="string">'react'</span>]</div><div class="line">    &#125;)</div><div class="line">    .bundle()</div><div class="line">    .pipe(fs.createWriteStream(<span class="string">'dist/bundle.js'</span>));</div></pre></td></tr></table></figure>
+</li>
+<li><p>React服务端渲染<br>将一个纯View用在此处其实有点别扭，但是为了SEO以及一些页面渲染性能的考虑，需要服务端渲染。React-SSR就是通过<code>ReactDOMServer.renderToString</code>得到HTML渲染到页面中，然后在客户端重新初始化组件，React并不会蠢的去重新渲染页面，所以此处可以忽略前端再次初始化带来的性能和使用体验的问题…前端初始化组件也是需要带数据的，所以在后端渲染组件时，我们将数据也带带页面中，然后再前端初始化后再删除数据DOM即可.<br>另外，在渲染字符串到页面中时，<code>views/partials/content.html</code>中放置渲染好的HTML的标签:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 不能有换行，否则客户端渲染时因为识别空白节点的问题在前端初始化失败。--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"yoho-container"</span>&gt;</span>&#123;&#123;&#123;content&#125;&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>Koa<br>koa + yield真的是太明智了，让代码不再一层层的去嵌套回调，棒！路由，接口取数据，数据格式化，页面渲染能对程序员展现以同步的形式去实现，跳出恶魔金字塔吧，Koa带你飞~</p>
+</li>
+<li>Postcss<br>Postcss相对于Compass的优势，在于其灵活性和轻便性，需要什么功能，扩展postcss插件就行了，autoprefixer，sprite-image应有尽有，Get what You Need…</li>
+</ol>
+<p>后记：前端现在愈发膨胀和夸张，无数的轮子和框架来方便你的开发，然而得有度，别让自己的程序失去控制…前端现在就像一匹飞奔的马，跑的很快，但是跑到哪你却不知道，你唯一能做的就是练好骑马的技术，别从马上摔下来。夯实基础，成就你的精湛马术吧</p>
+<p>精彩的参考资料:<br><a href="http://www.crmarsh.com/react-ssr/" target="_blank" rel="external">Rendering React Components on the Server</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2016/01/24/react-ssr/" data-id="ciw5nnjs9000ge58ajgnssyrt" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2016/01/24/react-ssr/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Browserify/">Browserify</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Es6/">Es6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Koa/">Koa</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Postcss/">Postcss</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ssr/">Ssr</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-js-oop" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/11/js-oop/">js-oop</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/01/11/js-oop/">
+      <time datetime="2016-01-11T07:50:22.000Z" itemprop="datePublished">2016-01-11</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Javascript可能是一门让人感觉“不适”的语言，实现<code>类</code>、<code>继承</code>等OOP概念竟然要通过<code>function</code>和<code>prototype</code>，Jser们可能理解原型机制就能伤半管子HP了。然而，这种情况随着ES6的到来变得好了起来，ES6提供了<code>class</code>、<code>extends</code>等语法糖可以帮你摆脱让人苦闷的原型（当然，如果你有高追求，你得理解），虽然JS的OOP的实现原理还是通过原型的，但是至少对开发者的友好性提升了很多，让JS更有OOP的味道也更接近于其他OOP的语言。现在我们也能很简单的来声明一个类：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123;</div><div class="line">    <span class="keyword">constructor</span>(name, age) &#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">        <span class="keyword">this</span>.age = age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    say() &#123;</div><div class="line">        alert(<span class="string">`Hello, I am <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+        
+          <p class="article-more-link">
+            <a href="/2016/01/11/js-oop/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2016/01/11/js-oop/" data-id="ciw5nnjs4000be58a2p2hynj3" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2016/01/11/js-oop/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Es6/">Es6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Js-Basic/">Js Basic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OOP/">OOP</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-respond-proxy" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/08/respond-proxy/">respondjs-proxy</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/01/08/respond-proxy/">
+      <time datetime="2016-01-08T02:47:43.000Z" itemprop="datePublished">2016-01-08</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>respond.js</strong>用来解决IE9以下不支持媒体查询的问题。</p>
+<p>在静态资源(CSS)和网站在同一域名的情况下使用起来很简单：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"path/to/cssfile.css"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"path/to/respond.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>引入HTML并置于css文件引用位置之后即可。<br>
+        
+          <p class="article-more-link">
+            <a href="/2016/01/08/respond-proxy/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2016/01/08/respond-proxy/" data-id="ciw5nnjsa000je58asplmgw69" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2016/01/08/respond-proxy/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IE8/">IE8</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Solution/">Solution</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-bad-rem" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/06/18/bad-rem/">REM是个坑，精确控制不适合</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/06/18/bad-rem/">
+      <time datetime="2015-06-18T06:56:05.000Z" itemprop="datePublished">2015-06-18</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前两天需要做一个涂鸦的活动页面，来瞅瞅<img src="https://dn-xuqi.qbox.me/yoho-q1.png" alt="年中大促"><br>
+        
+          <p class="article-more-link">
+            <a href="/2015/06/18/bad-rem/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2015/06/18/bad-rem/" data-id="ciw5nnjro0001e58a6t71taf9" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2015/06/18/bad-rem/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Solution/">Solution</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-handlebars" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/30/handlebars/">Handlebars使用指南</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/04/30/handlebars/">
+      <time datetime="2015-04-30T09:49:41.000Z" itemprop="datePublished">2015-04-30</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://handlebarsjs.com/">Handlebars</a>为Mustache的超集，即：在完全兼容Mustache语法的基础上，提供了很多语法糖，不要太甜…</p>
+<h2 id="Begin-Now"><a href="#Begin-Now" class="headerlink" title="Begin Now"></a>Begin Now</h2><h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>这里我们只介绍一些Handlebars中相对于Mustache超集的部分，若不了解Mustache，请<a href="http://i0011.com/2015/04/30/Mustache%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">移步</a><br>
+        
+          <p class="article-more-link">
+            <a href="/2015/04/30/handlebars/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2015/04/30/handlebars/" data-id="ciw5nnjs5000ce58aeradlmpv" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2015/04/30/handlebars/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HandBook/">HandBook</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-mustache" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/30/mustache/">Mustache使用指南</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/04/30/mustache/">
+      <time datetime="2015-04-30T05:59:45.000Z" itemprop="datePublished">2015-04-30</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>先拐远一点：mustache，读[ˈmʌsˌtæʃ]，而不是[ˈmʌstˌek]，胡子的意思，取这名字大概是将模板引擎中的<code>{</code>顺时针转个90度就像个人的胡子了，嗯，大概是这样…</p>
+<p>再进入正题：mustache是一个轻逻辑的模板引擎（为啥叫“轻逻辑”呢，因为没有if else for等逻辑语句，取而代之的是只用标签实现 ）</p>
+<p>mustache.js是mustache模板系统的js实现，或者叫解析器。下面介绍下使用方法，很简单的语法~<br>
+        
+          <p class="article-more-link">
+            <a href="/2015/04/30/mustache/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2015/04/30/mustache/" data-id="ciw5nnjs8000ee58an8p36n4k" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2015/04/30/mustache/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HandBook/">HandBook</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-compatibility-case" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/13/compatibility-case/">兼容性解决方案</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/04/13/compatibility-case/">
+      <time datetime="2015-04-13T07:40:22.000Z" itemprop="datePublished">2015-04-13</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>开发中得到的一些IE/FF/Safari下的兼容性处理方案，请叫我兼容性处理大师，谢谢~</p>
+<p>1 图片链接边框</p>
+<pre><code>&lt;a href=&quot;signup.html&quot;&gt;
+    &lt;img class=&quot;banner&quot; src=&quot;src/banner.jpg&quot;&gt;
+&lt;/a&gt;
+</code></pre><p>常用的图片链接，在IE8下，图片会被加上蓝色边框，什么鬼…这当然不是我们想要的结果了，加个</p>
+<pre><code>img {
+    border: none;
+}
+</code></pre><p>干掉IE8给加的边框。All is well~<br>
+        
+          <p class="article-more-link">
+            <a href="/2015/04/13/compatibility-case/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2015/04/13/compatibility-case/" data-id="ciw5nnjrv0003e58aip8nrk52" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2015/04/13/compatibility-case/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IE8/">IE8</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Solution/">Solution</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/兼容性/">兼容性</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <nav id="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+      </nav>
+    </section>
+      
+        <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/10/09/https-config/" class="thumbnail">
+  
+    <span style="background-image:url(https://dn-xuqi.qbox.me/https.png
+)" alt="Https养成手记" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/10/09/https-config/" class="title">Https养成手记</a></p>
+              <p class="item-date"><time datetime="2016-10-09T09:48:42.000Z" itemprop="datePublished">2016-10-09</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/09/25/destructuring/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/09/25/destructuring/" class="title">destructuring</a></p>
+              <p class="item-date"><time datetime="2016-09-25T03:48:01.000Z" itemprop="datePublished">2016-09-25</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/28/what-the-fuck-of-postcss/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/28/what-the-fuck-of-postcss/" class="title">What the f**k of Postcss</a></p>
+              <p class="item-date"><time datetime="2016-01-28T05:37:31.000Z" itemprop="datePublished">2016-01-28</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/24/react-ssr/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/24/react-ssr/" class="title">React server side render</a></p>
+              <p class="item-date"><time datetime="2016-01-24T12:20:17.000Z" itemprop="datePublished">2016-01-24</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/11/js-oop/" class="thumbnail">
+  
+    <span style="background-image:url(https://dn-xuqi.qbox.me/proto.jpg
+)" alt="js-oop" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/11/js-oop/" class="title">js-oop</a></p>
+              <p class="item-date"><time datetime="2016-01-11T07:50:22.000Z" itemprop="datePublished">2016-01-11</time></p>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browserify/">Browserify</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Es6/">Es6</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HandBook/">HandBook</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IE8/">IE8</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Js-Basic/">Js Basic</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Koa/">Koa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Life/">Life</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OOP/">OOP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plugin/">Plugin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postcss/">Postcss</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Solution/">Solution</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ssr/">Ssr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/兼容性/">兼容性</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browserify/" style="font-size: 10px;">Browserify</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Es6/" style="font-size: 16.67px;">Es6</a> <a href="/tags/HandBook/" style="font-size: 20px;">HandBook</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/IE8/" style="font-size: 13.33px;">IE8</a> <a href="/tags/Js-Basic/" style="font-size: 13.33px;">Js Basic</a> <a href="/tags/Koa/" style="font-size: 10px;">Koa</a> <a href="/tags/Life/" style="font-size: 10px;">Life</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/OOP/" style="font-size: 10px;">OOP</a> <a href="/tags/Plugin/" style="font-size: 10px;">Plugin</a> <a href="/tags/Postcss/" style="font-size: 13.33px;">Postcss</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Solution/" style="font-size: 20px;">Solution</a> <a href="/tags/Ssr/" style="font-size: 10px;">Ssr</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/兼容性/" style="font-size: 10px;">兼容性</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 徐祁<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"xuqi"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+
+
+ <script src="//ajax.useso.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,871 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Sagittarius Love Libra</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://www.i0011.com/"/>
+  <updated>2016-11-25T00:34:34.000Z</updated>
+  <id>http://www.i0011.com/</id>
+  
+  <author>
+    <name>徐祁</name>
+    <email>github.xq@gmail.com</email>
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Https养成手记</title>
+    <link href="http://www.i0011.com/2016/10/09/https-config/"/>
+    <id>http://www.i0011.com/2016/10/09/https-config/</id>
+    <published>2016-10-09T09:48:42.000Z</published>
+    <updated>2016-11-25T00:34:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>把大象放进冰箱分三步，那么实现https化你的网站也可以分三步：</p>
+<ol>
+<li><code>openssl req -newkey rsa:2048 -keyout server.key -out server.csr</code>在服务器上生成key和csr，可以直接扔在nginx目录，方便。此处需要<strong>注意</strong>的是，生成的private key需要移除passphrase，就是运行前面命令时让输入的<code>PEM</code>的值，否则nginx error。<br>执行<code>openssl rsa -in server.key -out unencripted-server.key</code>就OK了，我们在nginx配置中就使用未加密的key文件</li>
+<li>去<a href="www.startssl.com/Certificates/ApplySSLCert?level=1">Startssl</a>，将刚才得到的server.csr文件内容填入表单中，Submit！<br><img src="https://dn-xuqi.qbox.me/https.png" alt="Startssl配置"><br>然后下载生成的证书，因为我用的是nginx，就将NginxServer下面的的crt文件scp到服务器中</li>
+<li>配置nginx并将http80重定向到443即可<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 443 ssl;</div><div class="line">    ssl_certificate /path/to/crt;</div><div class="line">    ssl_certificate_key /path/to/unencripted/key;</div><div class="line">    ssl_session_tickets off;</div><div class="line">    ssl_session_cache   shared:SSL:10m;</div><div class="line">    server_name  yourdomain;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        proxy_redirect off;</div><div class="line">        proxy_pass  http://yourUpstream;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    server_name yourdomain;</div><div class="line">    return 301 https://yourdomain$request_uri;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>Got it… nginx reload就可以了</p>
+<p>Thanks to:<br><a href="https://segmentfault.com/a/1190000007024673?utm_source=weekly&amp;utm_medium=email&amp;utm_campaign=email_weekly" target="_blank" rel="external">给你的网站穿上外衣 － HTTPS 免费部署指南</a><br><a href="http://stackoverflow.com/questions/18101217/error-102-nginx-ssl" target="_blank" rel="external">Nginx 102 error ssl</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;把大象放进冰箱分三步，那么实现https化你的网站也可以分三步：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;openssl req -newkey rsa:2048 -keyout server.key -out server.csr&lt;/code&gt;在服务器上生成key和csr，
+    
+    </summary>
+    
+    
+      <category term="Https" scheme="http://www.i0011.com/tags/Https/"/>
+    
+      <category term="Ubuntu" scheme="http://www.i0011.com/tags/Ubuntu/"/>
+    
+      <category term="Nginx" scheme="http://www.i0011.com/tags/Nginx/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>destructuring</title>
+    <link href="http://www.i0011.com/2016/09/25/destructuring/"/>
+    <id>http://www.i0011.com/2016/09/25/destructuring/</id>
+    <published>2016-09-25T03:48:01.000Z</published>
+    <updated>2016-11-25T00:34:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>destructuring</strong>，解构，可以方便coder们从Object/Array中提取想要的数据，Es6大杀器…</p>
+<p>按照阮老师的说法，解构其实就属于一种数据结构的模式匹配，匹配上的模式对应的值会从表达式右侧赋值给表达式左侧，比如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> &#123;name, <span class="attr">info</span>: &#123;age&#125;&#125; = &#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'xuqi'</span>,</div><div class="line">    <span class="attr">info</span>: &#123;</div><div class="line">        <span class="attr">age</span>: <span class="number">27</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">name; <span class="comment">// 'xuqi'</span></div><div class="line">age; <span class="comment">// 27</span></div></pre></td></tr></table></figure></p>
+<p>我们就能直接获取<strong>模式</strong>name和age的值，赋值给<strong>变量</strong>name和age，需要注意的是模式和变量的概念，这是理解解构的基础，<br><code>{mode: var}</code>，<code>：</code>左侧为模式，右侧为变量，上述例子是当模式和变量名相同时的缩写，实际上是：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> &#123;<span class="attr">name</span>: name, <span class="attr">info</span>: &#123;</div><div class="line">    <span class="attr">age</span>: age</div><div class="line">&#125;&#125; = ...</div></pre></td></tr></table></figure></p>
+<p>这样理解起来就清楚了。解构可以从数组和对象中提取值，分别来说明…<br><a id="more"></a></p>
+<h2 id="Array-destructuring"><a href="#Array-destructuring" class="headerlink" title="Array destructuring"></a>Array destructuring</h2><h3 id="basic-variable-assignment"><a href="#basic-variable-assignment" class="headerlink" title="basic variable assignment"></a>basic variable assignment</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> [one, two, three] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</div></pre></td></tr></table></figure>
+<p>当然，变量声明和解构赋值可以分开进行：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> one, two, three;</div><div class="line">[one, two, three] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</div></pre></td></tr></table></figure></p>
+<h3 id="default-values"><a href="#default-values" class="headerlink" title="default values"></a>default values</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> [a = <span class="number">1</span>, b = <span class="number">2</span>] = [<span class="number">3</span>];</div><div class="line"></div><div class="line">a; <span class="comment">// 3</span></div><div class="line">b; <span class="comment">// 2</span></div></pre></td></tr></table></figure>
+<p>默认值生效的条件是右侧对应位置的值<strong>严格</strong>等于<code>undefined</code>，下述情况是不会发生默认值赋值的：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> [a = <span class="number">1</span>] = [<span class="literal">null</span>];</div><div class="line"></div><div class="line">a; <span class="comment">// null</span></div></pre></td></tr></table></figure></p>
+<p>另外，阮老师的书里面说到的一种情况可能平时不太会经常用到，但是还是需要注意下：在默认值是通过函数返回值赋值的情况下，函数是惰性求职的，即在不使用默认值的情况下，函数是不会被执行的<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> fn = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'Hey, I am here'</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> [a = fn()] = [<span class="number">1</span>];</div><div class="line"></div><div class="line"><span class="comment">// fn didn't invoke</span></div></pre></td></tr></table></figure></p>
+<p>当然默认值也可以引用变量(外部变量/解构变量)，当默认值引用解构变量时，需要注意在设置默认值时必须确保引用的解构变量已经声明，否则将报错<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">let a = 1;</div><div class="line">let [x = a, y = x] = [];</div><div class="line"></div><div class="line">x; // 1</div><div class="line">y; // 1</div></pre></td></tr></table></figure></p>
+<h3 id="swapping-variable"><a href="#swapping-variable" class="headerlink" title="swapping variable"></a>swapping variable</h3><p>轻松实现变量交换<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> a = <span class="number">1</span>;</div><div class="line"><span class="keyword">let</span> b = <span class="number">2</span>;</div><div class="line"></div><div class="line">[a, b] = [b, a];</div></pre></td></tr></table></figure></p>
+<h3 id="parsing-an-array-returned-from-a-function-amp-ignore-some-variable"><a href="#parsing-an-array-returned-from-a-function-amp-ignore-some-variable" class="headerlink" title="parsing an array returned from a function &amp; ignore some variable"></a>parsing an array returned from a function &amp; ignore some variable</h3><p>我们常见的场景，需要通过函数返回多个变量，通过解构的话就可以拿到返回的多个值，并且可以忽略某个或多个值。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> fn = <span class="function"><span class="params">()</span> =&gt;</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</div><div class="line"></div><div class="line"><span class="keyword">let</span> [a, , b] = fn();</div><div class="line"></div><div class="line">a; <span class="comment">// 1</span></div><div class="line">b; <span class="comment">// 3</span></div></pre></td></tr></table></figure></p>
+<h2 id="Object-destructuring"><a href="#Object-destructuring" class="headerlink" title="Object destructuring"></a>Object destructuring</h2><p>同数组，对象也可以按照结构进行解构赋值，文章开头已经举了一个basic assignment的例子，这里就继续说明其他的使用场景和注意事项。</p>
+<h3 id="assignment-without-declaration"><a href="#assignment-without-declaration" class="headerlink" title="assignment without declaration"></a>assignment without declaration</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> a, b;</div><div class="line">(&#123;a, b&#125; = &#123;<span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>&#125;);</div></pre></td></tr></table></figure>
+<p>需要注意的是，当解构赋值跟声明分开进行时，解构表达式外的<code>()</code>是必须得，否则解析左侧是会当成一个块级表达式，从而导致因=号的出现而报错。</p>
+<h3 id="assignment-to-new-variable-name"><a href="#assignment-to-new-variable-name" class="headerlink" title="assignment to new variable name"></a>assignment to new variable name</h3><p>对象的解构可以指定赋值的变量名：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> &#123;<span class="attr">name</span>: theName, <span class="attr">info</span>: &#123;<span class="attr">age</span>: theAge&#125;&#125; = &#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'xuqi'</span>,</div><div class="line">    <span class="attr">info</span>: &#123;</div><div class="line">        <span class="attr">age</span>: <span class="number">27</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">theName; <span class="comment">// 'xuqi'</span></div><div class="line">theAge; <span class="comment">// 27</span></div></pre></td></tr></table></figure></p>
+<p>之前已经介绍过模式和变量名的形式，这里就很好理解了，由于指定了变量名，name和age只是模式</p>
+<h3 id="default-values-1"><a href="#default-values-1" class="headerlink" title="default values"></a>default values</h3><p>跟数组一样，对象解构也可以设置默认值<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> &#123;a = <span class="number">1</span>, <span class="attr">b</span>:c = <span class="number">2</span>&#125; = &#123;<span class="attr">a</span>: <span class="number">2</span>&#125;;</div><div class="line"></div><div class="line">a; <span class="comment">// 2</span></div><div class="line">c; <span class="comment">// 2</span></div></pre></td></tr></table></figure></p>
+<p>对象解构的默认值有一种比较重要的应用场景：函数的默认参数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> fn = <span class="function">(<span class="params">&#123;a = <span class="number">1</span>, b = <span class="number">2</span>&#125; = &#123;&#125;</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">return</span> [a, b];</div><div class="line">&#125;;</div><div class="line"></div><div class="line">fn();</div></pre></td></tr></table></figure></p>
+<p>这篇流水账的起因是因为TS2.0发布了然后去看了下文档，瞬间被加了type的解构表达式搞晕了，然后就想着写个文章来捋一捋，毕竟看别人文章跟自己写出来还是有点差别的，想看详细的还是看文档或者阮老师的书比较好，想要了解下或者重新梳理思路，这篇文章适合你</p>
+<p>参考资料：<br><a href="http://es6.ruanyifeng.com/#docs/destructuring" target="_blank" rel="external">阮一峰《ECMAScript6入门》变量的解构赋值</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment" target="_blank" rel="external">MDN Destructuring assignment</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;destructuring&lt;/strong&gt;，解构，可以方便coder们从Object/Array中提取想要的数据，Es6大杀器…&lt;/p&gt;
+&lt;p&gt;按照阮老师的说法，解构其实就属于一种数据结构的模式匹配，匹配上的模式对应的值会从表达式右侧赋值给表达式左侧，比如：&lt;br&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; &amp;#123;name, &lt;span class=&quot;attr&quot;&gt;info&lt;/span&gt;: &amp;#123;age&amp;#125;&amp;#125; = &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;xuqi&#39;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;info&lt;/span&gt;: &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;age&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;27&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;name; &lt;span class=&quot;comment&quot;&gt;// &#39;xuqi&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;age; &lt;span class=&quot;comment&quot;&gt;// 27&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;我们就能直接获取&lt;strong&gt;模式&lt;/strong&gt;name和age的值，赋值给&lt;strong&gt;变量&lt;/strong&gt;name和age，需要注意的是模式和变量的概念，这是理解解构的基础，&lt;br&gt;&lt;code&gt;{mode: var}&lt;/code&gt;，&lt;code&gt;：&lt;/code&gt;左侧为模式，右侧为变量，上述例子是当模式和变量名相同时的缩写，实际上是：&lt;br&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; &amp;#123;&lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;: name, &lt;span class=&quot;attr&quot;&gt;info&lt;/span&gt;: &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;age&lt;/span&gt;: age&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&amp;#125; = ...&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这样理解起来就清楚了。解构可以从数组和对象中提取值，分别来说明…&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Es6" scheme="http://www.i0011.com/tags/Es6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>What the f**k of Postcss</title>
+    <link href="http://www.i0011.com/2016/01/28/what-the-fuck-of-postcss/"/>
+    <id>http://www.i0011.com/2016/01/28/what-the-fuck-of-postcss/</id>
+    <published>2016-01-28T05:37:31.000Z</published>
+    <updated>2016-11-25T00:34:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>PostCSS is a tool for transforming styles with JS plugins. These plugins can lint your CSS, support variables and mixins, transpile future CSS syntax, inline images, and more.</p>
+</blockquote>
+<p>对于Postcss，这样介绍来开启话题最合适不过。大部分人对Postcss的认知还是CSS pre-preprocessor，因此经常会有将Postcss和Sass/Less/Stylus进行对比的情况。那Postcss到底是什么？</p>
+<p>Postcss只是一个工具，获取CSS内容并将其转化成JS插件可以处理的数据，如此基于Postcss的JS插件便可基于Postcss提供的数据进行对应的处理。目前Postcss Plugin的列表数目已经200+，提供诸于：auto-prefix、next-css、linter、short-name等功能。另外，由于Postcss的职能是类似于工具箱，用户可以选择自己的工具放进去，所以你可以根据自身的开发喜好和需求去开发自己的“工具”扔到工具箱里去，心有多大，世界就有多大，勇敢的少年啊，快去创造奇迹~<br><a id="more"></a></p>
+<p>在认清Postcss的真实面目后，搬出下面这段摘抄的话，会显得逼格很高：</p>
+<blockquote>
+<ul>
+<li>It’s not a pre-processor, though it can optionally behave like one.</li>
+<li>It’s not a post-processor, though it can optionally behave like one.</li>
+<li>It’s not about “future syntax”, though it can facilitate support for future syntax</li>
+<li>It’s not a clean up / optimization tool, though it can provide such functionality.</li>
+<li>It’s not any one thing; it’s a means to potentially unlimited functionality configured as you choose.</li>
+</ul>
+</blockquote>
+<p>也就是，它看起来什么都是，然而本质上它什么都不是，但是它什么都能干。万剑归宗，万法归一，嗯，就是这种意思了…</p>
+<p>口说无凭，祭出插件杀器：</p>
+<ul>
+<li><a href="https://github.com/postcss/autoprefixer" target="_blank" rel="external">autoprefixer</a> 为指定的browsers生成兼容性CSS，你只需按照W3C的标准去书写你的样式就好了，接下的事autoprefixer帮你摆平</li>
+<li><a href="https://github.com/jonathantneal/precss" target="_blank" rel="external">precss</a> 如果你需要像Sass提供的:variables、mixins、conditionals等功能，precss是不二之选</li>
+<li><a href="https://github.com/postcss/postcss-import" target="_blank" rel="external">postcss-import</a> 使用@import，并且可以获取第三方的样式(比如bower或者npm)</li>
+<li><a href="https://github.com/ben-eb/cssnano" target="_blank" rel="external">cssnano</a> css<strong>优化</strong>(清除注释和尾分号、合并规则，字体权重优化等等等…)，压缩…强大</li>
+<li><a href="https://github.com/assetsjs/postcss-assets" target="_blank" rel="external">postcss-assets</a> img/font加载路径解决方案，另外还提供获取图片尺寸以及将图片转化为base64写入css的功能</li>
+<li><a href="https://github.com/2createStudio/postcss-sprites" target="_blank" rel="external">postcss-sprites</a> image sprite</li>
+<li>…颜色处理，可读性处理，简化输入，优化，打包，<a href="http://postcss.parts/" target="_blank" rel="external">自行探索&gt;&gt;&gt;</a></li>
+</ul>
+<p>怎么去用？Gulp！你应该享受现代工具~<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>),</div><div class="line">    postcss = <span class="built_in">require</span>(<span class="string">'gulp-postcss'</span>),</div><div class="line">    sourcemap = <span class="built_in">require</span>(<span class="string">'gulp-sourcemaps'</span>);</div><div class="line">gulp.task(<span class="string">'css'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    gulp.src(<span class="string">'css/**/*.css'</span>)</div><div class="line">        .pipe(sourcemap.init())</div><div class="line">        .pipe(postcss([</div><div class="line">            <span class="built_in">require</span>(<span class="string">'autoprefixer'</span>)(&#123;</div><div class="line">                <span class="attr">browsers</span>: [<span class="string">'not ie &lt; 8'</span>]</div><div class="line">            &#125;),</div><div class="line">            <span class="built_in">require</span>(<span class="string">'precss'</span>),</div><div class="line">            <span class="built_in">require</span>(<span class="string">'postcss-assets'</span>)(&#123;</div><div class="line">                <span class="attr">loadPaths</span>: [<span class="string">'font/'</span>, <span class="string">'img/'</span>],</div><div class="line">                <span class="attr">relativeTo</span>: <span class="string">'css/post/'</span></div><div class="line">            &#125;),</div><div class="line">            <span class="built_in">require</span>(<span class="string">'postcss-sprites'</span>).default(&#123;</div><div class="line">                <span class="attr">basePath</span>: <span class="string">'./img'</span>, <span class="comment">//img base path</span></div><div class="line">                stylesheetPath: <span class="string">'./css'</span>, <span class="comment">//path of css generated</span></div><div class="line">                spritePath: <span class="string">'./img'</span>, <span class="comment">//path of sprites generated</span></div><div class="line">                spritesmith: &#123;</div><div class="line">                    <span class="attr">padding</span>: <span class="number">2</span>,</div><div class="line">                &#125;,</div><div class="line">                <span class="attr">groupBy</span>: <span class="function"><span class="keyword">function</span>(<span class="params">file</span>) </span>&#123;</div><div class="line">                    <span class="keyword">var</span> group = file.url.split(<span class="string">'/'</span>)[<span class="number">1</span>]; <span class="comment">// 根据目录分组，防止合并后的图片太大</span></div><div class="line">                    <span class="keyword">return</span> group ? <span class="built_in">Promise</span>.resolve(group) : <span class="built_in">Promise</span>.reject();</div><div class="line">                &#125;</div><div class="line">            &#125;)</div><div class="line">        ]))</div><div class="line">        .pipe(sourcemap.write(<span class="string">'.'</span>))</div><div class="line">        .pipe(gulp.dest(<span class="string">'dist/'</span>))</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><p>由于正在使用Compass，不自主会把这两个工具进行比较：<br>Compass是Sass的扩展，提供了很多牛X的Minix和功能(比如：无可比拟的image-sprite)。用过Compass的可能会有疑问了，你上面讲的在Compass都能做啊，而且我还不用去找很多插件来实现我的功能，去网站翻使用指南和它的API就可以了，不要太强大…然而，出问题的就是他的强，大：</p>
+<ol>
+<li>Compass需要依赖Ruby，这一点就足够判死刑</li>
+<li>Compass提供了很多@mixin，其中也包括类似于autoprefix的功能，但是，前提是：我得知道我要写的属性需要进行prefix处理，所以对大部分人来说，这个功能属于鸡肋功能。对于一些辅助的功能实现的mixin，我们可能会想到去官网搜索，然而，这个比prefix的处理更让人头疼，在一个全站颜色统一，甚至对搜索结果都不做突出的网站上找到想要的API是有多难，搜索结果下你会发现不知所云的搜索结果</li>
+<li>我们并不需要Compass提供的那么多内置mixin</li>
+<li>对compass认知程度有限，上述叙述若有偏颇，勿怪，个人观点…当然，不可否认还是有很多出色的功能的~</li>
+</ol>
+<p>对比Compass，我更喜欢Postcss带来的体验，把一切交给npm，无需其他乱七八糟的环境的配置，通过一些基本的插件，可以实现从Compass到Postcss的无缝切换，而且Postcss的开放性必然会给以后带来诸多Compass所不会有的好处。插件多样性可以帮你处理各种常见问题：嫌每天重复输入相同的width,height…你可以用<code>postcss-short</code>或者<code>postcss-size</code>；嫌<code>#3f3f3f</code>这种输入浪费时间，<code>postcss-color-short</code>帮你解决后顾之忧，你只用输入<code>#3f</code>；想像写Es6那样享受超前的快感，<code>cssnext</code>带你装逼；想摆脱老是写水平居中或者垂直居中的困扰，<code>postcss-center</code>助你一臂之力；clearfix的功能在你只用写<code>clear:fix</code>的情况下，也有插件<code>postcss-clearfix</code>帮你铺平道路；甚至连css的语法检查，也有插件给你两肋插刀…总之大到模块化，小到画三角，应有尽有，各取所需就好…</p>
+<p>灵活性+开放性+易用性+扩展性….足够了，写Postcss，挺好~</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;PostCSS is a tool for transforming styles with JS plugins. These plugins can lint your CSS, support variables and mixins, transpile future CSS syntax, inline images, and more.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;对于Postcss，这样介绍来开启话题最合适不过。大部分人对Postcss的认知还是CSS pre-preprocessor，因此经常会有将Postcss和Sass/Less/Stylus进行对比的情况。那Postcss到底是什么？&lt;/p&gt;
+&lt;p&gt;Postcss只是一个工具，获取CSS内容并将其转化成JS插件可以处理的数据，如此基于Postcss的JS插件便可基于Postcss提供的数据进行对应的处理。目前Postcss Plugin的列表数目已经200+，提供诸于：auto-prefix、next-css、linter、short-name等功能。另外，由于Postcss的职能是类似于工具箱，用户可以选择自己的工具放进去，所以你可以根据自身的开发喜好和需求去开发自己的“工具”扔到工具箱里去，心有多大，世界就有多大，勇敢的少年啊，快去创造奇迹~&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="HandBook" scheme="http://www.i0011.com/tags/HandBook/"/>
+    
+      <category term="Postcss" scheme="http://www.i0011.com/tags/Postcss/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>React server side render</title>
+    <link href="http://www.i0011.com/2016/01/24/react-ssr/"/>
+    <id>http://www.i0011.com/2016/01/24/react-ssr/</id>
+    <published>2016-01-24T12:20:17.000Z</published>
+    <updated>2016-11-25T00:34:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>如何使用React开发高效可<del>装B</del>用的WEB应用:) … 融合React以及React-ssr、koa、Es6、Postcss，绽放吧，骚年…</p>
+<p><a href="https://github.com/loveLibra/React-ssr-demo" target="_blank" rel="external">DEMO传送门&gt;&gt;&gt;&gt;</a></p>
+<ol>
+<li><p>JSX支持Runtime<br><code>require(&#39;node-jsx&#39;).install({harmony: true});</code>。添加harmony选项可在JSX中使用部分ES6的特性，但是未完全支持.</p>
+</li>
+<li><p>browserify打包客户端脚本</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">browserify(<span class="string">'./js/index.js'</span>)</div><div class="line">    .transform(babelify, &#123;</div><div class="line">        <span class="attr">presets</span>: [<span class="string">'es2015'</span>, <span class="string">'react'</span>]</div><div class="line">    &#125;)</div><div class="line">    .bundle()</div><div class="line">    .pipe(fs.createWriteStream(<span class="string">'dist/bundle.js'</span>));</div></pre></td></tr></table></figure>
+</li>
+<li><p>React服务端渲染<br>将一个纯View用在此处其实有点别扭，但是为了SEO以及一些页面渲染性能的考虑，需要服务端渲染。React-SSR就是通过<code>ReactDOMServer.renderToString</code>得到HTML渲染到页面中，然后在客户端重新初始化组件，React并不会蠢的去重新渲染页面，所以此处可以忽略前端再次初始化带来的性能和使用体验的问题…前端初始化组件也是需要带数据的，所以在后端渲染组件时，我们将数据也带带页面中，然后再前端初始化后再删除数据DOM即可.<br>另外，在渲染字符串到页面中时，<code>views/partials/content.html</code>中放置渲染好的HTML的标签:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 不能有换行，否则客户端渲染时因为识别空白节点的问题在前端初始化失败。--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"yoho-container"</span>&gt;</span>&#123;&#123;&#123;content&#125;&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>Koa<br>koa + yield真的是太明智了，让代码不再一层层的去嵌套回调，棒！路由，接口取数据，数据格式化，页面渲染能对程序员展现以同步的形式去实现，跳出恶魔金字塔吧，Koa带你飞~</p>
+</li>
+<li>Postcss<br>Postcss相对于Compass的优势，在于其灵活性和轻便性，需要什么功能，扩展postcss插件就行了，autoprefixer，sprite-image应有尽有，Get what You Need…</li>
+</ol>
+<p>后记：前端现在愈发膨胀和夸张，无数的轮子和框架来方便你的开发，然而得有度，别让自己的程序失去控制…前端现在就像一匹飞奔的马，跑的很快，但是跑到哪你却不知道，你唯一能做的就是练好骑马的技术，别从马上摔下来。夯实基础，成就你的精湛马术吧</p>
+<p>精彩的参考资料:<br><a href="http://www.crmarsh.com/react-ssr/" target="_blank" rel="external">Rendering React Components on the Server</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;如何使用React开发高效可&lt;del&gt;装B&lt;/del&gt;用的WEB应用:) … 融合React以及React-ssr、koa、Es6、Postcss，绽放吧，骚年…&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/loveLibra/React-ssr-
+    
+    </summary>
+    
+    
+      <category term="Es6" scheme="http://www.i0011.com/tags/Es6/"/>
+    
+      <category term="React" scheme="http://www.i0011.com/tags/React/"/>
+    
+      <category term="Ssr" scheme="http://www.i0011.com/tags/Ssr/"/>
+    
+      <category term="Koa" scheme="http://www.i0011.com/tags/Koa/"/>
+    
+      <category term="Browserify" scheme="http://www.i0011.com/tags/Browserify/"/>
+    
+      <category term="Postcss" scheme="http://www.i0011.com/tags/Postcss/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>js-oop</title>
+    <link href="http://www.i0011.com/2016/01/11/js-oop/"/>
+    <id>http://www.i0011.com/2016/01/11/js-oop/</id>
+    <published>2016-01-11T07:50:22.000Z</published>
+    <updated>2016-11-25T00:34:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Javascript可能是一门让人感觉“不适”的语言，实现<code>类</code>、<code>继承</code>等OOP概念竟然要通过<code>function</code>和<code>prototype</code>，Jser们可能理解原型机制就能伤半管子HP了。然而，这种情况随着ES6的到来变得好了起来，ES6提供了<code>class</code>、<code>extends</code>等语法糖可以帮你摆脱让人苦闷的原型（当然，如果你有高追求，你得理解），虽然JS的OOP的实现原理还是通过原型的，但是至少对开发者的友好性提升了很多，让JS更有OOP的味道也更接近于其他OOP的语言。现在我们也能很简单的来声明一个类：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123;</div><div class="line">    <span class="keyword">constructor</span>(name, age) &#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">        <span class="keyword">this</span>.age = age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    say() &#123;</div><div class="line">        alert(<span class="string">`Hello, I am <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>这要是放ES5时代呢？<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">People</span>(<span class="params">name, age</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">    <span class="keyword">this</span>.age = age;</div><div class="line">&#125;</div><div class="line"></div><div class="line">People.prototype.say = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    alert(<span class="string">'Hello, I am '</span> + <span class="keyword">this</span>.name);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>两者new对象的实现方式一致：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> People(<span class="string">'xuqi'</span>, <span class="number">26</span>);</div><div class="line">p.say();</div></pre></td></tr></table></figure></p>
+<p>对比两者的实现，可以大致了解ES6提供的类的实现细节是怎样的。</p>
+<p>接下来，我们来构建一个Woman类，继承自People类，并实现<code>buy</code>方法。先看ES5的两种实现方式（PS：可结合扩展，比如添加自己的factory方法等）:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//方法一：Prototype</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Woman</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line"></div><div class="line">Woman.prototype = <span class="keyword">new</span> People();</div><div class="line"></div><div class="line">Woman.prototype.buy = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    alert(<span class="string">'双11，买买买'</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Woman.prototype.constructor = Woman; <span class="comment">//修正constructor</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//方法二：call/apply</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Woman</span>(<span class="params">name, age</span>) </span>&#123;</div><div class="line">    People.call(<span class="keyword">this</span>, name, age);</div><div class="line">&#125;</div><div class="line"></div><div class="line">Woman.prototype.buy = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    alert(<span class="string">'双11，买买买'</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>方法一通过原型机制实现继承，设置子类的prototype为父类的一个实例化对象即可；方法二通过call，在子类的上下文环境中执行父类的构造函数即可获得父类的属性和方法。两者的方法扩展都需通过prototype去实现。</p>
+<p>但是上述两种方法在例子中都有问题：通过原型的实现在绑定子类prototype为父类的实例化对象时，必须初始化父类，要不然父类的参数(name, age)就不能使用了；通过call/apply方法实现的子类的实例化对象无法使用父类绑定在prototype上的方法(say)。因此我们需要结合两者：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Woman</span>(<span class="params">name, age</span>) </span>&#123;</div><div class="line">    People.call(<span class="keyword">this</span>, name, age);</div><div class="line">&#125;</div><div class="line"></div><div class="line">Woman.prototype = <span class="keyword">new</span> People();</div><div class="line"></div><div class="line">Woman.prototype.constructor = Woman;</div><div class="line"></div><div class="line">Woman.prototype.buy = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    alert(<span class="string">'双11，买买买'</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>再来看看ES6的继承是怎样实现的：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Woman</span> <span class="keyword">extends</span> <span class="title">People</span> </span>&#123;</div><div class="line">    <span class="keyword">constructor</span>(name, age) &#123;</div><div class="line">        <span class="keyword">super</span>(name, age);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    buy() &#123;</div><div class="line">        alert(<span class="string">'双11，买买买'</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>ES6的代码简洁明了，通过<code>extends</code>可以简单的实现类的继承。需要注意的是，子类的构造函数中需先调用<code>super()</code>从而生成一个父类的实例化对象即<code>this</code>，然后再对this进行扩展，因此在super调用前使用this会报错；在ES5中实现对象则相反，先生成子类实例化对象this，然后向this中扩展父类的方法和属性.</p>
+<h3 id="扩展："><a href="#扩展：" class="headerlink" title="扩展："></a>扩展：</h3><ol>
+<li>ES5的继承实现中为什么需要<code>Woman.prototype.constructor = Woman;</code>？<br>对象都有<code>constructor</code>属性，为一个函数，标识构造出该对象的构造函数，对象默认的constructor为<code>function Object(){...}</code>；<br>因此该问题中，若不重新制定constructor到Woman(){…}，通过Woman实例化出来的对象的constructor = Woman.prototype.constructor = (new People()).constructor = People(){…}。这显然不是我们想看到的。</li>
+<li><p>ES5中父类和子类的关系到底是怎样串联起来的？<br>构造两条<strong>继承链</strong>：<br>（1）实例继承<br>（2）构造函数继承/静态属性方法继承<br>实现模式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//实例继承</span></div><div class="line"><span class="built_in">Object</span>.setPrototypeOf(Sub.prototype, Parent.prototype);</div><div class="line"><span class="comment">//等同于</span></div><div class="line">Sub.prototype.__proto__ = Parent.prototype;</div><div class="line"></div><div class="line"><span class="comment">//构造函数继承</span></div><div class="line"><span class="built_in">Object</span>.setPrototypeOf(Sub, Parent);</div><div class="line"><span class="comment">//等同于</span></div><div class="line">Sub.__proto__ = Parent;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在ES5的例子中，我们通过<code>Woman.prototype = new People();</code>实现了实例继承，推导式：Woman.prototype.__proto__  =  (new People()).__proto__  =  People.prototype；根据2，我们可以完善上述ES5的继承的实现–补充构造函数的继承，添加如下代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Object</span>.setPrototypeOf ?</div><div class="line">    <span class="built_in">Object</span>.setPrototypeOf(Woman, People) :</div><div class="line">    Woman.__proto__ = People;</div></pre></td></tr></table></figure>
+</li>
+<li><p>完整的继承实现后，我们可以得到如下等式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> sub = <span class="keyword">new</span> Sub();</div><div class="line"></div><div class="line"><span class="comment">//true</span></div><div class="line">sub.__proto__ === Sub.prototype;</div><div class="line">sub.constructor === Sub;</div><div class="line"></div><div class="line">sub <span class="keyword">instanceof</span> Sub;</div><div class="line">sub <span class="keyword">instanceof</span> Parent;</div><div class="line">Sub.prototype <span class="keyword">instanceof</span> Parent;</div><div class="line"></div><div class="line">Parent.prototype.constructor === Parent;</div><div class="line"></div><div class="line"><span class="built_in">Object</span>.getPrototypeOf(Sub) === Parent;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>附：<br><img src="https://dn-xuqi.qbox.me/proto.jpg" alt="原型原理图"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Javascript可能是一门让人感觉“不适”的语言，实现&lt;code&gt;类&lt;/code&gt;、&lt;code&gt;继承&lt;/code&gt;等OOP概念竟然要通过&lt;code&gt;function&lt;/code&gt;和&lt;code&gt;prototype&lt;/code&gt;，Jser们可能理解原型机制就能伤半管子HP了。然而，这种情况随着ES6的到来变得好了起来，ES6提供了&lt;code&gt;class&lt;/code&gt;、&lt;code&gt;extends&lt;/code&gt;等语法糖可以帮你摆脱让人苦闷的原型（当然，如果你有高追求，你得理解），虽然JS的OOP的实现原理还是通过原型的，但是至少对开发者的友好性提升了很多，让JS更有OOP的味道也更接近于其他OOP的语言。现在我们也能很简单的来声明一个类：&lt;br&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;People&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;constructor&lt;/span&gt;(name, age) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.name = name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.age = age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    say() &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        alert(&lt;span class=&quot;string&quot;&gt;`Hello, I am &lt;span class=&quot;subst&quot;&gt;$&amp;#123;&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.name&amp;#125;&lt;/span&gt;`&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Js Basic" scheme="http://www.i0011.com/tags/Js-Basic/"/>
+    
+      <category term="Es6" scheme="http://www.i0011.com/tags/Es6/"/>
+    
+      <category term="OOP" scheme="http://www.i0011.com/tags/OOP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>respondjs-proxy</title>
+    <link href="http://www.i0011.com/2016/01/08/respond-proxy/"/>
+    <id>http://www.i0011.com/2016/01/08/respond-proxy/</id>
+    <published>2016-01-08T02:47:43.000Z</published>
+    <updated>2016-11-25T00:34:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>respond.js</strong>用来解决IE9以下不支持媒体查询的问题。</p>
+<p>在静态资源(CSS)和网站在同一域名的情况下使用起来很简单：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"path/to/cssfile.css"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"path/to/respond.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>引入HTML并置于css文件引用位置之后即可。<br><a id="more"></a><br>然而大部分情况下并非如此，静态资源都会放在cdn上进行访问加速，这样就产生了域名不一致而导致respondjs在跨域的情况下失效的问题。Github上作者对该<a href="https://github.com/scottjehl/Respond#cdnx-domain-setup" target="_blank" rel="external">问题</a>的产生给出了阐述，感兴趣的可以去看下。<a href="https://github.com/scottjehl/Respond/tree/master/cross-domain" target="_blank" rel="external">代码</a>中也给出了解决示例。此处给出解决方法：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"path/to/respond-proxy.html"</span> <span class="attr">id</span>=<span class="string">"respond-proxy"</span> <span class="attr">rel</span>=<span class="string">"respond-proxy"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"path/to/respond.proxy.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"path/to/respond.proxy.gif"</span> <span class="attr">id</span>=<span class="string">"respond-redirect"</span> <span class="attr">rel</span>=<span class="string">"respond-redirect"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
+<p>再加载上述三行代码到HTML中即可。需要注意的是<code>respond-proxy.html</code>需要与静态资源放在同一域名下。</p>
+<p>Enjoy it~</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;respond.js&lt;/strong&gt;用来解决IE9以下不支持媒体查询的问题。&lt;/p&gt;
+&lt;p&gt;在静态资源(CSS)和网站在同一域名的情况下使用起来很简单：&lt;br&gt;&lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;link&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;rel&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;path/to/cssfile.css&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;src&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;path/to/respond.js&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;undefined&quot;&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;script&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;引入HTML并置于css文件引用位置之后即可。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Solution" scheme="http://www.i0011.com/tags/Solution/"/>
+    
+      <category term="IE8" scheme="http://www.i0011.com/tags/IE8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>REM是个坑，精确控制不适合</title>
+    <link href="http://www.i0011.com/2015/06/18/bad-rem/"/>
+    <id>http://www.i0011.com/2015/06/18/bad-rem/</id>
+    <published>2015-06-18T06:56:05.000Z</published>
+    <updated>2016-11-25T00:34:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>前两天需要做一个涂鸦的活动页面，来瞅瞅<img src="https://dn-xuqi.qbox.me/yoho-q1.png" alt="年中大促"><br><a id="more"></a><br>简要介绍下这个页面，就是一个ABC选择，选中某项后加红色区分然后右侧动画闪动。<em>[图片版权声明：版权归YOHO所有]</em></p>
+<p>拿到这个页面第一反应就是好*蛋啊，就是个图片页面了然后需要点击的地方就绝对定位一个div盖在上面。考虑是手机端的页面，那就可以使用REM神器了:</p>
+<ol>
+<li><p>加上脚本</p>
+<pre><code>(function (doc, win) {
+    var docEl = doc.documentElement,
+        resizeEvt = &apos;orientationchange&apos; in window ? &apos;orientationchange&apos; : &apos;resize&apos;,
+        recalc = function () {
+            var clientWidth = docEl.clientWidth;
+            if (!clientWidth) {
+                return;
+            }
+            docEl.style.fontSize = 20 * (clientWidth / 320) + &apos;px&apos;;
+        };
+
+    if (!doc.addEventListener) {
+        return;
+    }
+    win.addEventListener(resizeEvt, recalc, false);
+    doc.addEventListener(&apos;DOMContentLoaded&apos;, recalc, false);
+})(document, window);
+</code></pre></li>
+<li>使用方法<br>css中原来用px的换成rem就可以了,40px = 1rem</li>
+<li>脚本根据屏幕尺寸会在html元素上生成个font-size的样式，然后页面渲染时都会根据这个值和rem的数值等比例生成对应屏幕的尺寸或者位置。</li>
+</ol>
+<p>大体功能都能满足，但是在进行选项图标200ms每帧切换的时候却出现了问题，会抖动，那找原因就是通过雪碧图切换background-position位置不准咯，而且在各个手机上不同的选项各有抖动与不抖动的情况。</p>
+<p>就是使用rem的原因，不同的屏幕生成的根font-size不一样然后计算后就会出现定位不准的问题了，最后还是换成了直接切换background-image了，雪碧图用不了。（ps:如果用rem可以实现请告诉我…）</p>
+<p>另外这个页面还有另外一个情况，看到会有选中项的颜色区分。最开始做的时候是把整个图片除掉选项右边的小图标(图标会有动画实现因此时单独的)作为底图然后选中后就在对应项上面加一个有颜色的div。事实肯定不如所意了，文字和ABC会被盖住….最后的解决办法是：灰色的底图单独是一层作为最底层，然后页面图片去底图在最上面，选中时的颜色div放在两层中间就可以了…但是这样对上层图切的要求就高了，要不然你会发现边边角角全是白色的锯齿。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前两天需要做一个涂鸦的活动页面，来瞅瞅&lt;img src=&quot;https://dn-xuqi.qbox.me/yoho-q1.png&quot; alt=&quot;年中大促&quot;&gt;&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="CSS" scheme="http://www.i0011.com/tags/CSS/"/>
+    
+      <category term="Solution" scheme="http://www.i0011.com/tags/Solution/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Handlebars使用指南</title>
+    <link href="http://www.i0011.com/2015/04/30/handlebars/"/>
+    <id>http://www.i0011.com/2015/04/30/handlebars/</id>
+    <published>2015-04-30T09:49:41.000Z</published>
+    <updated>2016-11-25T00:34:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="http://handlebarsjs.com/" target="_blank" rel="external">Handlebars</a>为Mustache的超集，即：在完全兼容Mustache语法的基础上，提供了很多语法糖，不要太甜…</p>
+<h2 id="Begin-Now"><a href="#Begin-Now" class="headerlink" title="Begin Now"></a>Begin Now</h2><h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>这里我们只介绍一些Handlebars中相对于Mustache超集的部分，若不了解Mustache，请<a href="http://i0011.com/2015/04/30/Mustache%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" target="_blank" rel="external">移步</a><br><a id="more"></a></p>
+<h3 id="Expressions"><a href="#Expressions" class="headerlink" title="Expressions"></a>Expressions</h3><p>表达式就是{{}}里面包的东西，Handlebars中语法的最小单位。{{xx}}表示在<strong>当前上下文环境</strong>中去寻找xx属性，并用xx属性的值去替换之。Handlebars支持<code>.</code>分隔的属性{{xx.yy}}，但在有的情况下<code>.</code>不能解决我们的问题，比如:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">data = &#123;</div><div class="line">    <span class="attr">articles</span>: [</div><div class="line">        &#123;</div><div class="line">            <span class="string">'#comments'</span>: &#123;</div><div class="line">                <span class="attr">author</span>: <span class="string">'dabai'</span>,</div><div class="line">                <span class="attr">date</span>: <span class="string">'2015.4.30'</span></div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        &#123;</div><div class="line">            <span class="string">'#comments'</span>: [</div><div class="line">                &#123;</div><div class="line">                    <span class="attr">author</span>: <span class="string">'xuqi'</span>,</div><div class="line">                    <span class="attr">date</span>: <span class="string">'2015.4.30'</span></div><div class="line">                &#125;,</div><div class="line">                &#123;</div><div class="line">                    <span class="attr">author</span>: <span class="string">'xuqi-two'</span>,</div><div class="line">                    <span class="attr">date</span>: <span class="string">'2015.4.30'</span></div><div class="line">                &#125;,</div><div class="line">                &#123;</div><div class="line">                    <span class="attr">author</span>: <span class="string">'xuqi-three'</span>,</div><div class="line">                    <span class="attr">date</span>: <span class="string">'2015.4.30'</span></div><div class="line">                &#125;,</div><div class="line">                ...</div><div class="line">            ],</div><div class="line">            ...</div><div class="line">        &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>需要渲染articles数组第2项的’#comments’的数据，我们用<code>.</code>怎么分隔？<code>articles.2.#comments</code>?…呵呵哒…跟js一样嘛，我们可以用<code>[]</code>:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;&#123;# each articles.[10].[#comment]&#125;&#125;</div><div class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123;author&#125;&#125;&#123;&#123;date&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">&#123;&#123;/ each&#125;&#125;</div></pre></td></tr></table></figure></p>
+<p>上述这种情况在需要取数据某一元素或者渲染的属性名不是合理的Handlebars标识名时适用。</p>
+<h3 id="Helper"><a href="#Helper" class="headerlink" title="Helper"></a>Helper</h3><p>Handlebars中可以让我们体验飞一般感觉的重量级语法糖，精华所在，可以帮助我们现在前段时间因为使用简单Mustache语法而引入的很多不必要的数据嵌套的问题，我们可以用<code>if</code>了，可以用<code>each</code>了，可以自定义了Helper了~欢呼雀跃吧….好吧，冷静，回归正题。</p>
+<p>先从一个例子引入，然后逐步强化，里面有干货：<br>Level1：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//tpl</div><div class="line">&#123;&#123;link 'http://www.baidu.com' '百度'&#125;&#125;</div><div class="line"></div><div class="line">//helper</div><div class="line">Handlebars.registerHelper('link', function(url, name) &#123;</div><div class="line">     return '<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"' + url + '"</span>&gt;</span>' + name + '<span class="tag">&lt;/<span class="name">a</span>&gt;</span>';</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>Level2：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//tpl</div><div class="line">&#123;&#123;link site&#125;&#125;</div><div class="line"> </div><div class="line">//helper</div><div class="line">Handlebars.registerHelper('link', function(site) &#123;</div><div class="line">    return '<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"' + site.url + '"</span>&gt;</span>' + site.name + '<span class="tag">&lt;/<span class="name">a</span>&gt;</span>'</div><div class="line">&#125;);</div><div class="line"> </div><div class="line">//data</div><div class="line">&#123;</div><div class="line">    site: &#123;</div><div class="line">        url: 'http://www.baidu.com',</div><div class="line">        name: '百度'</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Level3：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//tpl</div><div class="line">&#123;&#123;link '百度' url='http://www.baidu.com' class='site'&#125;&#125;</div><div class="line"></div><div class="line">//helper</div><div class="line">Handlebars.registerHelper('link', function(name, options) &#123;</div><div class="line">    var attrs = [],</div><div class="line">        prop;</div><div class="line">    for (prop in options.hash) &#123;</div><div class="line">        attrs.push(prop + '="' + options.hash[prop] + '"');</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    return '<span class="tag">&lt;<span class="name">a</span> ' + <span class="attr">attrs.join</span>(' ') + '&gt;</span>' + name + '<span class="tag">&lt;/<span class="name">a</span>&gt;</span>'</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>上述三个等级分别演示了Helper中参数传递的方法的功能递进， 下面介绍两个Handlebars的API为Helper打辅助：<code>Handlebars.SafeString()</code> 和 <code>Handlebars.escapeExpression()</code>。 </p>
+<p>Helper返回的HTML字符串会被默认转义， 显示在界面上的只是文本节点而不是元素节点。所以， 对于这种自定义的Helper， 因为我们能确保返回的字符串是安全的， 因此我们需要告诉编译器这是一个安全的字符串， 放心当成元素节点插进去吧， 使用的方法就是SafeString()；<br>另外， 因为Helper函数中有输入参数而我们不能确定这些数据是否含有XSS脚本， 如此那我们便手动将你转化成安全的字符串吧， 如此escapeExpression()的用法也自然就知晓了， 现在用这两个方法完善下上述Level3的Helper的例子:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Handlebars.registerHelper(<span class="string">'link'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">name, options</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> attrs = [],</div><div class="line">        prop;</div><div class="line">    <span class="keyword">for</span> (prop <span class="keyword">in</span> options.hash) &#123;</div><div class="line">        attrs.push(</div><div class="line">            Handlebars.escapeExpression(prop) +<span class="string">'="'</span> +</div><div class="line">            Handlebars.escapeExpression(options.hash[prop]) + <span class="string">'"'</span></div><div class="line">        );</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Handlebars.SafeString(<span class="string">'&lt;a '</span> + attrs.join(<span class="string">' '</span>) + <span class="string">'&gt;'</span> +</div><div class="line">        Handlebars.escapeExpression(name) + <span class="string">'&lt;/a&gt;'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>Level4：BLOCK-Heplers<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;&#123;#bold&#125;&#125;</div><div class="line">    My name is &#123;&#123;name&#125;&#125;</div><div class="line">&#123;&#123;/bold&#125;&#125;</div><div class="line"></div><div class="line">Handlebars.registerHelper('bold', function(options) &#123;</div><div class="line">    return new Handlebars.SafeString('<span class="tag">&lt;<span class="name">b</span>&gt;</span>' + options.fn(this) + '<span class="tag">&lt;/<span class="name">b</span>&gt;</span>');</div><div class="line">&#125;);</div><div class="line"></div><div class="line">&#123;name: 'xuqi'&#125;</div></pre></td></tr></table></figure></p>
+<p>可以看到跟上述三个步骤中的Tpl不一样，这次好像不是简单的代码替换了，因为Helper变成了一个区块，区块中还有内容， 那该怎么办？注意本例中我需要一个文字加粗的功能，在返回字符串中我加了<code>&lt;b&gt;</code>标签实现加粗，中间那个options.fn(this)是干啥的？</p>
+<p>前面讲了<code>&lt;b&gt;</code>实现了加粗，那加粗总该有个对象吧，也就是My name is {{name}}；<br>那我也总不能直接把这个模板字符串给加粗输出吧，我得编译然后根据上下文环境的属性值name去生成My name is xuqi。所以呢，option.fn的功能就自然出来了，就是在this上下文中执行编译Block中的模板并填充数据得到HTML片段。<br>而this就是Block Helper执行的当前上下文环境。 </p>
+<p>另外，可以通过this取得当前上下文的属性值手动进行某些操作，比如可以通过this.name获取name的属性值为xuqi。</p>
+<h4 id="Ps-一些有用的Build-In-Helper"><a href="#Ps-一些有用的Build-In-Helper" class="headerlink" title="Ps: 一些有用的Build-In Helper"></a>Ps: 一些有用的Build-In Helper</h4><ul>
+<li>{{#each arg}}
+<p>循环内可以通过{{@index}}获取当前的循环的索引， 通过{{@../index}}可以获得父级遍历的索引；<br>{{@key}}可以获取当前遍历的数组或者对象的键值，数组中等同于{{@index}}；<br>{{@first}}，{{@last}}表示遍历中的第一个和最后一个的标识，返回true或false；<br>each可选择性插入{{else}}， 在遍历的list为<strong>空</strong>(遍历对象为非空数组或者对象时不为空值)时执行。</p>
+</li>
+<li>{{#if condition}} or {{else}} or {{else if conditionElse}}
+</li>
+<li>{{#unless condition}} inverse of the `if` helper
+</li>
+<li>{{#with ctx}}
+<p>与Js的with一样，改变当前context，可以避免含有深层次嵌套属性时重复书写父级的名字</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">//tpl</div><div class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123;title&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">&#123;&#123;#with story&#125;&#125;</div><div class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123;intro&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123;body&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">&#123;&#123;else&#125;&#125;</div><div class="line">    &#123;&#123;!-- 可选择性插入else，仅当story为false值时渲染 --&#125;&#125;</div><div class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>I am Empty<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">&#123;&#123;/with&#125;&#125;</div><div class="line">    </div><div class="line">//data</div><div class="line">&#123;</div><div class="line">    title: 'Hello world',</div><div class="line">    story: &#123;</div><div class="line">        intro: 'Before the jump',</div><div class="line">        body: 'After the jump'</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li>{{lookup context key}} 获取动态参数进行渲染，相当于获取context.key的值，看例子会容易理解点：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">//tpl</div><div class="line">&#123;&#123;#each names&#125;&#125;</div><div class="line">    &#123;&#123;.&#125;&#125; : &#123;&#123;lookup ../foo @key&#125;&#125;</div><div class="line">&#123;&#123;/each&#125;&#125;</div><div class="line">    </div><div class="line">//data</div><div class="line">&#123;</div><div class="line">    names: &#123;</div><div class="line">        a: 'Name1',</div><div class="line">        b: 'Name2',</div><div class="line">        c:'Name3'</div><div class="line">    &#125;,</div><div class="line">    foo: &#123;</div><div class="line">        a: 'Foo1',</div><div class="line">        b: 'Foo2',</div><div class="line">        c: 'Foo3'</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">    </div><div class="line">//output</div><div class="line">Name1 ：Foo1</div><div class="line">Name2 ：Foo2</div><div class="line">Name3 ：Foo3</div></pre></td></tr></table></figure>
+</li>
+<li><p>{{log info}} 打印调试</p>
+</li>
+</ul>
+<h3 id="Partials"><a href="#Partials" class="headerlink" title="Partials"></a>Partials</h3><p>Handlebars.registerPartial(‘parName’, ‘parContent’); 注册一个Partials；</p>
+<p>需要调用Partials时{{> parName}}即可。</p>
+<p>调用Partials时也可以传入参数：{{> parName parContext}}指定Partials的执行上下文；{{> parName attr=val}}</p>
+<h3 id="Path"><a href="#Path" class="headerlink" title="Path"></a>Path</h3>{{xx}}中的xx可以不只是我们熟悉的一个属性的名字，或是xx.yy这样的嵌套路径。也能支持<code>../</code>这样的父级上下文环境和<code>./</code>这样的当前上下文环境的语法啦，来个例子：<br><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//tpl</div><div class="line">&#123;&#123;# nest&#125;&#125;</div><div class="line">    &#123;&#123;../hello&#125;&#125;</div><div class="line">&#123;&#123;/ nest&#125;&#125;</div><div class="line"></div><div class="line">//data</div><div class="line">&#123;</div><div class="line">    nest: [</div><div class="line">        ...</div><div class="line">    ],</div><div class="line">    hello: 'I am Hello'</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>./是用来解决Helper名字和属性名重名的冲突的情况，例如./xx表示的是属性名而不是Helper名。另外this/name和this.name也实现相同的功能。</p>
+<p>当然啦， 如果嵌套层级很深， 而我想访问到根作用域的时候是不是要写成<code>../../..</code>这样呢？ 是不是sa！ 那该咋办？ Handlebars提供了一个@root变量轻轻松松访问到根作用域：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;&#123;#each sub&#125;&#125;</div><div class="line">    &#123;&#123;@root.someAttr&#125;&#125;</div><div class="line">&#123;&#123;/each&#125;&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="Comments"><a href="#Comments" class="headerlink" title="Comments"></a>Comments</h3><p>{{!-- --}}和{{! }}不会将注释内容输出到HTML中，如果想输出注释到HTML中可以使用HTML的注释语法<code>&lt;!-- --&gt;</code>。另外，如果注释中有}}，则必须使用{{!-- --}}。</p>
+<h2 id="后语"><a href="#后语" class="headerlink" title="后语"></a>后语</h2><p>上面讲的只是一些基本用法，冰山一角，官网上面还有很多文章中没有提及但是也许会给你的不一样的快感的功能。Helper的实现方式需要着重理解，几个Build-In Helper在官网上都提供了Helper实现方式，明白思想-&gt;模仿实现-&gt;定义自己的Helper实现特定的功能，go ~</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;http://handlebarsjs.com/&quot;&gt;Handlebars&lt;/a&gt;为Mustache的超集，即：在完全兼容Mustache语法的基础上，提供了很多语法糖，不要太甜…&lt;/p&gt;
+&lt;h2 id=&quot;Begin-Now&quot;&gt;&lt;a href=&quot;#Begin-Now&quot; class=&quot;headerlink&quot; title=&quot;Begin Now&quot;&gt;&lt;/a&gt;Begin Now&lt;/h2&gt;&lt;h3 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot; title=&quot;写在前面&quot;&gt;&lt;/a&gt;写在前面&lt;/h3&gt;&lt;p&gt;这里我们只介绍一些Handlebars中相对于Mustache超集的部分，若不了解Mustache，请&lt;a href=&quot;http://i0011.com/2015/04/30/Mustache%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/&quot;&gt;移步&lt;/a&gt;&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="HandBook" scheme="http://www.i0011.com/tags/HandBook/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mustache使用指南</title>
+    <link href="http://www.i0011.com/2015/04/30/mustache/"/>
+    <id>http://www.i0011.com/2015/04/30/mustache/</id>
+    <published>2015-04-30T05:59:45.000Z</published>
+    <updated>2016-11-25T00:34:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>先拐远一点：mustache，读[ˈmʌsˌtæʃ]，而不是[ˈmʌstˌek]，胡子的意思，取这名字大概是将模板引擎中的<code>{</code>顺时针转个90度就像个人的胡子了，嗯，大概是这样…</p>
+<p>再进入正题：mustache是一个轻逻辑的模板引擎（为啥叫“轻逻辑”呢，因为没有if else for等逻辑语句，取而代之的是只用标签实现 ）</p>
+<p>mustache.js是mustache模板系统的js实现，或者叫解析器。下面介绍下使用方法，很简单的语法~<br><a id="more"></a></p>
+<h2 id="quick-example"><a href="#quick-example" class="headerlink" title="quick example"></a>quick example</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Mustache.render(<span class="string">'&lt;p&gt;I am &#123;&#123;name&#125;&#125;, I am &#123;&#123;age&#125;&#125; years old&lt;/p&gt;'</span>, &#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'xuqi'</span>,</div><div class="line">    <span class="attr">age</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">24</span>;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>上述例子输出一段HTML片段：<code>&lt;p&gt;I am xuqi, I am 24 years old&lt;/p&gt;</code>。</p>
+<p>首先上述例子给我们最直观的印象就是：templates + data =&gt; html-partials。使用render(tpls, dataObj)。使用dataObj去渲染tpls得到html片段。</p>
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>模板就是一段包含任意数目{{keyname}}的字符串~<br>{{keyname}}中的包裹的keyname即为mustache模板的键名（稍微了解下就好）。下面介绍三种加载模板的方法<br>1 直接在js中声明模板字符串，如quick example所示<br>2 从HTML中读取模板<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">id</span>=<span class="string">"ex-tpl"</span> <span class="attr">type</span>=<span class="string">"x-tmpl-mustache"</span>&gt;</span><span class="undefined"></span></div><div class="line">    My name is &#123;&#123;name&#125;&#125;, I am &#123;&#123;age&#125;&#125; years old</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">    <span class="comment">//example.js</span></div><div class="line">    <span class="keyword">var</span> tpl = $(<span class="string">'#ex-tpl'</span>).html(),</div><div class="line">        html;</div><div class="line">    html = Mustache.render(tpl, data);</div><div class="line"><span class="string">`</span></div></pre></td></tr></table></figure>
+<p>3 从.mst文件中读取/通过ajax异步渲染<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadTpl</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    $.get(<span class="string">'tpl.mst'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">tpl</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> html = Mustache.render(tpl, data);</div><div class="line">        <span class="comment">//Operation of html</span></div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>最简单的标签就是一个变量{{key}}…使用当前上下文环境中的key值替换标签，如果key不存在，则不会被渲染。</p>
+{{key}}会默认转义一些HTML标记，如果不想使用转义， 可以使用{{{}}}或者{{&}}。<br><br>另外，JS中的<code>.</code>也可以在mustache中使用，比如：{{person.name}}
+<h2 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;&#123;#section&#125;&#125;</div><div class="line">    &#123;&#123;name&#125;&#125;</div><div class="line">    //other code</div><div class="line">&#123;&#123;/section&#125;&#125;</div></pre></td></tr></table></figure>
+<p>根据上下文环境中的section的值去渲染区块内的代码。如果section键名不存在或者存在但是值为’false’值（null，undefined，false，0，NaN，’’，[]），区块内代码不会被渲染。</p>
+<p>键名存在也为’true’值的情况下，区块内代码被渲染1+次。比如：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//view</div><div class="line">&#123;</div><div class="line">    section: [</div><div class="line">        &#123;name: 'xuqi'&#125;,</div><div class="line">        &#123;name: 'xuqi2'&#125;</div><div class="line">    ]</div><div class="line">&#125;</div><div class="line"></div><div class="line">//template</div><div class="line">&#123;&#123;#section&#125;&#125;</div><div class="line">    <span class="tag">&lt;<span class="name">b</span>&gt;</span>&#123;&#123;name&#125;&#125;<span class="tag">&lt;/<span class="name">b</span>&gt;</span></div><div class="line">&#123;&#123;/section&#125;&#125;</div><div class="line"></div><div class="line">//output</div><div class="line"><span class="tag">&lt;<span class="name">b</span>&gt;</span>xuqi<span class="tag">&lt;/<span class="name">b</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">b</span>&gt;</span>xuqi2<span class="tag">&lt;/<span class="name">b</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>我们把上面的view简化一下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">section</span>: [<span class="string">'xuqi'</span>, <span class="string">'xuqi2'</span>]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>对，就是把section的元素由对象简化为了字符串，那键名没了我怎么去渲染？{{.}}来帮你~<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;&#123;#section&#125;&#125;<span class="tag">&lt;<span class="name">b</span>&gt;</span>&#123;&#123;.&#125;&#125;<span class="tag">&lt;/<span class="name">b</span>&gt;</span>&#123;&#123;/section&#125;&#125;</div></pre></td></tr></table></figure></p>
+<p>这样就可以得到同样的output啦。</p>
+<p>再来看一种稍微复杂一点的情况：外国人都有firstname和lastname，如果按照上面的情况去实现就得{{firstname}}.{{lastname}}去手动拼接。所以现在要引入函数来帮我们实现拼接了，而不是把逻辑扔在template中去实现。</p>
+<p>如果section中有个变量是一个函数，那么会遍历对应上下文中的各个项并执行，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">//view</div><div class="line">&#123;</div><div class="line">    &apos;section&apos;: [</div><div class="line">        &#123; &apos;firstName&apos;: &apos;qi&apos;, &apos;lastName&apos;: &apos;xu&apos; &#125;,</div><div class="line">        &#123; &apos;firstName&apos;: &apos;qi2&apos;, &apos;lastName&apos;: &apos;xu&apos; &#125;</div><div class="line">    ],</div><div class="line">    &apos;name&apos;: function () &#123;</div><div class="line">        return this.firstName + &apos;.&apos; + this.lastName;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//template</div><div class="line">&#123;&#123;#section&#125;&#125;</div><div class="line">    &lt;b&gt;&#123;&#123;name&#125;&#125;&lt;/b&gt;</div><div class="line">&#123;&#123;/section&#125;&#125;</div><div class="line"></div><div class="line">//output</div><div class="line">&lt;b&gt;qi.xu&lt;/b&gt;</div><div class="line">&lt;b&gt;qi2.xu&lt;/b&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="取反区块"><a href="#取反区块" class="headerlink" title="取反区块"></a>取反区块</h2>{{^section}}与区块的情况相反，section的值为’false’值时执行，否则不执行<br><br>## 区块函数<br>如果section键名为函数，即{{#sectionFn}}{{/sectionFn}}中sectionFn为函数时，是个奇葩，官方文档看不懂是什么意思，直接来看例子吧~~<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//view</div><div class="line">&#123;</div><div class="line">    name: 'xuqi',</div><div class="line">    bold: function() &#123;</div><div class="line">        return function(text, render) &#123;</div><div class="line">            return '<span class="tag">&lt;<span class="name">b</span>&gt;</span>' + render(text) + '<span class="tag">&lt;/<span class="name">b</span>&gt;</span>';</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//tpl</div><div class="line">&#123;&#123;#bold&#125;&#125;Hi &#123;&#123;name&#125;&#125;&#123;&#123;/bold&#125;&#125;</div><div class="line"></div><div class="line">//output</div><div class="line"><span class="tag">&lt;<span class="name">b</span>&gt;</span>Hi xuqi<span class="tag">&lt;/<span class="name">b</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>function里面的实现意思就是：render(text)替换{{bold}}块中的内容并将数据渲染进去，然后把{{bold}}替换成<code>&lt;b&gt;</code>标签就行了</p>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2>{{!}}内容不显示<br><br>## Partials<br>{{> partial-name}}引入某个小部件到模板中，比如<br><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//base.mst</div><div class="line">&#123;&#123;#name&#125;&#125;</div><div class="line">    &#123;&#123;&gt; user&#125;&#125;</div><div class="line">&#123;&#123;/name&#125;&#125;</div><div class="line"></div><div class="line">//user.mst</div><div class="line"><span class="tag">&lt;<span class="name">b</span>&gt;</span>&#123;&#123;name&#125;&#125;<span class="tag">&lt;/<span class="name">b</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>mustache将user.mst的内容插入到base.mst中{{> user}}的位置。</p>
+<p>如果在Mustache.render中使用partials的话，将partials当做render的第三个参数即可，即：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Mustache.render(tpl, data, &#123;</div><div class="line">    <span class="attr">user</span>: userTplText,</div><div class="line">    ...</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h2 id="预编译和缓存模板"><a href="#预编译和缓存模板" class="headerlink" title="预编译和缓存模板"></a>预编译和缓存模板</h2><p>默认情况下Mustache在第一次编译模板后会缓存起来，如果第二次的模板没有变化，就直接从缓存中取编译后的模板去渲染，加快了渲染速度。如果你需要提前预编译和缓存，可调用Mustache.parse(tpl);…..一会儿以后，你就可以享受预编译模板带来的渲染快感了</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;先拐远一点：mustache，读[ˈmʌsˌtæʃ]，而不是[ˈmʌstˌek]，胡子的意思，取这名字大概是将模板引擎中的&lt;code&gt;{&lt;/code&gt;顺时针转个90度就像个人的胡子了，嗯，大概是这样…&lt;/p&gt;
+&lt;p&gt;再进入正题：mustache是一个轻逻辑的模板引擎（为啥叫“轻逻辑”呢，因为没有if else for等逻辑语句，取而代之的是只用标签实现 ）&lt;/p&gt;
+&lt;p&gt;mustache.js是mustache模板系统的js实现，或者叫解析器。下面介绍下使用方法，很简单的语法~&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="HandBook" scheme="http://www.i0011.com/tags/HandBook/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>兼容性解决方案</title>
+    <link href="http://www.i0011.com/2015/04/13/compatibility-case/"/>
+    <id>http://www.i0011.com/2015/04/13/compatibility-case/</id>
+    <published>2015-04-13T07:40:22.000Z</published>
+    <updated>2016-11-25T00:34:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>开发中得到的一些IE/FF/Safari下的兼容性处理方案，请叫我兼容性处理大师，谢谢~</p>
+<p>1 图片链接边框</p>
+<pre><code>&lt;a href=&quot;signup.html&quot;&gt;
+    &lt;img class=&quot;banner&quot; src=&quot;src/banner.jpg&quot;&gt;
+&lt;/a&gt;
+</code></pre><p>常用的图片链接，在IE8下，图片会被加上蓝色边框，什么鬼…这当然不是我们想要的结果了，加个</p>
+<pre><code>img {
+    border: none;
+}
+</code></pre><p>干掉IE8给加的边框。All is well~<br><a id="more"></a><br>2 未设置背景的div真的只是四条边线<br>什么意思呢？就是IE8如果你一个普通的div，设置width,height后，恩，你想这个div应该有一个cursor:pointer，然后再绑定个click事件什么的….然后你会发现？wtf！鼠标移上去完全没作用啊！点击也完全没作用啊！诶，不对，似乎鼠标在经过边框的时候有反应…好吧，你已经发现真理了。来，解决这个问题，填充一下就可以了嘛：</p>
+<pre><code>div {
+    height: 100px;
+    width: 100px;
+    cursor: pointer;
+    background-color: #fff;
+    opacity: 0;
+    filter: Alpha(opacity=0);
+}
+</code></pre><p>Perfect!</p>
+<p>3 设置高度的select中的文字没有垂直居中<br>那你就加line-height去控制啊，look down:</p>
+<pre><code>select {
+    height: 36px;
+    line-height: 18px;
+    padding: 9px 0;
+}
+</code></pre><p>4 placeholderIE10以下处理方案<br>简单的东西当然可以自己写了， 但是网上有那么多， 没必要啦…最基本的实现方式都是给输入框一个值然后在keyup的时候去清除， 但是这种情况， 因为是直接把内容填进去的， 对于有验证的输入框来说就有点痛苦了而且密码框要么就是placeholder=“密码”会被转成两个<code>..</code>， 要么就是输入密码直接给显示出来， 太恶心太麻烦。<br>我还是比较喜欢<a href="https://github.com/amerikan/placeholder-polyfill" target="_blank" rel="external">这个插件</a>的做法， 在input的外面包裹一个wrapper， 然后加一个input同级的label来显示placeholder， placeholder其实就是label， 然后控制label的显示与隐藏就可以了。但是label的样式可能需要手动去改一下， 要么直接在插件里面扩展， 要么传入参数扩展。 </p>
+<p>另外， 当然也不是一帆风顺了， 当遇到<code>自动填入</code>（浏览器记住密码） 的时候就会发现IE10往下是全部不会让”placeholder”消失的， 估计写插件的人也没考虑这个， 于是乎就给他补了一个chang的事件监听….啊， IE10好了， IE9也好了….擦， IE8什么鬼， 不会触发change….苦苦寻找， 好吧有<code>propertychange</code> 可以用也一样…IE真坑爹</p>
+<p>5 Mac safari输入框placeholder文字底部被截取<br>开始的输入框一直是:</p>
+<pre><code>height: 43px;
+line-height: 43px;
+</code></pre><p>诶， 测试没有mac下了一个windows的safari， 怎么输入框placeholder全坏的啊…拿掉line-height好了…于是不用line-height， 用</p>
+<pre><code>height: 18px;
+padding: 12px 0;
+</code></pre><p>这样的替代方案…其他的好了， 到mac上的safari就有文字截取了， 最后查了一下原因还是因为没有line-height的原因， 那就加上吧， 然后来个兼容方案:</p>
+<pre><code>height: 43px;
+font-size: 16px;
+line-height: 1.2;
+line-height: 43px\0/; /* for IE 8 */
+</code></pre><p>6 windows safari的password输入框似乎不支持黑体这样的字体<br>对于设置了黑体的password-input， 你是看不到密码的黑点的， 输入也没有反应（其实已经有了） ， 坑爹货。 </p>
+<p>Windows safari已经停止更新了， 不要再用这个来折磨前端了…</p>
+<p>7 IE8是不支持rgba的颜色的<br>因此只能用相近色去替代了， 或者直接不要用rgba了， 毛用， 就是来找麻烦的…这样写可以兼容:</p>
+<pre><code>color: #9a9a9a;
+color: rgba(0,0,0,.5);
+</code></pre><p>上面是替换色, IE8下会执行, 其他浏览器使用下面的颜色, 按顺序写就行了。 </p>
+<p>8 IE8下解决横向排列被换行的问题<br>比如下面这种情况：<img src="https://dn-xuqi.qbox.me/list.png" alt="CommodityList">，内容固定宽度横向排列，每个右侧有margin-right，:nth-child(4n)的margin-right:0。<br>好嘛，IE8下最后一个就下来了。ie8不认识:nth-child。</p>
+<p><strong>解决办法</strong>：将他的父容器的宽度设置成4*(width+margin)就可以了，也就是比原宽度多个margin就可以保证最后一个不被挤下去。(开始时没设置父容器宽度的，但是有个外层容器设置了宽度)<br>另外还有一个没有注意的点是IE是不支持:last-child的。  </p>
+<p>9 select显示靠右使用direction: rtl<br>direction有两个有效值:<code>rtl</code>和<code>ltr</code>…就是right to left 和 left to right,表示文本从左往右显示从右往左显示。默认ltr  </p>
+<p>10 新鲜出炉的问题H5的keyup在ios8.0下使用搜狗输入法不能被触发<br>好吧，换事件<code>input</code>，GAME OVER~<br>因为问题详细解决方案可参考<a href="http://segmentfault.com/q/1010000002608898" target="_blank" rel="external">参考资料</a></p>
+<p>11 安卓机下FF34.0会显示select标签的三角号，就算你设置了appearance为none也没有<br>其实就这是单纯的FF的bug，你会发现39.0的没有这问题了，其他的版本我没试。所以遇到这样的问题，直接跳过吧，坑爹的很</p>
+<p>12 为select或者input设置label并制定label的for在各浏览器中反应不一样<br>以ios为代表的是点击label就相当于点击了它for的对象，安卓机上也有部分有这样的情况…保持统一，拿掉label了（为什么当时脑袋抽风加了一个for呢…）  </p>
+<p>13 (移动Andriod)select在focus时在FF下会有边框<br>前提，已经写过常规样式<code>select:focus{border:none;outline:0;}</code>，事实证明这对firefox是无效了，查资料千辛万苦终于找到了：</p>
+<pre><code>select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #fff;
+}
+</code></pre><p>这个解决方案来自：<a href="http://stackoverflow.com/questions/19451183/cannot-remove-outline-dotted-border-from-firefox-select-drop-down" target="_blank" rel="external">参考资料</a></p>
+<p>IE8一生黑~~<br>End with: 没什么高深的东西，慢慢积累就会变成财富。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;开发中得到的一些IE/FF/Safari下的兼容性处理方案，请叫我兼容性处理大师，谢谢~&lt;/p&gt;
+&lt;p&gt;1 图片链接边框&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;a href=&amp;quot;signup.html&amp;quot;&amp;gt;
+    &amp;lt;img class=&amp;quot;banner&amp;quot; src=&amp;quot;src/banner.jpg&amp;quot;&amp;gt;
+&amp;lt;/a&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;常用的图片链接，在IE8下，图片会被加上蓝色边框，什么鬼…这当然不是我们想要的结果了，加个&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;img {
+    border: none;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;干掉IE8给加的边框。All is well~&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Solution" scheme="http://www.i0011.com/tags/Solution/"/>
+    
+      <category term="IE8" scheme="http://www.i0011.com/tags/IE8/"/>
+    
+      <category term="兼容性" scheme="http://www.i0011.com/tags/%E5%85%BC%E5%AE%B9%E6%80%A7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Way To Pjax</title>
+    <link href="http://www.i0011.com/2015/03/16/way-to-pjax/"/>
+    <id>http://www.i0011.com/2015/03/16/way-to-pjax/</id>
+    <published>2015-03-16T05:11:37.000Z</published>
+    <updated>2016-11-25T00:34:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Pjax-PushState-Ajax"><a href="#Pjax-PushState-Ajax" class="headerlink" title="Pjax = PushState + Ajax"></a>Pjax = <strong>P</strong>ushState + A<strong>jax</strong></h3><p>Pjax使用在链接跳转页面的情形下，可以将跳转页面转化为页面内异步更新内容，并且同时浏览器URL、Title以及浏览器的回退等功能都能无异于页面跳转。效果可以参考Github上的文件/目录跳转加载，Github就是采用Pjax的方式去实现的。</p>
+<p>Pjax的好处：</p>
+<ul>
+<li>用户体验提升<br>无刷新页面极大的提升了用户的体验</li>
+<li>减少资源加载<br>只更新页面中需要替换的那部分资源，layout框架部分不用重新加载</li>
+<li>浏览器支持处理<br>在不支持PushState或者Ajax的浏览器中，Pjax的功能不被支持，但是不影响正常使用，Pjax会使用原始的页面跳转来处理这种情况<a id="more"></a>
+Pjax的实现原理：<br>pajx阻止链接的点击默认事件，转为通过ajax从服务器端抓取html并把html填充到需要变更内容的容器中，然后通过PushState更新页面URL。(easy to understand,uh？But we are not the first one to eat crab ~~)</li>
+</ul>
+<p>以上属于思想层面的东西，因为jquery.pjax的存在，下面将针对jquery.pjax做出使用说明。</p>
+<hr>
+<p><a href="https://github.com/defunkt/jquery-pjax" target="_blank" rel="external">Jquery.pjax</a></p>
+<p>Start By An Example:</p>
+<pre><code>//page1.html
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf8&quot;&gt;
+        &lt;title&gt;Pjax Example&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id=&quot;container&quot;&gt;
+            Nothing
+            &lt;a id=&quot;switch-to-two&quot; href=&quot;page2.html&quot;&gt;Go to page2&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div&gt;Other parts&lt;/div&gt;
+        &lt;script src=&quot;bower_components/jquery/dist/jquery.min.js&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;bower_components/jquery-pjax/jquery.pjax.js&quot;&gt;&lt;/script&gt;
+        &lt;script&gt;
+            $(document).pjax(&apos;#switch-to-two&apos;, &apos;#container&apos;);
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+
+
+//page2.html
+&lt;p&gt;I am page2&lt;/p&gt;
+&lt;a id=&quot;switch-to-one&quot; href=&quot;page1.html&quot;&gt;Go to pag1&lt;/a&gt;
+</code></pre><p>Tip：使用前bower安装一下jquery和jquery.pjax或者cdn引入下。动手运行感受下吧~</p>
+<p>Usage:</p>
+<ul>
+<li>$.fn.pjax<br>初始化Pjax，可通过下述方法实现链接的pjax页面加载：</li>
+</ul>
+<pre><code>$(document).pjax(selector, [container], options)
+</code></pre><p>selector可以指定为a[data-pjax]，然后html中a标签中指定data-pjax为container即可省略列表中container参数。</p>
+<p>还有另外一种方法初始化，但是不推荐：</p>
+<pre><code>$(&apos;a[data-pjax]&apos;).pjax();
+</code></pre><p>因为源码中初始化的过程是这样的：</p>
+<pre><code>function fnPjax(selector, container, options) {
+    var context = this
+    return this.on(&apos;click.pjax&apos;, selector, function(event) {
+        var opts = $.extend({}, optionsFor(container, options))
+
+        if (!opts.container)
+            opts.container = $(this).attr(&apos;data-pjax&apos;) || context
+        handleClick(event, opts) 
+    })
+}
+</code></pre><p>在上下文环境（此处为document）中为selector绑定click.pjax事件并执行回调，回调中会首先拼接opts即将container和options两个参数合并成一个对象（<code>{container: &#39;#container&#39;, otherOpt: ...}</code>）。<br>如果参数列表中没有传入container则会去读上下文环境中的data-pjax属性（上述不推荐的例子就是属于这种情况）或者直接将上下文环境当成container。由代码可以看到，如果采用不推荐的那种写法，基本功能虽然可以实现，但是此时如果我在列表中传入了一个options对象，其实这个时候options是无效的（会被当成selector），或者传入一个字符串选择器（本意是container），但是会被绑定一个原来链接元素才会有的事件。上述所有情况都会造成不预期的错误，虽然仍然以跳转页面进行处理，但这不是我们想要的结果。所以，尽量避免…（我看到好多stackoverflow上的都是这么写的，难道是我技术拙劣得不能理解了…如果你很知道的话一定要不吝指教啊）</p>
+<p>options：</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th style="text-align:center">Default</th>
+<th style="text-align:right">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>timeout</td>
+<td style="text-align:center">650</td>
+<td style="text-align:right"><em>timeout</em>毫秒后的强制刷新</td>
+</tr>
+<tr>
+<td>push</td>
+<td style="text-align:center">true</td>
+<td style="text-align:right">使用pushState添加一个浏览器记录</td>
+</tr>
+<tr>
+<td>replace</td>
+<td style="text-align:center">false</td>
+<td style="text-align:right">url替换而不是添加(类比replaceState)</td>
+</tr>
+<tr>
+<td>maxCacheLength</td>
+<td style="text-align:center">20</td>
+<td style="text-align:right">缓存以前container内容最大数目</td>
+</tr>
+<tr>
+<td>version</td>
+<td style="text-align:center"></td>
+<td style="text-align:right">string/function，当前pjax版本</td>
+</tr>
+<tr>
+<td>scrollTo</td>
+<td style="text-align:center">0</td>
+<td style="text-align:right">页面“刷新”后定位的scrollTop</td>
+</tr>
+<tr>
+<td>type</td>
+<td style="text-align:center">‘GET’</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>dataType</td>
+<td style="text-align:center">‘html’</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>container</td>
+<td style="text-align:center"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>url</td>
+<td style="text-align:center">link.href</td>
+<td style="text-align:right">string/function，URL for ajax request</td>
+</tr>
+<tr>
+<td>target</td>
+<td style="text-align:center">link</td>
+<td style="text-align:right">事件relatedTarget属性的值</td>
+</tr>
+<tr>
+<td>fragment</td>
+<td style="text-align:center"></td>
+<td style="text-align:right">指定返回数据中某一段代码进行填充</td>
+</tr>
+</tbody>
+</table>
+<p>另外，pjax允许你通过<code>$.pjax.defaults.xx</code>去修改默认值。<br>Ps: relatedTarget是当前事件涉及到的相关联的其他元素。比如mouseover会涉及到多个元素，从元素1离开然后进入元素2，此时relatedTarget就是元素1…你明白了吗？反正我明白了…涉及到这个属性的事件比较少，列如下：mouseenter，mouseout，mouseover，mouseleave，focus，blur。</p>
+<ul>
+<li><p>$.pjax.click<br>pajx的底层函数，功能是手动去把链接click事件转移到pjax实现，可以增加一些使用者对事件句柄event的控制。</p>
+<pre><code>if ($.support.pjax) {//使用前应该判断浏览器是否支持pjax
+    $(document).on(&apos;click&apos;, &apos;#switch&apos;, function(event) {
+        $.pjax.click(event, {
+            container: $(&apos;#container&apos;)
+        });
+    });
+}
+</code></pre><p>通过上述可以同样实现上述例子的功能</p>
+</li>
+<li><p>$.pjax.submit<br>用于实现通过Pjax提交表单数据</p>
+<pre><code>$(document).on(&apos;submit&apos;, &apos;#form&apos;, function(e) {
+    $.pjax.submit(e, &apos;#container&apos;);
+});
+</code></pre></li>
+<li><p>$.pjax.reload<br>使用当前URL通过pjax机制向服务端请求数据并替换#container内的内容</p>
+<pre><code>$.pjax.reload(&apos;#container&apos;, options);
+</code></pre></li>
+<li><p>$.pjax<br>手动触发pjax，用于非click事件触发的一个请求</p>
+<pre><code>$.pjax({
+    url: url,
+    container: &apos;#container&apos;
+});
+</code></pre></li>
+<li><p>pjax event<br>pjax提供了很多事件来供我们实现Pjax过程中需要处理的细节功能，比如，上述例子中，在pjax请求完成后我打印一个’Complete’，就可以这样实现：</p>
+<pre><code>$(document).on(&apos;pjax:complete&apos;, function() {
+    console.log(&apos;Compelete&apos;);
+});
+</code></pre></li>
+</ul>
+<p>另外，pjax:send和pjax:complete是一对基友，可以帮我们实现类似于loading图标正确的显示和隐藏的功能，send时显示，complete时隐藏，语法同上，不赘述。</p>
+<p>events list：<br>Ps：pjax:click和pjax:clicked是由链接元素触发的，其他事件由容器触发。</p>
+<ul>
+<li><code>pjax:click</code></li>
+<li><code>pjax:beforeSend</code></li>
+<li><code>pjax:start</code></li>
+<li><code>pjax:send</code></li>
+<li><code>pjax:clicked</code></li>
+<li><code>pjax:beforeReplace</code></li>
+<li><code>pjax:success</code></li>
+<li><code>pjax:timeout</code></li>
+<li><code>pjax:error</code></li>
+<li><code>pjax:complete</code></li>
+<li><code>pjax:end</code></li>
+</ul>
+<p>下列事件会在浏览器后退/前进按钮时触发</p>
+<ul>
+<li><code>pjax:popstate</code></li>
+<li><code>pjax:start</code> – 内容替换前</li>
+<li><code>pjax:beforeReplace</code> – 从缓存中读取HTML替换之前</li>
+<li><code>pjax:end</code> – 内容替换后</li>
+</ul>
+<hr>
+<p>另外，如果你使用spm，jquery.pjax也被简单了封装了一下放在了上面，你可以通过<code>spm install jquery-pjax --save</code>获取。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Pjax-PushState-Ajax&quot;&gt;&lt;a href=&quot;#Pjax-PushState-Ajax&quot; class=&quot;headerlink&quot; title=&quot;Pjax = PushState + Ajax&quot;&gt;&lt;/a&gt;Pjax = &lt;strong&gt;P&lt;/strong&gt;ushState + A&lt;strong&gt;jax&lt;/strong&gt;&lt;/h3&gt;&lt;p&gt;Pjax使用在链接跳转页面的情形下，可以将跳转页面转化为页面内异步更新内容，并且同时浏览器URL、Title以及浏览器的回退等功能都能无异于页面跳转。效果可以参考Github上的文件/目录跳转加载，Github就是采用Pjax的方式去实现的。&lt;/p&gt;
+&lt;p&gt;Pjax的好处：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用户体验提升&lt;br&gt;无刷新页面极大的提升了用户的体验&lt;/li&gt;
+&lt;li&gt;减少资源加载&lt;br&gt;只更新页面中需要替换的那部分资源，layout框架部分不用重新加载&lt;/li&gt;
+&lt;li&gt;浏览器支持处理&lt;br&gt;在不支持PushState或者Ajax的浏览器中，Pjax的功能不被支持，但是不影响正常使用，Pjax会使用原始的页面跳转来处理这种情况
+    
+    </summary>
+    
+    
+      <category term="HandBook" scheme="http://www.i0011.com/tags/HandBook/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>console what u need</title>
+    <link href="http://www.i0011.com/2015/03/06/console-what-u-need/"/>
+    <id>http://www.i0011.com/2015/03/06/console-what-u-need/</id>
+    <published>2015-03-06T06:13:14.000Z</published>
+    <updated>2016-11-25T00:34:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>console能用来干嘛？console.log啊，用来debug我们的程序，浏览器或者terminal就能看到输出了。没错，引用<a href="https://segmentfault.com/a/1190000006721606?utm_source=weekly&amp;utm_medium=email&amp;utm_campaign=email_weekly" target="_blank" rel="external">ZHANGXIANGLIANG同学挂在sf上面文章</a>里面的话，这是凡人视角，还有不为人知的上帝视角~</p>
+<p><strong>建议</strong>先控制台打印下<code>console</code>本身，先感受下能有多少方法给我们用</p>
+<ul>
+<li><p>console.log<br>console.log输出信息到控制台，意思很简单，但格式化输出的功能可能会用的不多，这边提供一个列表供参考:<br><table><tr><th>Format Specifier</th><th>Description</th></tr><tr><td>%s</td><td>Formats the value as a string.</td></tr><tr><td>%d or %i</td><td>Formats the value as an integer.</td></tr><tr><td>%f</td><td>Formats the value as a floating point value.</td></tr><tr><td>%o</td><td>Formats the value as an expandable DOM element</td></tr><tr><td>%O</td><td>Formats the value as an expandable JavaScript object.</td></tr><tr><td>%c</td><td>Formats the output string according to CSS styles you provide.</td></tr></table></p>
+<a id="more"></a>
+<p>另外，console还提供了另外3种显示信息的方法：console.info、console.warn、console.error，分别用来显示一般信息、警告提示、错误提示，而console.debug只是console.log的一个alias</p>
+</li>
+<li><p>console.clear<br>清空控制台</p>
+</li>
+<li><p>console.group<br>分组显示信息:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.group(<span class="string">'first group'</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'info1'</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'info2'</span>);</div><div class="line"><span class="built_in">console</span>.groupEnd();</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>group打印的信息是展开的，如果想默认折叠，可以用<code>console.groupCollapsed</code>  </p>
+<p>另，分组是可以嵌套的哦，groupEnd就近匹配，与group[Collapsed]成对出现</p>
+<ul>
+<li><p>console.table<br>用表格显示需要打印的<strong>对象数组</strong>的信息，清晰明了</p>
+</li>
+<li><p>console.dir<br>显示一个对象的所有属性和方法</p>
+</li>
+<li><p>console.dirxml<br>显示网页某个节点的html/xml代码</p>
+</li>
+<li><p>console.assert<br>断言判定</p>
+</li>
+<li><p>console.trace<br>追踪函数的调用轨迹</p>
+</li>
+<li><p>console.time / console.timeEnd<br>显示代码运行时间</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.time(<span class="string">'timer'</span>);</div><div class="line">...</div><div class="line">console.timeEnd(<span class="string">'timer'</span>);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>注意到console还有一对方法timeline / timelineEnd，用一下，发现提示<code>deprecated</code>，哦，跟time/timeEnd的用途一样的，快被废了，忽视~</p>
+<ul>
+<li><p>console.profile<br>性能分析，同chrome F12中的Profiler功能，chrome下console的分析的结果会直接显示在chrome的<code>Profiles</code>中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.profile(<span class="string">'profile1'</span>);</div><div class="line">...</div><div class="line">console.profileEnd();</div></pre></td></tr></table></figure>
+</li>
+<li><p>console.count<br>统计执行次数，可以不用单独申明一个变量来帮我们做数字统计</p>
+</li>
+<li><p>console.memory<br>这是console的一个<strong>属性</strong>，打印JS运行行堆栈的内存情况…这个有点蒙B，MDN文档好像都没提啊…</p>
+</li>
+<li><p>console.timeStamp<br>在浏览器的timeline工具中加入一个marker(在timeline上会显示一个黄点)，这样的话可以将代码与timeline中的节点关联起来，分析起来更清晰一点</p>
+</li>
+</ul>
+<p>参考资料：<br><a href="http://www.ruanyifeng.com/blog/2011/03/firebug_console_tutorial.html" target="_blank" rel="external">阮一峰 - Firebug控制台详解</a><br><a href="https://segmentfault.com/a/1190000006721606?utm_source=weekly&amp;utm_medium=email&amp;utm_campaign=email_weekly" target="_blank" rel="external">sf - 你所不知道的Console</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/API/Console" target="_blank" rel="external">MDN - console</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;console能用来干嘛？console.log啊，用来debug我们的程序，浏览器或者terminal就能看到输出了。没错，引用&lt;a href=&quot;https://segmentfault.com/a/1190000006721606?utm_source=weekly&amp;amp;utm_medium=email&amp;amp;utm_campaign=email_weekly&quot;&gt;ZHANGXIANGLIANG同学挂在sf上面文章&lt;/a&gt;里面的话，这是凡人视角，还有不为人知的上帝视角~&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;建议&lt;/strong&gt;先控制台打印下&lt;code&gt;console&lt;/code&gt;本身，先感受下能有多少方法给我们用&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;console.log&lt;br&gt;console.log输出信息到控制台，意思很简单，但格式化输出的功能可能会用的不多，这边提供一个列表供参考:&lt;br&gt;&lt;table&gt;&lt;tr&gt;&lt;th&gt;Format Specifier&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;Formats the value as a string.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%d or %i&lt;/td&gt;&lt;td&gt;Formats the value as an integer.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%f&lt;/td&gt;&lt;td&gt;Formats the value as a floating point value.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%o&lt;/td&gt;&lt;td&gt;Formats the value as an expandable DOM element&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%O&lt;/td&gt;&lt;td&gt;Formats the value as an expandable JavaScript object.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;%c&lt;/td&gt;&lt;td&gt;Formats the output string according to CSS styles you provide.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Js Basic" scheme="http://www.i0011.com/tags/Js-Basic/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在服务端和客户端使用Handlebars</title>
+    <link href="http://www.i0011.com/2015/01/21/handlebars-on-server-and-client/"/>
+    <id>http://www.i0011.com/2015/01/21/handlebars-on-server-and-client/</id>
+    <published>2015-01-21T01:11:27.000Z</published>
+    <updated>2016-11-25T00:34:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>英文原文：<a href="http://tilomitra.com/handlebars-on-the-server-and-client/#comment-13139" target="_blank" rel="external">http://tilomitra.com/handlebars-on-the-server-and-client/#comment-13139</a></p>
+<p>昨天在Node上尝试使用Handlebars，之前没搞清服务端Handlebars和客户端Handlebars的区别,导致在使用Handlebars的模板时很茫然，昨天终于在google找到真爱，解决了问题，下面阐述下我遇到的问题后就正式进入大神的文章，带着问题看可以理解更深。</p>
+<p>问题：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">id</span>=<span class="string">"login-signup-tpl"</span> <span class="attr">type</span>=<span class="string">"text/x-handlebars-template"</span>&gt;</span><span class="undefined"></span></div><div class="line">    ...</div><div class="line">    &#123;&#123;#if isLogin&#125;&#125;</div><div class="line">        登录</div><div class="line">    &#123;&#123;^&#125;&#125;</div><div class="line">        注册</div><div class="line">    &#123;&#123;/if&#125;&#125;</div><div class="line">    ...</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">    <span class="keyword">var</span> tpl = Handlebars.compile($(<span class="string">'#login-signup-tpl'</span>).html());</div><div class="line">    $(<span class="string">'body'</span>).append(tpl(&#123;<span class="attr">isLogin</span>: <span class="literal">true</span>&#125;));</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>功能就是使用Handlebars编译模板并传入json然后得到对应的HTML片段。不过试一下就知道，这样时得不到你想要的东西的。下面带着问题看文章吧…</p>
+<a id="more"></a>
+<h1 id="在服务端和客户端使用Handlebars"><a href="#在服务端和客户端使用Handlebars" class="headerlink" title="在服务端和客户端使用Handlebars"></a>在服务端和客户端使用Handlebars</h1><p>这篇文章讲的主要是关于如果在客户端和服务端使用Handlebars，以及如何避免一些使用中的陷阱。</p>
+<h2 id="服务端使用Handlebars"><a href="#服务端使用Handlebars" class="headerlink" title="服务端使用Handlebars"></a>服务端使用Handlebars</h2><p>NodeJS中我选择<a href="http://handlebarsjs.com/" target="_blank" rel="external">Handlebars</a>作为我的视图引擎。我喜欢这种看上去只是多了一些花括号和helper的HTML，而不是像EJS和Jade那样跟HTML有很大区别的视图引擎。如果你之前还没有使用过Handlebars，下面的代码段就是一段简单的模板示例：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"entry"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123;title&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"body"</span>&gt;</span></div><div class="line">        &#123;&#123;body&#125;&#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在构建一个基于Express的Web应用的时候，我选择<a href="https://github.com/ericf/express-handlebars" target="_blank" rel="external">express-handlebars</a>去建立管道来使用Handlebars作为视图引擎。它的作者是我的好朋友和大学同学Eric，他是我见过的最好的工程师之一。我强烈推荐express-handlebars。你可以很方便的通过npm安装：</p>
+<pre><code>npm install express3-handlebars
+</code></pre><p>查看express-handlebars的<a href="https://github.com/ericf/express-handlebars#basic-usage" target="_blank" rel="external">基本使用</a>可以找到一些如何使用Express使用它的信息。</p>
+<p>如果你想在基于Express的应用中使用Handlebars，可以参考我的<a href="https://github.com/tilomitra/node-boilerplate/" target="_blank" rel="external">node-boilerplate</a>。</p>
+<h2 id="客户端使用Handlebars"><a href="#客户端使用Handlebars" class="headerlink" title="客户端使用Handlebars"></a>客户端使用Handlebars</h2><p>如果你正在使用任何Javascript MV*框架（BackboneJs，EmberJs，YAF等），你也许需要在客户端使用一个模板库。Handlebars在所有这些框架中都能很好的被用起来。在客户端使用Handlebars最酷的事情之一就是你可以在客户端和服务端之间共享模板。你可以通过把模板存储在partials，然后在服务端以及在客户端通过<code>script</code>标签来分别使用。</p>
+<h2 id="服务端使用Handlebars时的客户端模板设置"><a href="#服务端使用Handlebars时的客户端模板设置" class="headerlink" title="服务端使用Handlebars时的客户端模板设置"></a>服务端使用Handlebars时的客户端模板设置</h2><p>如果你在客户端和服务端使用Handlebars，你会遇到这样的<a href="http://stackoverflow.com/questions/10037936/node-js-with-handlebars-js-on-server-and-client" target="_blank" rel="external">问题</a>，客户端的模板会被服务端的视图引擎解析。例如：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>My Page Title<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- This template should be transformed into HTML by the server --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"photoList"</span> <span class="attr">class</span>=<span class="string">"pure-g"</span>&gt;</span></div><div class="line">    &#123;&#123;#each photos&#125;&#125;</div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"photo pure-u-1-12"</span> <span class="attr">data-photo-id</span>=<span class="string">"&#123;&#123;id&#125;&#125;"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">"pure-u-1"</span> <span class="attr">src</span>=<span class="string">"&#123;&#123;src&#125;&#125;"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    &#123;&#123;/each&#125;&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- This template should not be touched. It's for the client --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/x-handlebars"</span> <span class="attr">id</span>=<span class="string">"lightbox-template"</span>&gt;</span><span class="javascript"></span></div><div class="line">    &lt;img <span class="class"><span class="keyword">class</span></span>=<span class="string">"lightbox-image"</span> src=<span class="string">"&#123;&#123;large&#125;&#125;"</span>&gt;</div><div class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightbox-meta"</span>&gt;</span></span></div><div class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"pure-button lightbox-link"</span> <span class="attr">href</span>=<span class="string">"&#123;&#123;url&#125;&#125;"</span>&gt;</span>View on Flickr<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"pure-button lightbox-link lightbox-hide"</span>&gt;</span>Hide<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在浏览器上查看页面时,handlebars模板脚本会被解释成完全无用的代码段：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/x-handlebars"</span> <span class="attr">id</span>=<span class="string">"lightbox-template"</span>&gt;</span><span class="javascript"></span></div><div class="line">    &lt;img <span class="class"><span class="keyword">class</span></span>=<span class="string">"lightbox-image"</span> src=<span class="string">""</span>&gt;</div><div class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightbox-meta"</span>&gt;</span></span></div><div class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"pure-button lightbox-link"</span> <span class="attr">href</span>=<span class="string">""</span>&gt;</span>View on Flickr<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"pure-button lightbox-link lightbox-hide"</span>&gt;</span>Hide<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>不过幸运的是，解决这个问题的方法很简单。只用在Hbs表达式之前加一个反斜杠就可以了。反斜杠会在编译的时候才会被解析，这样的话你可以得到一个可用的客户端模板:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- Add a \ before the handlebars --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/x-handlebars"</span> <span class="attr">id</span>=<span class="string">"lightbox-template"</span>&gt;</span><span class="javascript"></span></div><div class="line">    &lt;img <span class="class"><span class="keyword">class</span></span>=<span class="string">"lightbox-image"</span> src=<span class="string">"\&#123;&#123;large&#125;&#125;"</span>&gt;</div><div class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightbox-meta"</span>&gt;</span></span></div><div class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"pure-button lightbox-link"</span> <span class="attr">href</span>=<span class="string">"\&#123;&#123;url&#125;&#125;"</span>&gt;</span>View on Flickr<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"pure-button lightbox-link lightbox-hide"</span>&gt;</span>Hide<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>最后，回到文章开始的问题上。客户端使用Handlebars不能正确解析的原因是因为在服务器端渲染页面的时候，Handlebars模板已经被编译了，加上反斜杠后就可以阻止服务端的编译。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;英文原文：&lt;a href=&quot;http://tilomitra.com/handlebars-on-the-server-and-client/#comment-13139&quot;&gt;http://tilomitra.com/handlebars-on-the-server-and-client/#comment-13139&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;昨天在Node上尝试使用Handlebars，之前没搞清服务端Handlebars和客户端Handlebars的区别,导致在使用Handlebars的模板时很茫然，昨天终于在google找到真爱，解决了问题，下面阐述下我遇到的问题后就正式进入大神的文章，带着问题看可以理解更深。&lt;/p&gt;
+&lt;p&gt;问题：&lt;br&gt;&lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;login-signup-tpl&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;type&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;text/x-handlebars-template&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;undefined&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ...&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#123;&amp;#123;#if isLogin&amp;#125;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        登录&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#123;&amp;#123;^&amp;#125;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        注册&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#123;&amp;#123;/if&amp;#125;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ...&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;script&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;script&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;javascript&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; tpl = Handlebars.compile($(&lt;span class=&quot;string&quot;&gt;&#39;#login-signup-tpl&#39;&lt;/span&gt;).html());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    $(&lt;span class=&quot;string&quot;&gt;&#39;body&#39;&lt;/span&gt;).append(tpl(&amp;#123;&lt;span class=&quot;attr&quot;&gt;isLogin&lt;/span&gt;: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;&amp;#125;));&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;script&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;功能就是使用Handlebars编译模板并传入json然后得到对应的HTML片段。不过试一下就知道，这样时得不到你想要的东西的。下面带着问题看文章吧…&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Solution" scheme="http://www.i0011.com/tags/Solution/"/>
+    
+      <category term="Plugin" scheme="http://www.i0011.com/tags/Plugin/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NanJing</title>
+    <link href="http://www.i0011.com/2015/01/16/NanJing/"/>
+    <id>http://www.i0011.com/2015/01/16/NanJing/</id>
+    <published>2015-01-16T03:23:34.000Z</published>
+    <updated>2016-11-25T00:34:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://dn-xuqi.qbox.me/1.jpg" alt="烟笼寒水月笼沙"><br><a id="more"></a><br><img src="http://dn-xuqi.qbox.me/2.jpg" alt="夜泊秦淮近酒家"><br><img src="http://dn-xuqi.qbox.me/3.jpg" alt="商女不知亡国恨"><br><img src="http://dn-xuqi.qbox.me/4.jpg" alt="隔江犹唱后庭花"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;http://dn-xuqi.qbox.me/1.jpg&quot; alt=&quot;烟笼寒水月笼沙&quot;&gt;&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Life" scheme="http://www.i0011.com/tags/Life/"/>
+    
+  </entry>
+  
+</feed>

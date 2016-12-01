@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>What the f**k of Postcss | Sagittarius Love Libra</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="PostCSS is a tool for transforming styles with JS plugins. These plugins can lint your CSS, support variables and mixins, transpile future CSS syntax, inline images, and more.
+
+对于Postcss，这样介绍来开启话题最合适">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What the f**k of Postcss">
+<meta property="og:url" content="http://www.i0011.com/2016/01/28/what-the-fuck-of-postcss/index.html">
+<meta property="og:site_name" content="Sagittarius Love Libra">
+<meta property="og:description" content="PostCSS is a tool for transforming styles with JS plugins. These plugins can lint your CSS, support variables and mixins, transpile future CSS syntax, inline images, and more.
+
+对于Postcss，这样介绍来开启话题最合适">
+<meta property="og:updated_time" content="2016-11-25T00:34:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="What the f**k of Postcss">
+<meta name="twitter:description" content="PostCSS is a tool for transforming styles with JS plugins. These plugins can lint your CSS, support variables and mixins, transpile future CSS syntax, inline images, and more.
+
+对于Postcss，这样介绍来开启话题最合适">
+  
+  
+    <link rel="icon" href="favicon.png">
+  
+  
+ <link href='//fonts.useso.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i><span class="site-title">Sagittarius Love Libra</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://dn-xuqi.qbox.me/avatar.jpg"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://www.i0011.com"></form>
+        
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+        <td>
+          
+            <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://www.i0011.com"></form>
+          
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://dn-xuqi.qbox.me/avatar.jpg">
+      <h2 id="name">徐祁</h2>
+      <h3 id="title">Enjoy</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>YOHO.cn, NanJing, China</span>
+      <a id="follow" href="https://github.com/loveLibra/">关注我</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        14
+        <span>文章</span>
+      </div>
+      <div class="article-info-block">
+        18
+        <span>标签</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="http://weibo.com/u/2287068735" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+          
+          <td><a href="https://cn.linkedin.com/in/祁-徐-3ba230ab" target="_blank" title="linkedin"><i class="fa fa-linkedin"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-what-the-fuck-of-postcss" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      What the f**k of Postcss
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/01/28/what-the-fuck-of-postcss/">
+      <time datetime="2016-01-28T05:37:31.000Z" itemprop="datePublished">2016-01-28</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <blockquote>
+<p>PostCSS is a tool for transforming styles with JS plugins. These plugins can lint your CSS, support variables and mixins, transpile future CSS syntax, inline images, and more.</p>
+</blockquote>
+<p>对于Postcss，这样介绍来开启话题最合适不过。大部分人对Postcss的认知还是CSS pre-preprocessor，因此经常会有将Postcss和Sass/Less/Stylus进行对比的情况。那Postcss到底是什么？</p>
+<p>Postcss只是一个工具，获取CSS内容并将其转化成JS插件可以处理的数据，如此基于Postcss的JS插件便可基于Postcss提供的数据进行对应的处理。目前Postcss Plugin的列表数目已经200+，提供诸于：auto-prefix、next-css、linter、short-name等功能。另外，由于Postcss的职能是类似于工具箱，用户可以选择自己的工具放进去，所以你可以根据自身的开发喜好和需求去开发自己的“工具”扔到工具箱里去，心有多大，世界就有多大，勇敢的少年啊，快去创造奇迹~<br><a id="more"></a></p>
+<p>在认清Postcss的真实面目后，搬出下面这段摘抄的话，会显得逼格很高：</p>
+<blockquote>
+<ul>
+<li>It’s not a pre-processor, though it can optionally behave like one.</li>
+<li>It’s not a post-processor, though it can optionally behave like one.</li>
+<li>It’s not about “future syntax”, though it can facilitate support for future syntax</li>
+<li>It’s not a clean up / optimization tool, though it can provide such functionality.</li>
+<li>It’s not any one thing; it’s a means to potentially unlimited functionality configured as you choose.</li>
+</ul>
+</blockquote>
+<p>也就是，它看起来什么都是，然而本质上它什么都不是，但是它什么都能干。万剑归宗，万法归一，嗯，就是这种意思了…</p>
+<p>口说无凭，祭出插件杀器：</p>
+<ul>
+<li><a href="https://github.com/postcss/autoprefixer" target="_blank" rel="external">autoprefixer</a> 为指定的browsers生成兼容性CSS，你只需按照W3C的标准去书写你的样式就好了，接下的事autoprefixer帮你摆平</li>
+<li><a href="https://github.com/jonathantneal/precss" target="_blank" rel="external">precss</a> 如果你需要像Sass提供的:variables、mixins、conditionals等功能，precss是不二之选</li>
+<li><a href="https://github.com/postcss/postcss-import" target="_blank" rel="external">postcss-import</a> 使用@import，并且可以获取第三方的样式(比如bower或者npm)</li>
+<li><a href="https://github.com/ben-eb/cssnano" target="_blank" rel="external">cssnano</a> css<strong>优化</strong>(清除注释和尾分号、合并规则，字体权重优化等等等…)，压缩…强大</li>
+<li><a href="https://github.com/assetsjs/postcss-assets" target="_blank" rel="external">postcss-assets</a> img/font加载路径解决方案，另外还提供获取图片尺寸以及将图片转化为base64写入css的功能</li>
+<li><a href="https://github.com/2createStudio/postcss-sprites" target="_blank" rel="external">postcss-sprites</a> image sprite</li>
+<li>…颜色处理，可读性处理，简化输入，优化，打包，<a href="http://postcss.parts/" target="_blank" rel="external">自行探索&gt;&gt;&gt;</a></li>
+</ul>
+<p>怎么去用？Gulp！你应该享受现代工具~<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>),</div><div class="line">    postcss = <span class="built_in">require</span>(<span class="string">'gulp-postcss'</span>),</div><div class="line">    sourcemap = <span class="built_in">require</span>(<span class="string">'gulp-sourcemaps'</span>);</div><div class="line">gulp.task(<span class="string">'css'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    gulp.src(<span class="string">'css/**/*.css'</span>)</div><div class="line">        .pipe(sourcemap.init())</div><div class="line">        .pipe(postcss([</div><div class="line">            <span class="built_in">require</span>(<span class="string">'autoprefixer'</span>)(&#123;</div><div class="line">                <span class="attr">browsers</span>: [<span class="string">'not ie &lt; 8'</span>]</div><div class="line">            &#125;),</div><div class="line">            <span class="built_in">require</span>(<span class="string">'precss'</span>),</div><div class="line">            <span class="built_in">require</span>(<span class="string">'postcss-assets'</span>)(&#123;</div><div class="line">                <span class="attr">loadPaths</span>: [<span class="string">'font/'</span>, <span class="string">'img/'</span>],</div><div class="line">                <span class="attr">relativeTo</span>: <span class="string">'css/post/'</span></div><div class="line">            &#125;),</div><div class="line">            <span class="built_in">require</span>(<span class="string">'postcss-sprites'</span>).default(&#123;</div><div class="line">                <span class="attr">basePath</span>: <span class="string">'./img'</span>, <span class="comment">//img base path</span></div><div class="line">                stylesheetPath: <span class="string">'./css'</span>, <span class="comment">//path of css generated</span></div><div class="line">                spritePath: <span class="string">'./img'</span>, <span class="comment">//path of sprites generated</span></div><div class="line">                spritesmith: &#123;</div><div class="line">                    <span class="attr">padding</span>: <span class="number">2</span>,</div><div class="line">                &#125;,</div><div class="line">                <span class="attr">groupBy</span>: <span class="function"><span class="keyword">function</span>(<span class="params">file</span>) </span>&#123;</div><div class="line">                    <span class="keyword">var</span> group = file.url.split(<span class="string">'/'</span>)[<span class="number">1</span>]; <span class="comment">// 根据目录分组，防止合并后的图片太大</span></div><div class="line">                    <span class="keyword">return</span> group ? <span class="built_in">Promise</span>.resolve(group) : <span class="built_in">Promise</span>.reject();</div><div class="line">                &#125;</div><div class="line">            &#125;)</div><div class="line">        ]))</div><div class="line">        .pipe(sourcemap.write(<span class="string">'.'</span>))</div><div class="line">        .pipe(gulp.dest(<span class="string">'dist/'</span>))</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h3><p>由于正在使用Compass，不自主会把这两个工具进行比较：<br>Compass是Sass的扩展，提供了很多牛X的Minix和功能(比如：无可比拟的image-sprite)。用过Compass的可能会有疑问了，你上面讲的在Compass都能做啊，而且我还不用去找很多插件来实现我的功能，去网站翻使用指南和它的API就可以了，不要太强大…然而，出问题的就是他的强，大：</p>
+<ol>
+<li>Compass需要依赖Ruby，这一点就足够判死刑</li>
+<li>Compass提供了很多@mixin，其中也包括类似于autoprefix的功能，但是，前提是：我得知道我要写的属性需要进行prefix处理，所以对大部分人来说，这个功能属于鸡肋功能。对于一些辅助的功能实现的mixin，我们可能会想到去官网搜索，然而，这个比prefix的处理更让人头疼，在一个全站颜色统一，甚至对搜索结果都不做突出的网站上找到想要的API是有多难，搜索结果下你会发现不知所云的搜索结果</li>
+<li>我们并不需要Compass提供的那么多内置mixin</li>
+<li>对compass认知程度有限，上述叙述若有偏颇，勿怪，个人观点…当然，不可否认还是有很多出色的功能的~</li>
+</ol>
+<p>对比Compass，我更喜欢Postcss带来的体验，把一切交给npm，无需其他乱七八糟的环境的配置，通过一些基本的插件，可以实现从Compass到Postcss的无缝切换，而且Postcss的开放性必然会给以后带来诸多Compass所不会有的好处。插件多样性可以帮你处理各种常见问题：嫌每天重复输入相同的width,height…你可以用<code>postcss-short</code>或者<code>postcss-size</code>；嫌<code>#3f3f3f</code>这种输入浪费时间，<code>postcss-color-short</code>帮你解决后顾之忧，你只用输入<code>#3f</code>；想像写Es6那样享受超前的快感，<code>cssnext</code>带你装逼；想摆脱老是写水平居中或者垂直居中的困扰，<code>postcss-center</code>助你一臂之力；clearfix的功能在你只用写<code>clear:fix</code>的情况下，也有插件<code>postcss-clearfix</code>帮你铺平道路；甚至连css的语法检查，也有插件给你两肋插刀…总之大到模块化，小到画三角，应有尽有，各取所需就好…</p>
+<p>灵活性+开放性+易用性+扩展性….足够了，写Postcss，挺好~</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2016/01/28/what-the-fuck-of-postcss/" data-id="ciw5nnjsc000ke58ajzn08nva" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2016/01/28/what-the-fuck-of-postcss/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HandBook/">HandBook</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Postcss/">Postcss</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/09/25/destructuring/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          destructuring
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/24/react-ssr/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">React server side render</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="http://www.i0011.com/2016/01/28/what-the-fuck-of-postcss/" data-title="What the f**k of Postcss" data-url="http://www.i0011.com/2016/01/28/what-the-fuck-of-postcss/">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by DuoShuo.</a></noscript>
+      </div>
+  </section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/10/09/https-config/" class="thumbnail">
+  
+    <span style="background-image:url(https://dn-xuqi.qbox.me/https.png
+)" alt="Https养成手记" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/10/09/https-config/" class="title">Https养成手记</a></p>
+              <p class="item-date"><time datetime="2016-10-09T09:48:42.000Z" itemprop="datePublished">2016-10-09</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/09/25/destructuring/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/09/25/destructuring/" class="title">destructuring</a></p>
+              <p class="item-date"><time datetime="2016-09-25T03:48:01.000Z" itemprop="datePublished">2016-09-25</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/28/what-the-fuck-of-postcss/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/28/what-the-fuck-of-postcss/" class="title">What the f**k of Postcss</a></p>
+              <p class="item-date"><time datetime="2016-01-28T05:37:31.000Z" itemprop="datePublished">2016-01-28</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/24/react-ssr/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/24/react-ssr/" class="title">React server side render</a></p>
+              <p class="item-date"><time datetime="2016-01-24T12:20:17.000Z" itemprop="datePublished">2016-01-24</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/11/js-oop/" class="thumbnail">
+  
+    <span style="background-image:url(https://dn-xuqi.qbox.me/proto.jpg
+)" alt="js-oop" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/11/js-oop/" class="title">js-oop</a></p>
+              <p class="item-date"><time datetime="2016-01-11T07:50:22.000Z" itemprop="datePublished">2016-01-11</time></p>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browserify/">Browserify</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Es6/">Es6</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HandBook/">HandBook</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IE8/">IE8</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Js-Basic/">Js Basic</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Koa/">Koa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Life/">Life</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OOP/">OOP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plugin/">Plugin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postcss/">Postcss</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Solution/">Solution</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ssr/">Ssr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/兼容性/">兼容性</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Browserify/" style="font-size: 10px;">Browserify</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Es6/" style="font-size: 16.67px;">Es6</a> <a href="/tags/HandBook/" style="font-size: 20px;">HandBook</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/IE8/" style="font-size: 13.33px;">IE8</a> <a href="/tags/Js-Basic/" style="font-size: 13.33px;">Js Basic</a> <a href="/tags/Koa/" style="font-size: 10px;">Koa</a> <a href="/tags/Life/" style="font-size: 10px;">Life</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/OOP/" style="font-size: 10px;">OOP</a> <a href="/tags/Plugin/" style="font-size: 10px;">Plugin</a> <a href="/tags/Postcss/" style="font-size: 13.33px;">Postcss</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Solution/" style="font-size: 20px;">Solution</a> <a href="/tags/Ssr/" style="font-size: 10px;">Ssr</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/兼容性/" style="font-size: 10px;">兼容性</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 徐祁<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"xuqi"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+
+
+ <script src="//ajax.useso.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
