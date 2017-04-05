@@ -3,17 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: OOP | Sagittarius Love Libra</title>
+  <title>lodash源码祭 | Sagittarius Love Libra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="xuqi&apos;s Blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Sagittarius Love Libra">
-<meta property="og:url" content="http://www.i0011.com/tags/OOP/index.html">
+  <meta name="description" content="巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…
+
+Arraychunk1_.chunk(array, [size=1])
+猜想下实现方法，功能就是将数组拆分成arrar.length / size个数组，每个数组size个元素，剩余的元素作为最后一个分组，数组操作中slice不改变原数组并实现数组切分:1234567891011121314const chunk">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lodash源码祭">
+<meta property="og:url" content="http://www.i0011.com/2017/04/03/lodash/index.html">
 <meta property="og:site_name" content="Sagittarius Love Libra">
-<meta property="og:description" content="xuqi&apos;s Blog">
+<meta property="og:description" content="巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…
+
+Arraychunk1_.chunk(array, [size=1])
+猜想下实现方法，功能就是将数组拆分成arrar.length / size个数组，每个数组size个元素，剩余的元素作为最后一个分组，数组操作中slice不改变原数组并实现数组切分:1234567891011121314const chunk">
+<meta property="og:updated_time" content="2017-04-05T13:38:17.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sagittarius Love Libra">
-<meta name="twitter:description" content="xuqi&apos;s Blog">
+<meta name="twitter:title" content="lodash源码祭">
+<meta name="twitter:description" content="巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…
+
+Arraychunk1_.chunk(array, [size=1])
+猜想下实现方法，功能就是将数组拆分成arrar.length / size个数组，每个数组size个元素，剩余的元素作为最后一个分组，数组操作中slice不改变原数组并实现数组切分:1234567891011121314const chunk">
   
   
     <link rel="icon" href="favicon.png">
@@ -117,50 +127,88 @@
 </aside>
 
       
-      <section id="main">
-    <section class="archives-wrap">
-    <div class="archive-tag-wrap">
-      <span class="archive-tag">#OOP</span>
-    </div>
-    <div class="archives">
+      <section id="main"><article id="post-lodash" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
     
-    <div class="archive-article-thumbnail">
-      <a href="/2016/01/11/js-oop/" class="thumbnail">
-  
-    <span style="background-image:url(https://dn-xuqi.qbox.me/proto.jpg
-)" alt="js-oop" class="thumbnail-image"></span>
-  
-</a>
-    </div>
     
-    <header class="archive-article-header">
-      
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/01/11/js-oop/">js-oop</a>
+    <h1 class="article-title" itemprop="name">
+      lodash源码祭
     </h1>
   
 
-      
-        
-  <div class="archive-article-date">
+        <div class="article-meta">
+          
+  <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2016/01/11/js-oop/">
-      <time datetime="2016-01-11T07:50:22.000Z" itemprop="datePublished">2016 1月 11</time>
+    <a href="/2017/04/03/lodash/">
+      <time datetime="2017-04-03T14:08:37.000Z" itemprop="datePublished">2017-04-03</time>
     </a>
   </div>
 
 
-      
-    </header>
-  </div>
-</article>
+          
+        </div>
+      </header>
     
-    </div></section>
-    </section>
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <blockquote>
+<p>巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…</p>
+</blockquote>
+<h1 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h1><h2 id="chunk"><a href="#chunk" class="headerlink" title="chunk"></a>chunk</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.chunk(array, [size=1])</div></pre></td></tr></table></figure>
+<p>猜想下实现方法，功能就是将数组拆分成<code>arrar.length / size</code>个数组，每个数组<code>size</code>个元素，剩余的元素作为最后一个分组，数组操作中<code>slice</code>不改变原数组并实现数组切分:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> chunk = <span class="function">(<span class="params">array, size = <span class="number">1</span></span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">let</span> count = <span class="built_in">Math</span>.ceil(array.length / size);</div><div class="line"></div><div class="line">    <span class="keyword">let</span> _chunk = <span class="keyword">new</span> <span class="built_in">Array</span>(count);</div><div class="line"></div><div class="line">    <span class="keyword">let</span> index = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">let</span> start = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">while</span> (++index &lt; count) &#123;</div><div class="line">        _chunk[index] = array.slice(start, start += size);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> _chunk;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>验证下，功能OK，再来看下lodash的实现方法:</p>
+<ul>
+<li>首先，<strong>对参数进行验证</strong><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">size = <span class="built_in">Math</span>.max(size, <span class="number">0</span>)</div><div class="line"><span class="keyword">const</span> length = array == <span class="literal">null</span> ? <span class="number">0</span> : array.length</div><div class="line"><span class="keyword">if</span> (!length || size &lt; <span class="number">1</span>) &#123;</div><div class="line">    <span class="keyword">return</span> []</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>确保size非负以及length为合法值…</p>
+<p>虽然处理了数组，但是需不需要考虑ArrayLike的Object伪装Array的情况<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.chunk(&#123;<span class="attr">a</span>:<span class="number">1</span>, <span class="attr">b</span>:<span class="number">2</span>, <span class="attr">length</span>:<span class="number">2</span>&#125;, <span class="number">2</span>)</div></pre></td></tr></table></figure></p>
+<p>将得到一个包含两个undefined的数组的数组，是否加上数组判断是更nice呢:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (!length || !(array <span class="keyword">instanceof</span> <span class="built_in">Array</span>) || size &lt; <span class="number">1</span>) &#123;</div><div class="line">    <span class="keyword">return</span> [];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>再看<code>import baseSlice from &#39;./.internal/baseSlice.js&#39;</code>，lodash并未用Array.prototype.slice去做数组切割，而是自己写了一个，为啥？slice是基础特性啊，浏览器都支持的，咋不直接用的…实现上首先将<code>start</code>和<code>end</code>都转化为正值并做start &lt;= end的验证，在算切割的数组length的时候，用了这样的语句，可以关注一下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">length = start &gt; end ? <span class="number">0</span> : ((end - start) &gt;&gt;&gt; <span class="number">0</span>)<span class="string">`</span></div></pre></td></tr></table></figure></p>
+<p><code>&gt;&gt;&gt; 0</code>有什么用？Check <a href="http://stackoverflow.com/questions/1822350/what-is-the-javascript-operator-and-how-do-you-use-it" target="_blank" rel="external">stackoverlfow</a>…其实就是将值转化为32位无符号整数，即Array.length的合法值，参见<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/length" target="_blank" rel="external">MDN</a>，非”数字”转化后值为0，比如:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="literal">null</span> &gt;&gt;&gt; <span class="number">0</span> <span class="comment">// 0</span></div><div class="line"></div><div class="line"><span class="string">'1'</span> &gt;&gt;&gt; <span class="number">0</span> <span class="comment">// 1 数字字符串将转化为对应的数字</span></div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2017/04/03/lodash/" data-id="cj150sytj000b918a0khvipyl" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2017/04/03/lodash/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lodash/">Lodash</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/10/09/https-config/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">Https养成手记</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="http://www.i0011.com/2017/04/03/lodash/" data-title="lodash源码祭" data-url="http://www.i0011.com/2017/04/03/lodash/">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by DuoShuo.</a></noscript>
+      </div>
+  </section>
+
+</section>
       
         <aside id="sidebar">
   
