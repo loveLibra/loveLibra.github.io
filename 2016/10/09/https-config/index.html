@@ -16,7 +16,7 @@ openssl req -newkey rsa:2048 -keyout server.key -out server.csr在服务器上�
 
 openssl req -newkey rsa:2048 -keyout server.key -out server.csr在服务器上生成key和csr，可以直接扔在nginx目录，方便。此处需要注意的是，生成的private key需要移除passphrase，就是运行前面命令时让输入的PEM的值，否则nginx error。">
 <meta property="og:image" content="https://dn-xuqi.qbox.me/https.png">
-<meta property="og:updated_time" content="2016-11-25T00:34:34.000Z">
+<meta property="og:updated_time" content="2017-04-07T01:46:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Https养成手记">
 <meta name="twitter:description" content="把大象放进冰箱分三步，那么实现https化你的网站也可以分三步：
@@ -159,7 +159,7 @@ openssl req -newkey rsa:2048 -keyout server.key -out server.csr在服务器上�
         <p>把大象放进冰箱分三步，那么实现https化你的网站也可以分三步：</p>
 <ol>
 <li><code>openssl req -newkey rsa:2048 -keyout server.key -out server.csr</code>在服务器上生成key和csr，可以直接扔在nginx目录，方便。此处需要<strong>注意</strong>的是，生成的private key需要移除passphrase，就是运行前面命令时让输入的<code>PEM</code>的值，否则nginx error。<br>执行<code>openssl rsa -in server.key -out unencripted-server.key</code>就OK了，我们在nginx配置中就使用未加密的key文件</li>
-<li>去<a href="www.startssl.com/Certificates/ApplySSLCert?level=1">Startssl</a>，将刚才得到的server.csr文件内容填入表单中，Submit！<br><img src="https://dn-xuqi.qbox.me/https.png" alt="Startssl配置"><br>然后下载生成的证书，因为我用的是nginx，就将NginxServer下面的的crt文件scp到服务器中</li>
+<li>去<a href="https://www.startssl.com/Certificates/ApplySSLCert?level=1" target="_blank" rel="external">Startssl</a>，将刚才得到的server.csr文件内容填入表单中，Submit！<br><img src="https://dn-xuqi.qbox.me/https.png" alt="Startssl配置"><br>然后下载生成的证书，因为我用的是nginx，就将NginxServer下面的的crt文件scp到服务器中</li>
 <li>配置nginx并将http80重定向到443即可<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 443 ssl;</div><div class="line">    ssl_certificate /path/to/crt;</div><div class="line">    ssl_certificate_key /path/to/unencripted/key;</div><div class="line">    ssl_session_tickets off;</div><div class="line">    ssl_session_cache   shared:SSL:10m;</div><div class="line">    server_name  yourdomain;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        proxy_redirect off;</div><div class="line">        proxy_pass  http://yourUpstream;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    server_name yourdomain;</div><div class="line">    return 301 https://yourdomain$request_uri;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 </ol>
@@ -169,7 +169,7 @@ openssl req -newkey rsa:2048 -keyout server.key -out server.csr在服务器上�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/10/09/https-config/" data-id="cj16hxzj0000f0d8aioii0itt" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2016/10/09/https-config/" data-id="cj1jedqh4000f9f8apu0qxfr3" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2016/10/09/https-config/#ds-thread" class="article-comment-link">评论</a>
       

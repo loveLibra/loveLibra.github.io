@@ -160,7 +160,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/04/03/lodash/" data-id="cj16hxzix000d0d8agpyt3ewp" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/04/03/lodash/" data-id="cj1jedqh0000c9f8al851c3z3" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/04/03/lodash/#ds-thread" class="article-comment-link">评论</a>
       
@@ -208,7 +208,7 @@
         <p>把大象放进冰箱分三步，那么实现https化你的网站也可以分三步：</p>
 <ol>
 <li><code>openssl req -newkey rsa:2048 -keyout server.key -out server.csr</code>在服务器上生成key和csr，可以直接扔在nginx目录，方便。此处需要<strong>注意</strong>的是，生成的private key需要移除passphrase，就是运行前面命令时让输入的<code>PEM</code>的值，否则nginx error。<br>执行<code>openssl rsa -in server.key -out unencripted-server.key</code>就OK了，我们在nginx配置中就使用未加密的key文件</li>
-<li>去<a href="www.startssl.com/Certificates/ApplySSLCert?level=1">Startssl</a>，将刚才得到的server.csr文件内容填入表单中，Submit！<br><img src="https://dn-xuqi.qbox.me/https.png" alt="Startssl配置"><br>然后下载生成的证书，因为我用的是nginx，就将NginxServer下面的的crt文件scp到服务器中</li>
+<li>去<a href="https://www.startssl.com/Certificates/ApplySSLCert?level=1" target="_blank" rel="external">Startssl</a>，将刚才得到的server.csr文件内容填入表单中，Submit！<br><img src="https://dn-xuqi.qbox.me/https.png" alt="Startssl配置"><br>然后下载生成的证书，因为我用的是nginx，就将NginxServer下面的的crt文件scp到服务器中</li>
 <li>配置nginx并将http80重定向到443即可<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 443 ssl;</div><div class="line">    ssl_certificate /path/to/crt;</div><div class="line">    ssl_certificate_key /path/to/unencripted/key;</div><div class="line">    ssl_session_tickets off;</div><div class="line">    ssl_session_cache   shared:SSL:10m;</div><div class="line">    server_name  yourdomain;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        proxy_redirect off;</div><div class="line">        proxy_pass  http://yourUpstream;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    server_name yourdomain;</div><div class="line">    return 301 https://yourdomain$request_uri;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 </ol>
@@ -218,7 +218,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/10/09/https-config/" data-id="cj16hxzj0000f0d8aioii0itt" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2016/10/09/https-config/" data-id="cj1jedqh4000f9f8apu0qxfr3" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2016/10/09/https-config/#ds-thread" class="article-comment-link">评论</a>
       
@@ -274,7 +274,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/09/25/destructuring/" data-id="cj16hxziv00090d8a5a9pw46p" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2016/09/25/destructuring/" data-id="cj1jedqgt00059f8a6yblub8l" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2016/09/25/destructuring/#ds-thread" class="article-comment-link">评论</a>
       
@@ -331,7 +331,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/01/28/what-the-fuck-of-postcss/" data-id="cj16hxzj7000m0d8agar7h2hr" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2016/01/28/what-the-fuck-of-postcss/" data-id="cj1jedqhe000o9f8atr0ha0z8" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2016/01/28/what-the-fuck-of-postcss/#ds-thread" class="article-comment-link">评论</a>
       
@@ -397,7 +397,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/01/24/react-ssr/" data-id="cj16hxzj9000o0d8agg9slm2n" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2016/01/24/react-ssr/" data-id="cj1jedqh3000e9f8ahrcspx76" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2016/01/24/react-ssr/#ds-thread" class="article-comment-link">评论</a>
       
@@ -450,7 +450,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/01/11/js-oop/" data-id="cj16hxzit00080d8agniqie1y" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2016/01/11/js-oop/" data-id="cj1jedqgv00089f8aahtn5vc6" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2016/01/11/js-oop/#ds-thread" class="article-comment-link">评论</a>
       
@@ -505,7 +505,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/01/08/respond-proxy/" data-id="cj16hxzj3000i0d8a5j0o8nkm" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2016/01/08/respond-proxy/" data-id="cj1jedqh6000h9f8ar3w4a7y1" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2016/01/08/respond-proxy/#ds-thread" class="article-comment-link">评论</a>
       
@@ -558,7 +558,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2015/06/18/bad-rem/" data-id="cj16hxzil00030d8ao3b35okb" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2015/06/18/bad-rem/" data-id="cj1jedqgp00049f8a7ob6ju76" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2015/06/18/bad-rem/#ds-thread" class="article-comment-link">评论</a>
       
@@ -612,7 +612,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2015/04/30/handlebars/" data-id="cj16hxzis00050d8a7hhor36o" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2015/04/30/handlebars/" data-id="cj1jedqgz000b9f8axilvpbhw" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2015/04/30/handlebars/#ds-thread" class="article-comment-link">评论</a>
       
@@ -667,7 +667,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2015/04/30/mustache/" data-id="cj16hxzj5000k0d8aaib9vqtd" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2015/04/30/mustache/" data-id="cj1jedqha000j9f8acfp7dfsw" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2015/04/30/mustache/#ds-thread" class="article-comment-link">评论</a>
       
