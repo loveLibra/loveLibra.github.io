@@ -89,11 +89,11 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        15
+        21
         <span>文章</span>
       </div>
       <div class="article-info-block">
-        19
+        26
         <span>标签</span>
       </div>
     </div>
@@ -118,7 +118,7 @@
 
       
       <section id="main">
-      <article id="post-lodash" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-lodash-array" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -127,7 +127,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/03/lodash/">lodash源码祭</a>
+      <a class="article-title" href="/2017/07/12/lodash-array/">Lodash源码祭「Array」</a>
     </h1>
   
 
@@ -135,8 +135,8 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2017/04/03/lodash/">
-      <time datetime="2017-04-03T14:08:37.000Z" itemprop="datePublished">2017-04-03</time>
+    <a href="/2017/07/12/lodash-array/">
+      <time datetime="2017-07-12T11:09:17.000Z" itemprop="datePublished">2017-07-12</time>
     </a>
   </div>
 
@@ -154,18 +154,358 @@
 <p>猜想下实现方法，功能就是将数组拆分成<code>arrar.length / size</code>个数组，每个数组<code>size</code>个元素，剩余的元素作为最后一个分组，数组操作中<code>slice</code>不改变原数组并实现数组切分:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> chunk = <span class="function">(<span class="params">array, size = <span class="number">1</span></span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">let</span> count = <span class="built_in">Math</span>.ceil(array.length / size);</div><div class="line"></div><div class="line">    <span class="keyword">let</span> _chunk = <span class="keyword">new</span> <span class="built_in">Array</span>(count);</div><div class="line"></div><div class="line">    <span class="keyword">let</span> index = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">let</span> start = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">while</span> (++index &lt; count) &#123;</div><div class="line">        _chunk[index] = array.slice(start, start += size);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> _chunk;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
         
           <p class="article-more-link">
-            <a href="/2017/04/03/lodash/#more">Read More</a>
+            <a href="/2017/07/12/lodash-array/#more">Read More</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/04/03/lodash/" data-id="cj4av4ca3000cie8a7eoz5v9s" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-array/" data-id="cj50wwu03000bo28ajnrml0hl" class="article-share-link">分享到</a>
       
-        <a href="http://www.i0011.com/2017/04/03/lodash/#ds-thread" class="article-comment-link">评论</a>
+        <a href="http://www.i0011.com/2017/07/12/lodash-array/#ds-thread" class="article-comment-link">评论</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lodash/">Lodash</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Array/">Array</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lodash/">Lodash</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-lodash-date" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/12/lodash-date/">Lodash源码祭「Date」</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2017/07/12/lodash-date/">
+      <time datetime="2017-07-12T11:08:11.000Z" itemprop="datePublished">2017-07-12</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <blockquote>
+<p>巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…</p>
+</blockquote>
+<h1 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h1><h2 id="now"><a href="#now" class="headerlink" title="now"></a>now</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.now()</div></pre></td></tr></table></figure>
+<p>获取当前时间的毫秒时间戳<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> now () =&gt; &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-date/" data-id="cj50wwu04000co28ajey7tjq2" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2017/07/12/lodash-date/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Date/">Date</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lodash/">Lodash</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-lodash-collection" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/12/lodash-collection/">Lodash源码祭「Collection」</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2017/07/12/lodash-collection/">
+      <time datetime="2017-07-12T11:05:36.000Z" itemprop="datePublished">2017-07-12</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…</p>
+</blockquote>
+<h1 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h1><h2 id="countBy"><a href="#countBy" class="headerlink" title="countBy"></a>countBy</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.countBy(collection, [iteratee=_.identity])</div></pre></td></tr></table></figure>
+<p>collection中统计各项的数目，也可指定iteratee进行迭代处理<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> countBy = <span class="function">(<span class="params">collection, iteratee</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">let</span> result = &#123;&#125;;</div><div class="line"></div><div class="line">    collection.forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</div><div class="line"></div><div class="line">		<span class="keyword">let</span> ite = iteratee ? iteratee(key) : key;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> result[ite] === <span class="string">'undefined'</span>) &#123;</div><div class="line">            result[ite] = <span class="number">1</span>;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            result[ite] += <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>reduce?<br>
+        
+          <p class="article-more-link">
+            <a href="/2017/07/12/lodash-collection/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-collection/" data-id="cj50wwu08000eo28a2uz7fvyd" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2017/07/12/lodash-collection/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Collection/">Collection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lodash/">Lodash</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-lodash-math" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/12/lodash-math/">Lodash源码祭「Math」</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2017/07/12/lodash-math/">
+      <time datetime="2017-07-12T11:02:21.000Z" itemprop="datePublished">2017-07-12</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…</p>
+</blockquote>
+<h1 id="Math"><a href="#Math" class="headerlink" title="Math"></a>Math</h1><h2 id="mean"><a href="#mean" class="headerlink" title="mean"></a>mean</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.mean(array)</div></pre></td></tr></table></figure>
+<p>求数字平均数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> mean = <span class="function"><span class="params">array</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">let</span> sum = array.reduce(<span class="function">(<span class="params">total, i</span>) =&gt;</span> &#123;</div><div class="line">        <span class="keyword">return</span> total + i;</div><div class="line">    &#125;, <span class="number">0</span>);</div><div class="line">    <span class="keyword">let</span> &#123;length&#125; = array;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!length) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">NaN</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> sum / length;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+        
+          <p class="article-more-link">
+            <a href="/2017/07/12/lodash-math/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-math/" data-id="cj50wwu0f000lo28ap6t4403j" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2017/07/12/lodash-math/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lodash/">Lodash</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Math/">Math</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-lodash-number" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/12/lodash-number/">Lodash源码祭「Number」</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2017/07/12/lodash-number/">
+      <time datetime="2017-07-12T11:02:12.000Z" itemprop="datePublished">2017-07-12</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…</p>
+</blockquote>
+<h1 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h1><h2 id="random"><a href="#random" class="headerlink" title="random"></a>random</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.random([lower=<span class="number">0</span>], [upper=<span class="number">1</span>], [floating])</div></pre></td></tr></table></figure>
+<p>返回lower-upper之间任意的随机数，若lower为传则从0开始，floating=true则会返回浮点数，另外，如果lower或者upper为浮点数，也会返回一个浮点数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> random = <span class="function">(<span class="params">lower, upper, floating</span>) =&gt;</span> &#123;</div><div class="line">    <span class="comment">// 接收参数情况较多，需进行参数校准</span></div><div class="line"></div><div class="line">    <span class="comment">// 参数不满</span></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> floating === <span class="string">'undefined'</span>) &#123;</div><div class="line"></div><div class="line">        <span class="comment">// 2个参数，第2个参数为浮点数，则第一个参数为upper</span></div><div class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> upper === <span class="string">'boolean'</span>) &#123;</div><div class="line">            floating = upper;</div><div class="line"></div><div class="line">            upper = lower;</div><div class="line"></div><div class="line">            lower = <span class="literal">undefined</span>;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> lower === <span class="string">'boolean'</span>) &#123;</div><div class="line">            <span class="comment">// 1个参数</span></div><div class="line"></div><div class="line">            floating = lower;</div><div class="line">            lower = <span class="literal">undefined</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> lower === <span class="string">'undefined'</span>) &#123;</div><div class="line">        lower = <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> upper === <span class="string">'undefined'</span>) &#123;</div><div class="line">        upper = <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// lower &gt; upper的情况则交换</span></div><div class="line">    <span class="keyword">if</span> (lower &gt; upper) &#123;</div><div class="line">        [lower, upper] = [upper, lower];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 通过number % 1判断是否为浮点数</span></div><div class="line">    <span class="keyword">if</span> (floating || lower % <span class="number">1</span> || upper % <span class="number">1</span>) &#123;</div><div class="line">        <span class="comment">// 范围浮点数的方法有点诡异啊...</span></div><div class="line">        <span class="keyword">let</span> rand = <span class="built_in">Math</span>.random(); <span class="comment">// 0 - 1</span></div><div class="line">        <span class="keyword">let</span> len = <span class="string">`<span class="subst">$&#123;rand&#125;</span>`</span>.length;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="built_in">Math</span>.min(lower + (rand * (upper - lower + <span class="built_in">parseFloat</span>(<span class="string">`1e-<span class="subst">$&#123;len&#125;</span>`</span>))), upper); <span class="comment">// ...</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 整数</span></div><div class="line">    <span class="keyword">return</span> lower + <span class="built_in">Math</span>.floor((<span class="built_in">Math</span>.random() * (upper - lower + <span class="number">1</span>)));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+        
+          <p class="article-more-link">
+            <a href="/2017/07/12/lodash-number/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-number/" data-id="cj50wwu0i000oo28a7zxcu35x" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2017/07/12/lodash-number/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lodash/">Lodash</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Number/">Number</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-lodash-string" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/12/lodash-string/">Lodash源码祭「String」</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2017/07/12/lodash-string/">
+      <time datetime="2017-07-12T11:00:27.000Z" itemprop="datePublished">2017-07-12</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…</p>
+</blockquote>
+<h1 id="String"><a href="#String" class="headerlink" title="String"></a>String</h1><h2 id="loweFrirst"><a href="#loweFrirst" class="headerlink" title="loweFrirst"></a>loweFrirst</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.lowerFirst([string=<span class="string">''</span>])</div></pre></td></tr></table></figure>
+<p>小写字符串的首字母<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> lowerFirst = <span class="function">(<span class="params">string = <span class="string">''</span></span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">if</span> (string !== <span class="literal">null</span>) &#123;</div><div class="line">        string = <span class="keyword">typeof</span> string === <span class="string">'string'</span> ? string : string.toString();</div><div class="line"></div><div class="line">        <span class="keyword">let</span> head = string.match(<span class="regexp">/^[A-Z]/</span>);</div><div class="line"></div><div class="line">        head = head ? head[<span class="number">0</span>] : head;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (head) &#123;</div><div class="line">            <span class="keyword">return</span> string.replace(<span class="regexp">/^([A-Z])(.*)/</span>, <span class="string">`<span class="subst">$&#123;head.toLowerCase()&#125;</span>$2`</span>)</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> string;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="string">''</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+        
+          <p class="article-more-link">
+            <a href="/2017/07/12/lodash-string/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-string/" data-id="cj50wwu0l000so28a5uxsloig" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2017/07/12/lodash-string/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lodash/">Lodash</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/String/">String</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-lodash-lang" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/12/lodash-lang/">Lodash源码祭「Lang」</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2017/07/12/lodash-lang/">
+      <time datetime="2017-07-12T10:58:41.000Z" itemprop="datePublished">2017-07-12</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…</p>
+</blockquote>
+<h1 id="Lang"><a href="#Lang" class="headerlink" title="Lang"></a>Lang</h1><h2 id="castArray"><a href="#castArray" class="headerlink" title="castArray"></a>castArray</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.castArray(value)</div></pre></td></tr></table></figure>
+<p>如果value不是一个数组，就给他包成一个数组<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> castArray = <span class="function">(<span class="params">...arg</span>) =&gt;</span> &#123;</div><div class="line">    <span class="comment">// 没有参数的情况，返回空数组，需要特殊处理，跟参数为undefined不同</span></div><div class="line">    <span class="keyword">if</span> (arg.length === <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> [];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">let</span> value = arg[<span class="number">0</span>];</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(value)) &#123;</div><div class="line">        <span class="keyword">return</span> value;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> [value];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+        
+          <p class="article-more-link">
+            <a href="/2017/07/12/lodash-lang/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-lang/" data-id="cj50wwu0b000ho28ahpm2ej86" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2017/07/12/lodash-lang/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lang/">Lang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lodash/">Lodash</a></li></ul>
 
     </footer>
   </div>
@@ -218,7 +558,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/10/09/https-config/" data-id="cj4av4ca2000bie8avhbtsp7n" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2016/10/09/https-config/" data-id="cj50wwtzy0005o28ao50ww8il" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2016/10/09/https-config/#ds-thread" class="article-comment-link">评论</a>
       
@@ -274,7 +614,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/09/25/destructuring/" data-id="cj4av4c9t0004ie8a1jamtq6d" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2016/09/25/destructuring/" data-id="cj50wwtzr0003o28ankodw0nc" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2016/09/25/destructuring/#ds-thread" class="article-comment-link">评论</a>
       
@@ -331,7 +671,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/01/28/what-the-fuck-of-postcss/" data-id="cj4av4cah000pie8au140n6m7" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2016/01/28/what-the-fuck-of-postcss/" data-id="cj50wwu0r0011o28avi6ylxza" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2016/01/28/what-the-fuck-of-postcss/#ds-thread" class="article-comment-link">评论</a>
       
@@ -346,344 +686,8 @@
 
 
     
-      <article id="post-react-ssr" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/24/react-ssr/">React server side render</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2016/01/24/react-ssr/">
-      <time datetime="2016-01-24T12:20:17.000Z" itemprop="datePublished">2016-01-24</time>
-    </a>
-  </div>
-
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p>如何使用React开发高效可<del>装B</del>用的WEB应用:) … 融合React以及React-ssr、koa、Es6、Postcss，绽放吧，骚年…</p>
-<p><a href="https://github.com/loveLibra/React-ssr-demo" target="_blank" rel="external">DEMO传送门&gt;&gt;&gt;&gt;</a></p>
-<ol>
-<li><p>JSX支持Runtime<br><code>require(&#39;node-jsx&#39;).install({harmony: true});</code>。添加harmony选项可在JSX中使用部分ES6的特性，但是未完全支持.</p>
-</li>
-<li><p>browserify打包客户端脚本</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">browserify(<span class="string">'./js/index.js'</span>)</div><div class="line">    .transform(babelify, &#123;</div><div class="line">        <span class="attr">presets</span>: [<span class="string">'es2015'</span>, <span class="string">'react'</span>]</div><div class="line">    &#125;)</div><div class="line">    .bundle()</div><div class="line">    .pipe(fs.createWriteStream(<span class="string">'dist/bundle.js'</span>));</div></pre></td></tr></table></figure>
-</li>
-<li><p>React服务端渲染<br>将一个纯View用在此处其实有点别扭，但是为了SEO以及一些页面渲染性能的考虑，需要服务端渲染。React-SSR就是通过<code>ReactDOMServer.renderToString</code>得到HTML渲染到页面中，然后在客户端重新初始化组件，React并不会蠢的去重新渲染页面，所以此处可以忽略前端再次初始化带来的性能和使用体验的问题…前端初始化组件也是需要带数据的，所以在后端渲染组件时，我们将数据也带带页面中，然后再前端初始化后再删除数据DOM即可.<br>另外，在渲染字符串到页面中时，<code>views/partials/content.html</code>中放置渲染好的HTML的标签:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 不能有换行，否则客户端渲染时因为识别空白节点的问题在前端初始化失败。--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"yoho-container"</span>&gt;</span>&#123;&#123;&#123;content&#125;&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>Koa<br>koa + yield真的是太明智了，让代码不再一层层的去嵌套回调，棒！路由，接口取数据，数据格式化，页面渲染能对程序员展现以同步的形式去实现，跳出恶魔金字塔吧，Koa带你飞~</p>
-</li>
-<li>Postcss<br>Postcss相对于Compass的优势，在于其灵活性和轻便性，需要什么功能，扩展postcss插件就行了，autoprefixer，sprite-image应有尽有，Get what You Need…</li>
-</ol>
-<p>后记：前端现在愈发膨胀和夸张，无数的轮子和框架来方便你的开发，然而得有度，别让自己的程序失去控制…前端现在就像一匹飞奔的马，跑的很快，但是跑到哪你却不知道，你唯一能做的就是练好骑马的技术，别从马上摔下来。夯实基础，成就你的精湛马术吧</p>
-<p>精彩的参考资料:<br><a href="http://www.crmarsh.com/react-ssr/" target="_blank" rel="external">Rendering React Components on the Server</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/01/24/react-ssr/" data-id="cj4av4cac000lie8al8kdkv4c" class="article-share-link">分享到</a>
-      
-        <a href="http://www.i0011.com/2016/01/24/react-ssr/#ds-thread" class="article-comment-link">评论</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Browserify/">Browserify</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Es6/">Es6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Koa/">Koa</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Postcss/">Postcss</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ssr/">Ssr</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-js-oop" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/11/js-oop/">js-oop</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2016/01/11/js-oop/">
-      <time datetime="2016-01-11T07:50:22.000Z" itemprop="datePublished">2016-01-11</time>
-    </a>
-  </div>
-
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Javascript可能是一门让人感觉“不适”的语言，实现<code>类</code>、<code>继承</code>等OOP概念竟然要通过<code>function</code>和<code>prototype</code>，Jser们可能理解原型机制就能伤半管子HP了。然而，这种情况随着ES6的到来变得好了起来，ES6提供了<code>class</code>、<code>extends</code>等语法糖可以帮你摆脱让人苦闷的原型（当然，如果你有高追求，你得理解），虽然JS的OOP的实现原理还是通过原型的，但是至少对开发者的友好性提升了很多，让JS更有OOP的味道也更接近于其他OOP的语言。现在我们也能很简单的来声明一个类：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123;</div><div class="line">    <span class="keyword">constructor</span>(name, age) &#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">        <span class="keyword">this</span>.age = age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    say() &#123;</div><div class="line">        alert(<span class="string">`Hello, I am <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-        
-          <p class="article-more-link">
-            <a href="/2016/01/11/js-oop/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/01/11/js-oop/" data-id="cj4av4ca6000eie8apwvi8f2q" class="article-share-link">分享到</a>
-      
-        <a href="http://www.i0011.com/2016/01/11/js-oop/#ds-thread" class="article-comment-link">评论</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Es6/">Es6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Js-Basic/">Js Basic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OOP/">OOP</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-respond-proxy" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/08/respond-proxy/">respondjs-proxy</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2016/01/08/respond-proxy/">
-      <time datetime="2016-01-08T02:47:43.000Z" itemprop="datePublished">2016-01-08</time>
-    </a>
-  </div>
-
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>respond.js</strong>用来解决IE9以下不支持媒体查询的问题。</p>
-<p>在静态资源(CSS)和网站在同一域名的情况下使用起来很简单：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"path/to/cssfile.css"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"path/to/respond.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<p>引入HTML并置于css文件引用位置之后即可。<br>
-        
-          <p class="article-more-link">
-            <a href="/2016/01/08/respond-proxy/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/01/08/respond-proxy/" data-id="cj4av4ca7000gie8a55rgb0kg" class="article-share-link">分享到</a>
-      
-        <a href="http://www.i0011.com/2016/01/08/respond-proxy/#ds-thread" class="article-comment-link">评论</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IE8/">IE8</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Solution/">Solution</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-bad-rem" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/06/18/bad-rem/">REM是个坑，精确控制不适合</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/06/18/bad-rem/">
-      <time datetime="2015-06-18T06:56:05.000Z" itemprop="datePublished">2015-06-18</time>
-    </a>
-  </div>
-
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>前两天需要做一个涂鸦的活动页面，来瞅瞅<img src="https://dn-xuqi.qbox.me/yoho-q1.png" alt="年中大促"><br>
-        
-          <p class="article-more-link">
-            <a href="/2015/06/18/bad-rem/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2015/06/18/bad-rem/" data-id="cj4av4c9i0001ie8aeeglurqf" class="article-share-link">分享到</a>
-      
-        <a href="http://www.i0011.com/2015/06/18/bad-rem/#ds-thread" class="article-comment-link">评论</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Solution/">Solution</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-handlebars" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/04/30/handlebars/">Handlebars使用指南</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/04/30/handlebars/">
-      <time datetime="2015-04-30T09:49:41.000Z" itemprop="datePublished">2015-04-30</time>
-    </a>
-  </div>
-
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="http://handlebarsjs.com/">Handlebars</a>为Mustache的超集，即：在完全兼容Mustache语法的基础上，提供了很多语法糖，不要太甜…</p>
-<h2 id="Begin-Now"><a href="#Begin-Now" class="headerlink" title="Begin Now"></a>Begin Now</h2><h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>这里我们只介绍一些Handlebars中相对于Mustache超集的部分，若不了解Mustache，请<a href="http://i0011.com/2015/04/30/Mustache%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">移步</a><br>
-        
-          <p class="article-more-link">
-            <a href="/2015/04/30/handlebars/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2015/04/30/handlebars/" data-id="cj4av4c9z0008ie8a3n4pxss4" class="article-share-link">分享到</a>
-      
-        <a href="http://www.i0011.com/2015/04/30/handlebars/#ds-thread" class="article-comment-link">评论</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HandBook/">HandBook</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-mustache" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/04/30/mustache/">Mustache使用指南</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/04/30/mustache/">
-      <time datetime="2015-04-30T05:59:45.000Z" itemprop="datePublished">2015-04-30</time>
-    </a>
-  </div>
-
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>先拐远一点：mustache，读[ˈmʌsˌtæʃ]，而不是[ˈmʌstˌek]，胡子的意思，取这名字大概是将模板引擎中的<code>{</code>顺时针转个90度就像个人的胡子了，嗯，大概是这样…</p>
-<p>再进入正题：mustache是一个轻逻辑的模板引擎（为啥叫“轻逻辑”呢，因为没有if else for等逻辑语句，取而代之的是只用标签实现 ）</p>
-<p>mustache.js是mustache模板系统的js实现，或者叫解析器。下面介绍下使用方法，很简单的语法~<br>
-        
-          <p class="article-more-link">
-            <a href="/2015/04/30/mustache/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2015/04/30/mustache/" data-id="cj4av4ca9000jie8aihy2zsp0" class="article-share-link">分享到</a>
-      
-        <a href="http://www.i0011.com/2015/04/30/mustache/#ds-thread" class="article-comment-link">评论</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HandBook/">HandBook</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
       <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
       </nav>
     </section>
       
@@ -698,7 +702,7 @@
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2017/04/03/lodash/" class="thumbnail">
+              <a href="/2017/07/12/lodash-array/" class="thumbnail">
   
     <span class="thumbnail-image thumbnail-none"></span>
   
@@ -707,33 +711,15 @@
             
             <div class="item-inner">
               <p class="item-category"></p>
-              <p class="item-title"><a href="/2017/04/03/lodash/" class="title">lodash源码祭</a></p>
-              <p class="item-date"><time datetime="2017-04-03T14:08:37.000Z" itemprop="datePublished">2017-04-03</time></p>
+              <p class="item-title"><a href="/2017/07/12/lodash-array/" class="title">Lodash源码祭「Array」</a></p>
+              <p class="item-date"><time datetime="2017-07-12T11:09:17.000Z" itemprop="datePublished">2017-07-12</time></p>
             </div>
           </li>
         
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2016/10/09/https-config/" class="thumbnail">
-  
-    <span style="background-image:url(https://dn-xuqi.qbox.me/https.png
-)" alt="Https养成手记" class="thumbnail-image"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"></p>
-              <p class="item-title"><a href="/2016/10/09/https-config/" class="title">Https养成手记</a></p>
-              <p class="item-date"><time datetime="2016-10-09T09:48:42.000Z" itemprop="datePublished">2016-10-09</time></p>
-            </div>
-          </li>
-        
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2016/09/25/destructuring/" class="thumbnail">
+              <a href="/2017/07/12/lodash-date/" class="thumbnail">
   
     <span class="thumbnail-image thumbnail-none"></span>
   
@@ -742,15 +728,15 @@
             
             <div class="item-inner">
               <p class="item-category"></p>
-              <p class="item-title"><a href="/2016/09/25/destructuring/" class="title">destructuring</a></p>
-              <p class="item-date"><time datetime="2016-09-25T03:48:01.000Z" itemprop="datePublished">2016-09-25</time></p>
+              <p class="item-title"><a href="/2017/07/12/lodash-date/" class="title">Lodash源码祭「Date」</a></p>
+              <p class="item-date"><time datetime="2017-07-12T11:08:11.000Z" itemprop="datePublished">2017-07-12</time></p>
             </div>
           </li>
         
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2016/01/28/what-the-fuck-of-postcss/" class="thumbnail">
+              <a href="/2017/07/12/lodash-collection/" class="thumbnail">
   
     <span class="thumbnail-image thumbnail-none"></span>
   
@@ -759,15 +745,15 @@
             
             <div class="item-inner">
               <p class="item-category"></p>
-              <p class="item-title"><a href="/2016/01/28/what-the-fuck-of-postcss/" class="title">What the f**k of Postcss</a></p>
-              <p class="item-date"><time datetime="2016-01-28T05:37:31.000Z" itemprop="datePublished">2016-01-28</time></p>
+              <p class="item-title"><a href="/2017/07/12/lodash-collection/" class="title">Lodash源码祭「Collection」</a></p>
+              <p class="item-date"><time datetime="2017-07-12T11:05:36.000Z" itemprop="datePublished">2017-07-12</time></p>
             </div>
           </li>
         
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2016/01/24/react-ssr/" class="thumbnail">
+              <a href="/2017/07/12/lodash-math/" class="thumbnail">
   
     <span class="thumbnail-image thumbnail-none"></span>
   
@@ -776,8 +762,25 @@
             
             <div class="item-inner">
               <p class="item-category"></p>
-              <p class="item-title"><a href="/2016/01/24/react-ssr/" class="title">React server side render</a></p>
-              <p class="item-date"><time datetime="2016-01-24T12:20:17.000Z" itemprop="datePublished">2016-01-24</time></p>
+              <p class="item-title"><a href="/2017/07/12/lodash-math/" class="title">Lodash源码祭「Math」</a></p>
+              <p class="item-date"><time datetime="2017-07-12T11:02:21.000Z" itemprop="datePublished">2017-07-12</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2017/07/12/lodash-number/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2017/07/12/lodash-number/" class="title">Lodash源码祭「Number」</a></p>
+              <p class="item-date"><time datetime="2017-07-12T11:02:12.000Z" itemprop="datePublished">2017-07-12</time></p>
             </div>
           </li>
         
@@ -792,7 +795,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browserify/">Browserify</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Es6/">Es6</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HandBook/">HandBook</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IE8/">IE8</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Js-Basic/">Js Basic</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Koa/">Koa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Life/">Life</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lodash/">Lodash</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OOP/">OOP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plugin/">Plugin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postcss/">Postcss</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Solution/">Solution</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ssr/">Ssr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/兼容性/">兼容性</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Array/">Array</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browserify/">Browserify</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Date/">Date</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Es6/">Es6</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HandBook/">HandBook</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IE8/">IE8</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Js-Basic/">Js Basic</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Koa/">Koa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lang/">Lang</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Life/">Life</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lodash/">Lodash</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Number/">Number</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OOP/">OOP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plugin/">Plugin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postcss/">Postcss</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Solution/">Solution</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ssr/">Ssr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/String/">String</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/兼容性/">兼容性</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -801,7 +804,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Browserify/" style="font-size: 10px;">Browserify</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Es6/" style="font-size: 16.67px;">Es6</a> <a href="/tags/HandBook/" style="font-size: 20px;">HandBook</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/IE8/" style="font-size: 13.33px;">IE8</a> <a href="/tags/Js-Basic/" style="font-size: 13.33px;">Js Basic</a> <a href="/tags/Koa/" style="font-size: 10px;">Koa</a> <a href="/tags/Life/" style="font-size: 10px;">Life</a> <a href="/tags/Lodash/" style="font-size: 10px;">Lodash</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/OOP/" style="font-size: 10px;">OOP</a> <a href="/tags/Plugin/" style="font-size: 10px;">Plugin</a> <a href="/tags/Postcss/" style="font-size: 13.33px;">Postcss</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Solution/" style="font-size: 20px;">Solution</a> <a href="/tags/Ssr/" style="font-size: 10px;">Ssr</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/兼容性/" style="font-size: 10px;">兼容性</a>
+      <a href="/tags/Array/" style="font-size: 10px;">Array</a> <a href="/tags/Browserify/" style="font-size: 10px;">Browserify</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Collection/" style="font-size: 10px;">Collection</a> <a href="/tags/Date/" style="font-size: 10px;">Date</a> <a href="/tags/Es6/" style="font-size: 15px;">Es6</a> <a href="/tags/HandBook/" style="font-size: 17.5px;">HandBook</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/IE8/" style="font-size: 12.5px;">IE8</a> <a href="/tags/Js-Basic/" style="font-size: 12.5px;">Js Basic</a> <a href="/tags/Koa/" style="font-size: 10px;">Koa</a> <a href="/tags/Lang/" style="font-size: 10px;">Lang</a> <a href="/tags/Life/" style="font-size: 10px;">Life</a> <a href="/tags/Lodash/" style="font-size: 20px;">Lodash</a> <a href="/tags/Math/" style="font-size: 10px;">Math</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Number/" style="font-size: 10px;">Number</a> <a href="/tags/OOP/" style="font-size: 10px;">OOP</a> <a href="/tags/Plugin/" style="font-size: 10px;">Plugin</a> <a href="/tags/Postcss/" style="font-size: 12.5px;">Postcss</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Solution/" style="font-size: 17.5px;">Solution</a> <a href="/tags/Ssr/" style="font-size: 10px;">Ssr</a> <a href="/tags/String/" style="font-size: 10px;">String</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/兼容性/" style="font-size: 10px;">兼容性</a>
     </div>
   </div>
 
@@ -810,7 +813,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Lodash源码祭「Lang」 | Sagittarius Love Libra</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…
+
+LangcastArray1_.castArray(value)
+如果value不是一个数组，就给他包成一个数组1234567891011121314const castArray = (...arg) =&amp;gt; &amp;#123;    // 没有参数的情况，返回空数组，需要特殊处理，跟参数为undefined不同">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lodash源码祭「Lang」">
+<meta property="og:url" content="http://www.i0011.com/2017/07/12/lodash-lang/index.html">
+<meta property="og:site_name" content="Sagittarius Love Libra">
+<meta property="og:description" content="巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…
+
+LangcastArray1_.castArray(value)
+如果value不是一个数组，就给他包成一个数组1234567891011121314const castArray = (...arg) =&amp;gt; &amp;#123;    // 没有参数的情况，返回空数组，需要特殊处理，跟参数为undefined不同">
+<meta property="og:updated_time" content="2017-07-12T11:17:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lodash源码祭「Lang」">
+<meta name="twitter:description" content="巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…
+
+LangcastArray1_.castArray(value)
+如果value不是一个数组，就给他包成一个数组1234567891011121314const castArray = (...arg) =&amp;gt; &amp;#123;    // 没有参数的情况，返回空数组，需要特殊处理，跟参数为undefined不同">
+  
+  
+    <link rel="icon" href="favicon.png">
+  
+  
+ <link href='//fonts.useso.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+ <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  
+
+  
+
+  
+</head>
+<body>
+  <div id="container">
+    <header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="/" id="logo"><i class="logo" style="background-image: url(/css/images/logo.png)"></i><span class="site-title">Sagittarius Love Libra</span></a>
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/.">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://dn-xuqi.qbox.me/avatar.jpg"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+      
+      <div id="search-form-wrap">
+        
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://www.i0011.com"></form>
+        
+      </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tr>
+        
+          <td><a class="main-nav-link" href="/.">Home</a></td>
+        
+          <td><a class="main-nav-link" href="/archives">Archives</a></td>
+        
+        <td>
+          
+            <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="sitesearch" value="http://www.i0011.com"></form>
+          
+        </td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+    <div class="outer">
+      
+        <aside id="profile">
+  <div class="inner profile-inner">
+    <div class="base-info profile-block">
+      <img id="avatar" src="https://dn-xuqi.qbox.me/avatar.jpg">
+      <h2 id="name">徐祁</h2>
+      <h3 id="title">Enjoy</h3>
+      <span id="location"><i class="fa fa-map-marker"></i>YOHO.cn, NanJing, China</span>
+      <a id="follow" href="https://github.com/loveLibra/">关注我</a>
+    </div>
+    <div class="article-info profile-block">
+      <div class="article-info-block">
+        21
+        <span>文章</span>
+      </div>
+      <div class="article-info-block">
+        26
+        <span>标签</span>
+      </div>
+    </div>
+    
+    <div class="contact-info profile-block">
+      <table class="contact-list">
+        <tr>
+          
+          <td><a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+          
+          <td><a href="http://weibo.com/u/2287068735" target="_blank" title="weibo"><i class="fa fa-weibo"></i></a></td>
+          
+          <td><a href="https://cn.linkedin.com/in/祁-徐-3ba230ab" target="_blank" title="linkedin"><i class="fa fa-linkedin"></i></a></td>
+          
+        </tr>
+      </table>
+    </div>
+    
+    
+  </div>
+</aside>
+
+      
+      <section id="main"><article id="post-lodash-lang" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Lodash源码祭「Lang」
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2017/07/12/lodash-lang/">
+      <time datetime="2017-07-12T10:58:41.000Z" itemprop="datePublished">2017-07-12</time>
+    </a>
+  </div>
+
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <blockquote>
+<p>巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…</p>
+</blockquote>
+<h1 id="Lang"><a href="#Lang" class="headerlink" title="Lang"></a>Lang</h1><h2 id="castArray"><a href="#castArray" class="headerlink" title="castArray"></a>castArray</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.castArray(value)</div></pre></td></tr></table></figure>
+<p>如果value不是一个数组，就给他包成一个数组<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> castArray = <span class="function">(<span class="params">...arg</span>) =&gt;</span> &#123;</div><div class="line">    <span class="comment">// 没有参数的情况，返回空数组，需要特殊处理，跟参数为undefined不同</span></div><div class="line">    <span class="keyword">if</span> (arg.length === <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> [];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">let</span> value = arg[<span class="number">0</span>];</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(value)) &#123;</div><div class="line">        <span class="keyword">return</span> value;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> [value];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h2 id="eq"><a href="#eq" class="headerlink" title="eq"></a>eq</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.eq(value, other)</div></pre></td></tr></table></figure>
+<p>value和other是否「强相等」，但这里NaN和NaN相等<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> eq = <span class="function">(<span class="params">value, other</span>) =&gt;</span> value === other || (value !== value &amp;&amp; other !== other);</div></pre></td></tr></table></figure></p>
+<h2 id="gt"><a href="#gt" class="headerlink" title="gt"></a>gt</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.gt(value, other)</div></pre></td></tr></table></figure>
+<p>value &gt; other则返回true，否则返回false；需要注意的时，当两个参数都是字符串时，进行字符串比较，其余的都转化为数字进行比较<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> gt = <span class="function">(<span class="params">value, other</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">if</span> (!(<span class="keyword">typeof</span> value === <span class="string">'string'</span> &amp;&amp; <span class="keyword">typeof</span> other === <span class="string">'string'</span>)) &#123;</div><div class="line">        value = +value;</div><div class="line">        other = +other;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> value &gt; other;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>lt</code>、<code>lte</code>和<code>gte</code>同理…</p>
+<h2 id="isArguments"><a href="#isArguments" class="headerlink" title="isArguments"></a>isArguments</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.isArguments(value)</div></pre></td></tr></table></figure>
+<p>检查传入值是否是arguments对象<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> isArguments = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">typeof</span> value === <span class="string">'object'</span> &amp;&amp; value !== <span class="literal">null</span> &amp;&amp; value.toString() === <span class="string">'[object Arguments]'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="isArray"><a href="#isArray" class="headerlink" title="isArray"></a>isArray</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.isArray(value)</div></pre></td></tr></table></figure>
+<p>判断是否为数组<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> isArray = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">const</span> _isArray = <span class="built_in">Array</span>.isArray;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!_isArray) &#123;</div><div class="line">        _isArray = <span class="function"><span class="keyword">function</span>(<span class="params">arg</span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(arg) === <span class="string">'[object Array]'</span>;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> _isArray(value);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="isArrayBuffer"><a href="#isArrayBuffer" class="headerlink" title="isArrayBuffer"></a>isArrayBuffer</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.isArrayBuffer(value)</div></pre></td></tr></table></figure>
+<p>判断是否为ArrayBuffer。同样，通过<code>toString</code>也能得到ArrayBuffer的tag为<code>[object ArrayBuffer]</code></p>
+<h2 id="isArrayLike"><a href="#isArrayLike" class="headerlink" title="isArrayLike"></a>isArrayLike</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.isArrayLike(value)</div></pre></td></tr></table></figure>
+<p>首先，明确ArrayLike的特征为：非函数的value有length属性，length为整数且0 &lt;= value.length &lt;= Number.MAX_SAFE_INTEGER<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> isLength = <span class="function"><span class="params">val</span> =&gt;</span> &#123;</div><div class="line"></div><div class="line">    <span class="comment">// 数字 &amp;&amp; 非负 &amp;&amp; 除「-0」的非负「整数」 &amp;&amp; 小于最大正整数</span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">typeof</span> val === <span class="string">'number'</span> &amp;&amp; val &gt; <span class="number">-1</span> &amp;&amp; val % <span class="number">1</span> === <span class="number">0</span> &amp;&amp; val &lt;= <span class="built_in">Number</span>.MAX_SAFE_INTEGER;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> isArrayLike = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">return</span> value !== <span class="literal">null</span> &amp;&amp; <span class="keyword">typeof</span> value !== <span class="string">'function'</span> &amp;&amp; isLength(value.length);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="isArrayLikeObject"><a href="#isArrayLikeObject" class="headerlink" title="isArrayLikeObject"></a>isArrayLikeObject</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.isArrayLikeObject(value)</div></pre></td></tr></table></figure>
+<p>在<code>isArrayLike</code>的基础上加了个条件：判断value得是Object</p>
+<h2 id="isBoolean"><a href="#isBoolean" class="headerlink" title="isBoolean"></a>isBoolean</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.isBoolean(value)</div></pre></td></tr></table></figure>
+<p>可以检验值是否为布尔型变量，可以是原始值类型（true / false）也可以是Boolean的实例对象<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> isBoolean = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">return</span> value === <span class="literal">true</span> || value === <span class="literal">false</span> ||</div><div class="line">        (value !== <span class="literal">null</span> &amp;&amp; <span class="built_in">Object</span>.prototype.toString.call(value) === <span class="string">'[object Boolean]'</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="isNumber"><a href="#isNumber" class="headerlink" title="isNumber"></a>isNumber</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.isNumber(value);</div></pre></td></tr></table></figure>
+<p>判断参数是否为数字，同样对于原始类型和Number的实例都适用<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> isNumber = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">typeof</span> value === <span class="string">'number'</span> ||</div><div class="line">        <span class="built_in">Object</span>.prototype.toString.call(value) === <span class="string">'[object Number]'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="isNaN"><a href="#isNaN" class="headerlink" title="isNaN"></a>isNaN</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.isNaN(value)</div></pre></td></tr></table></figure>
+<p>原生<code>isNaN</code>方法会对非数字都返回true，而不光是NaN，lodash仅对NaN本身以及<code>new Number(NaN)</code>的情况返回true<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="built_in">isNaN</span> = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line"></div><div class="line">    <span class="comment">// 首先判断是否为数字</span></div><div class="line">    <span class="comment">// 然后区分是否跟本身相等</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> isNumber(value) &amp;&amp; value != +value; <span class="comment">// 非强等</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="isNil"><a href="#isNil" class="headerlink" title="isNil"></a>isNil</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.isNil(value)</div></pre></td></tr></table></figure>
+<p>判断参数是否为undefined或者null<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> isNil = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">return</span> value === <span class="literal">undefined</span> || value === <span class="literal">null</span>; <span class="comment">// value == null</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="isNull"><a href="#isNull" class="headerlink" title="isNull"></a>isNull</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.isNull(value)</div></pre></td></tr></table></figure>
+<p>判断参数是否为null<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> isNull = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">return</span> value === <span class="literal">null</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="isObject"><a href="#isObject" class="headerlink" title="isObject"></a>isObject</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.isObject(value)</div></pre></td></tr></table></figure>
+<p>是否为对象(包括数组、函数、对象、正则等等非原始数据类型…)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> isObject = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">var</span> type = <span class="keyword">typeof</span> value;</div><div class="line"></div><div class="line">    <span class="comment">// null &amp;&amp; 对象或者函数</span></div><div class="line">    <span class="keyword">return</span> value != <span class="literal">null</span> &amp;&amp; (type === <span class="string">'object'</span> || type === <span class="string">'function'</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="isObjectLike"><a href="#isObjectLike" class="headerlink" title="isObjectLike"></a>isObjectLike</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.isObjectLike(value)</div></pre></td></tr></table></figure>
+<p>检查value是否为Object-Like（非null并满足typeof vlaue === ‘object’）<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> isObjectLike = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">return</span> value !== <span class="literal">null</span> &amp;&amp; <span class="keyword">typeof</span> value === <span class="string">'object'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="isPlainObject"><a href="#isPlainObject" class="headerlink" title="isPlainObject"></a>isPlainObject</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.isPlainObject(value)</div></pre></td></tr></table></figure>
+<p>检查是否为plain object（object.constructor === Object || object.[[prototype]] === null）<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> isPlainObject = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="comment">// 首先满足是个对象并且排除掉一些内置的对象,比如Date这些</span></div><div class="line">    <span class="keyword">if</span> (!isObjectLike(value) || <span class="built_in">Object</span>.prototype.toString.call(value) !== <span class="string">'[object Object]'</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 先看value.[[prototype]]是否为null，[[prototype]]是不可见的属性，通过Object.getPrototype可以获取</span></div><div class="line">    <span class="keyword">let</span> proto = <span class="built_in">Object</span>.getPrototypeOf(value);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (proto === <span class="literal">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 承上，这边需要说一下，默认创建的总是有[[prototype]]指向Object.prototype的，但是为啥会有null的情况呢，因为有Object.create(null)啊！指定[[prototype]]是null，也就变成了食物链顶端的男人...需要考虑这种情况</span></div><div class="line"></div><div class="line">    <span class="comment">// 接下来判断对象是不是通过Object构造函数构造出来的</span></div><div class="line">    <span class="comment">// contructor是可以篡改的...</span></div><div class="line">    <span class="keyword">let</span> <span class="keyword">constructor</span> = Object.prototype.hasOwnProperty.call(proto, '<span class="keyword">constructor</span>') &amp;&amp; proto.<span class="keyword">constructor</span>;</div><div class="line"></div><div class="line">    if (typeof <span class="keyword">constructor</span> === 'function' &amp;&amp;</div><div class="line">        // instanceof 检查是是否在左参数是否在右参数的原型链中</div><div class="line">        // 除<span class="keyword">constructor</span>是Object外，其他构造函数不满足此条件</div><div class="line">        // 对于Object，Object.__proto__ === Function.prototype，Function.prototype.__proto__ === Object.prototype</div><div class="line">        <span class="keyword">constructor</span> instanceof <span class="keyword">constructor</span> &amp;&amp;</div><div class="line">        // 检查contructor字符串是否是Object的字符串</div><div class="line">        Function.prototype.toString.call(<span class="keyword">constructor</span>) === Function.prototype.toString.call(Object)) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="isRegExp"><a href="#isRegExp" class="headerlink" title="isRegExp"></a>isRegExp</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.isRegExp(value)</div></pre></td></tr></table></figure>
+<p>检查是否为正则<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> isRegExp = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="comment">// 官网似乎还做了个node环境下直接用util.isRegExp去判断的，但是看Node API似乎已经被Deprecated啦</span></div><div class="line">    <span class="keyword">return</span> isObjectLike(value) &amp;&amp; <span class="built_in">Object</span>.prototype.toString.call(value) === <span class="string">'[object RegExp]'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="isSafeInteger"><a href="#isSafeInteger" class="headerlink" title="isSafeInteger"></a>isSafeInteger</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.isSafeInteger(value)</div></pre></td></tr></table></figure>
+<p>也就是 -(2^53 - 1) ~ （2^53 - 1）之间的整数。ES6直接提供了方法<code>Number.isSafeInteger</code>可以直接实现…当然，考虑IE的话还是需要Polyfill的<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> isInteger = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">typeof</span> value === <span class="string">'number'</span> &amp;&amp;</div><div class="line">        <span class="built_in">isFinite</span>(value) &amp;&amp;</div><div class="line">        <span class="built_in">Math</span>.floor(value) === value;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> isSafeInteger = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">return</span> isInteger(value) &amp;&amp; <span class="built_in">Math</span>.abs(value) &lt;= <span class="built_in">Number</span>.MAX_SAFE_INTEGER;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="isSet-isWeekSet-isMap-isWeekMap"><a href="#isSet-isWeekSet-isMap-isWeekMap" class="headerlink" title="isSet / isWeekSet / isMap / isWeekMap"></a>isSet / isWeekSet / isMap / isWeekMap</h2><p>Set和Map都可以通过<code>Object.prototype.toString.call(value)</code>的值去判断，分别为’[object Set]’、’[object WeekSet]’、’[object Map]’、’[object WeekMap]’</p>
+<h2 id="isString"><a href="#isString" class="headerlink" title="isString"></a>isString</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.isString(value)</div></pre></td></tr></table></figure>
+<p>检查是否为字符串<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> isString = <span class="function"><span class="params">value</span> =&gt;</span> <span class="keyword">typeof</span> value === <span class="string">'string'</span> ||</div><div class="line">    Obejct.prototype.toString.call(value) === <span class="string">'[object String]'</span>;</div></pre></td></tr></table></figure></p>
+<h2 id="isSymbol"><a href="#isSymbol" class="headerlink" title="isSymbol"></a>isSymbol</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.isSymbol(value)</div></pre></td></tr></table></figure>
+<p>检查是否为symbol值<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> isSymbol = <span class="function"><span class="params">value</span> =&gt;</span> <span class="keyword">typeof</span> value === <span class="string">'symbol'</span> ||</div><div class="line">    Obejct.prototype.toString.call(value) === <span class="string">'[object Symbol]'</span>;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-lang/" data-id="cj50wwu0b000ho28ahpm2ej86" class="article-share-link">分享到</a>
+      
+        <a href="http://www.i0011.com/2017/07/12/lodash-lang/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lang/">Lang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lodash/">Lodash</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/12/lodash-string/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          Lodash源码祭「String」
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/https-config/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">Https养成手记</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="http://www.i0011.com/2017/07/12/lodash-lang/" data-title="Lodash源码祭「Lang」" data-url="http://www.i0011.com/2017/07/12/lodash-lang/">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by DuoShuo.</a></noscript>
+      </div>
+  </section>
+
+</section>
+      
+        <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2017/07/12/lodash-array/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2017/07/12/lodash-array/" class="title">Lodash源码祭「Array」</a></p>
+              <p class="item-date"><time datetime="2017-07-12T11:09:17.000Z" itemprop="datePublished">2017-07-12</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2017/07/12/lodash-date/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2017/07/12/lodash-date/" class="title">Lodash源码祭「Date」</a></p>
+              <p class="item-date"><time datetime="2017-07-12T11:08:11.000Z" itemprop="datePublished">2017-07-12</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2017/07/12/lodash-collection/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2017/07/12/lodash-collection/" class="title">Lodash源码祭「Collection」</a></p>
+              <p class="item-date"><time datetime="2017-07-12T11:05:36.000Z" itemprop="datePublished">2017-07-12</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2017/07/12/lodash-math/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2017/07/12/lodash-math/" class="title">Lodash源码祭「Math」</a></p>
+              <p class="item-date"><time datetime="2017-07-12T11:02:21.000Z" itemprop="datePublished">2017-07-12</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2017/07/12/lodash-number/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2017/07/12/lodash-number/" class="title">Lodash源码祭「Number」</a></p>
+              <p class="item-date"><time datetime="2017-07-12T11:02:12.000Z" itemprop="datePublished">2017-07-12</time></p>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Array/">Array</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Browserify/">Browserify</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collection/">Collection</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Date/">Date</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Es6/">Es6</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HandBook/">HandBook</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IE8/">IE8</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Js-Basic/">Js Basic</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Koa/">Koa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lang/">Lang</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Life/">Life</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lodash/">Lodash</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Number/">Number</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OOP/">OOP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Plugin/">Plugin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postcss/">Postcss</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Solution/">Solution</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ssr/">Ssr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/String/">String</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/兼容性/">兼容性</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Array/" style="font-size: 10px;">Array</a> <a href="/tags/Browserify/" style="font-size: 10px;">Browserify</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Collection/" style="font-size: 10px;">Collection</a> <a href="/tags/Date/" style="font-size: 10px;">Date</a> <a href="/tags/Es6/" style="font-size: 15px;">Es6</a> <a href="/tags/HandBook/" style="font-size: 17.5px;">HandBook</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/IE8/" style="font-size: 12.5px;">IE8</a> <a href="/tags/Js-Basic/" style="font-size: 12.5px;">Js Basic</a> <a href="/tags/Koa/" style="font-size: 10px;">Koa</a> <a href="/tags/Lang/" style="font-size: 10px;">Lang</a> <a href="/tags/Life/" style="font-size: 10px;">Life</a> <a href="/tags/Lodash/" style="font-size: 20px;">Lodash</a> <a href="/tags/Math/" style="font-size: 10px;">Math</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Number/" style="font-size: 10px;">Number</a> <a href="/tags/OOP/" style="font-size: 10px;">OOP</a> <a href="/tags/Plugin/" style="font-size: 10px;">Plugin</a> <a href="/tags/Postcss/" style="font-size: 12.5px;">Postcss</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Solution/" style="font-size: 17.5px;">Solution</a> <a href="/tags/Ssr/" style="font-size: 10px;">Ssr</a> <a href="/tags/String/" style="font-size: 10px;">String</a> <a href="/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/tags/兼容性/" style="font-size: 10px;">兼容性</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+  <div id="toTop" class="fa fa-chevron-up"></div>
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 徐祁<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+    </div>
+  </div>
+</footer>
+    
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"xuqi"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+
+
+ <script src="//ajax.useso.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
