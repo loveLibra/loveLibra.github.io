@@ -3,17 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: String | Sagittarius Love Libra</title>
+  <title>Lodash源码祭「Object」 | Sagittarius Love Libra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="xuqi&apos;s Blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Sagittarius Love Libra">
-<meta property="og:url" content="http://www.i0011.com/tags/String/index.html">
+  <meta name="description" content="巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…
+
+ObjectforIn1_.forIn(object, [iteratee=_.identity])
+遍历所有可枚举的字符串(非symbol)键和对应的值，iteratee接受三个参数：value、key、object…跟数组的forEach一样，return false会退出遍历12345678910111213">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lodash源码祭「Object」">
+<meta property="og:url" content="http://www.i0011.com/2017/07/20/lodash-object/index.html">
 <meta property="og:site_name" content="Sagittarius Love Libra">
-<meta property="og:description" content="xuqi&apos;s Blog">
+<meta property="og:description" content="巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…
+
+ObjectforIn1_.forIn(object, [iteratee=_.identity])
+遍历所有可枚举的字符串(非symbol)键和对应的值，iteratee接受三个参数：value、key、object…跟数组的forEach一样，return false会退出遍历12345678910111213">
+<meta property="og:updated_time" content="2017-07-22T14:58:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sagittarius Love Libra">
-<meta name="twitter:description" content="xuqi&apos;s Blog">
+<meta name="twitter:title" content="Lodash源码祭「Object」">
+<meta name="twitter:description" content="巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…
+
+ObjectforIn1_.forIn(object, [iteratee=_.identity])
+遍历所有可枚举的字符串(非symbol)键和对应的值，iteratee接受三个参数：value、key、object…跟数组的forEach一样，return false会退出遍历12345678910111213">
   
   
     <link rel="icon" href="favicon.png">
@@ -117,83 +127,80 @@
 </aside>
 
       
-      <section id="main">
-    <section class="archives-wrap">
-    <div class="archive-tag-wrap">
-      <span class="archive-tag">#String</span>
-    </div>
-    <div class="archives">
+      <section id="main"><article id="post-lodash-object" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
     
-    <div class="archive-article-thumbnail">
-      <a href="/2017/07/20/lodash-object/" class="thumbnail">
-  
-    <span class="thumbnail-image thumbnail-none"></span>
-  
-</a>
-    </div>
     
-    <header class="archive-article-header">
-      
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/20/lodash-object/">Lodash源码祭「Object」</a>
+    <h1 class="article-title" itemprop="name">
+      Lodash源码祭「Object」
     </h1>
   
 
-      
-        
-  <div class="archive-article-date">
+        <div class="article-meta">
+          
+  <div class="article-date">
     <i class="fa fa-calendar"></i>
     <a href="/2017/07/20/lodash-object/">
-      <time datetime="2017-07-20T14:33:33.000Z" itemprop="datePublished">2017 7月 20</time>
+      <time datetime="2017-07-20T14:33:33.000Z" itemprop="datePublished">2017-07-20</time>
     </a>
   </div>
 
 
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
       
-    </header>
-  </div>
-</article>
-    
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    
-    <div class="archive-article-thumbnail">
-      <a href="/2017/07/12/lodash-string/" class="thumbnail">
-  
-    <span class="thumbnail-image thumbnail-none"></span>
-  
-</a>
+                
+        <blockquote>
+<p>巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…</p>
+</blockquote>
+<h1 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h1><h2 id="forIn"><a href="#forIn" class="headerlink" title="forIn"></a>forIn</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.forIn(object, [iteratee=_.identity])</div></pre></td></tr></table></figure>
+<p>遍历所有可枚举的<code>字符串</code>(非symbol)键和对应的值，iteratee接受三个参数：value、key、object…跟数组的forEach一样，<code>return false</code>会退出遍历<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> forIn = <span class="function">(<span class="params">object, iteratee</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">if</span> (object == <span class="literal">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> object;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    object = <span class="built_in">Object</span>(object);</div><div class="line"></div><div class="line">    <span class="comment">//let attrs = Object.keys(object); // 获取所有可枚举属性</span></div><div class="line">    <span class="keyword">let</span> attrs = [];</div><div class="line"></div><div class="line">    <span class="comment">// 通过原生for in获取所有可枚举的属性</span></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> attr <span class="keyword">in</span> object) &#123;</div><div class="line">		attrs.push(attr);</div><div class="line">	&#125;</div><div class="line">    <span class="comment">// 或者通过如下方式获取，但是要保存object副本</span></div><div class="line">    <span class="comment">//while (object) &#123;</span></div><div class="line">    <span class="comment">//    let attr = Object.keys(object);</span></div><div class="line"></div><div class="line">    <span class="comment">//    attrs = [...attrs, ...attr];</span></div><div class="line"></div><div class="line">    <span class="comment">//    object = Object.getPrototypeOf(object);</span></div><div class="line">    <span class="comment">//&#125;</span></div><div class="line"></div><div class="line">    <span class="keyword">let</span> index = <span class="number">-1</span>;</div><div class="line"></div><div class="line">    <span class="keyword">while</span> (++index &lt; attrs.length) &#123;</div><div class="line">        <span class="keyword">let</span> attr = attrs[index];</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (iteratee(object[attr], attr, object) === <span class="literal">false</span>) &#123;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> object;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="forOwn"><a href="#forOwn" class="headerlink" title="forOwn"></a>forOwn</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.forOwn(object, [iteratee=_.identity])</div></pre></td></tr></table></figure>
+<p>类似于<code>forIn</code>，但是只遍历自己的可枚举属性，直接用<code>Object.keys</code>就可以啦<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> forOwn = <span class="function">(<span class="params">object, iteratee</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">if</span> (object == <span class="literal">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> object;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    object = <span class="built_in">Object</span>(object);</div><div class="line"></div><div class="line">    <span class="keyword">let</span> attrs = <span class="built_in">Object</span>.keys(object);</div><div class="line"></div><div class="line">    <span class="keyword">let</span> index = <span class="number">-1</span>;</div><div class="line"></div><div class="line">    <span class="keyword">while</span> (++index &lt; attrs.length) &#123;</div><div class="line">        <span class="keyword">let</span> attr = attrs[index];</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (iteratee(object[attr], attr, object) === <span class="literal">false</span>) &#123;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> object;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
     </div>
-    
-    <header class="archive-article-header">
+    <footer class="article-footer">
+      <a data-url="http://www.i0011.com/2017/07/20/lodash-object/" data-id="cj5ff70ai000l9z8a8untapdi" class="article-share-link">分享到</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/12/lodash-string/">Lodash源码祭「String」</a>
-    </h1>
-  
+        <a href="http://www.i0011.com/2017/07/20/lodash-object/#ds-thread" class="article-comment-link">评论</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lodash/">Lodash</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/String/">String</a></li></ul>
 
-      
-        
-  <div class="archive-article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2017/07/12/lodash-string/">
-      <time datetime="2017-07-12T11:00:27.000Z" itemprop="datePublished">2017 7月 12</time>
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/07/12/lodash-array/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">Lodash源码祭「Array」</div>
     </a>
-  </div>
+  
+</nav>
 
 
-      
-    </header>
-  </div>
+  
 </article>
-    
-    </div></section>
-    </section>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="http://www.i0011.com/2017/07/20/lodash-object/" data-title="Lodash源码祭「Object」" data-url="http://www.i0011.com/2017/07/20/lodash-object/">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by DuoShuo.</a></noscript>
+      </div>
+  </section>
+
+</section>
       
         <aside id="sidebar">
   
