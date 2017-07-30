@@ -7,23 +7,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…
 
-LangcastArray1_.castArray(value)
-如果value不是一个数组，就给他包成一个数组1234567891011121314const castArray = (...arg) =&amp;gt; &amp;#123;    // 没有参数的情况，返回空数组，需要特殊处理，跟参数为undefined不同">
+Langclone1_.clone(value)
+castArray1_.castArray(value)
+如果value不是一个数组，就给他包成一个数组1234567891011121314const castArray = (...arg) =&amp;gt; &amp;#123;    // 没有参数的情况，返回空数组，需要">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Lodash源码祭「Lang」">
 <meta property="og:url" content="http://www.i0011.com/2017/07/12/lodash-lang/index.html">
 <meta property="og:site_name" content="Sagittarius Love Libra">
 <meta property="og:description" content="巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…
 
-LangcastArray1_.castArray(value)
-如果value不是一个数组，就给他包成一个数组1234567891011121314const castArray = (...arg) =&amp;gt; &amp;#123;    // 没有参数的情况，返回空数组，需要特殊处理，跟参数为undefined不同">
-<meta property="og:updated_time" content="2017-07-19T12:12:40.000Z">
+Langclone1_.clone(value)
+castArray1_.castArray(value)
+如果value不是一个数组，就给他包成一个数组1234567891011121314const castArray = (...arg) =&amp;gt; &amp;#123;    // 没有参数的情况，返回空数组，需要">
+<meta property="og:updated_time" content="2017-07-22T15:00:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Lodash源码祭「Lang」">
 <meta name="twitter:description" content="巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…
 
-LangcastArray1_.castArray(value)
-如果value不是一个数组，就给他包成一个数组1234567891011121314const castArray = (...arg) =&amp;gt; &amp;#123;    // 没有参数的情况，返回空数组，需要特殊处理，跟参数为undefined不同">
+Langclone1_.clone(value)
+castArray1_.castArray(value)
+如果value不是一个数组，就给他包成一个数组1234567891011121314const castArray = (...arg) =&amp;gt; &amp;#123;    // 没有参数的情况，返回空数组，需要">
   
   
     <link rel="icon" href="favicon.png">
@@ -160,7 +163,8 @@ LangcastArray1_.castArray(value)
         <blockquote>
 <p>巧妙的函数实现吸引着你想去看看他的实现方法，里面会有更多奇思妙想让你欣喜若狂…</p>
 </blockquote>
-<h1 id="Lang"><a href="#Lang" class="headerlink" title="Lang"></a>Lang</h1><h2 id="castArray"><a href="#castArray" class="headerlink" title="castArray"></a>castArray</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.castArray(value)</div></pre></td></tr></table></figure>
+<h1 id="Lang"><a href="#Lang" class="headerlink" title="Lang"></a>Lang</h1><h2 id="clone"><a href="#clone" class="headerlink" title="clone"></a>clone</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.clone(value)</div></pre></td></tr></table></figure>
+<h2 id="castArray"><a href="#castArray" class="headerlink" title="castArray"></a>castArray</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.castArray(value)</div></pre></td></tr></table></figure>
 <p>如果value不是一个数组，就给他包成一个数组<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> castArray = <span class="function">(<span class="params">...arg</span>) =&gt;</span> &#123;</div><div class="line">    <span class="comment">// 没有参数的情况，返回空数组，需要特殊处理，跟参数为undefined不同</span></div><div class="line">    <span class="keyword">if</span> (arg.length === <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> [];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">let</span> value = arg[<span class="number">0</span>];</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(value)) &#123;</div><div class="line">        <span class="keyword">return</span> value;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> [value];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <a id="more"></a>
 <h2 id="eq"><a href="#eq" class="headerlink" title="eq"></a>eq</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.eq(value, other)</div></pre></td></tr></table></figure>
@@ -230,7 +234,7 @@ LangcastArray1_.castArray(value)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/07/12/lodash-lang/" data-id="cj5ff70al000m9z8aqvmaiab8" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-lang/" data-id="cj5qti4rs000e7x8admo29384" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/07/12/lodash-lang/#ds-thread" class="article-comment-link">评论</a>
       
