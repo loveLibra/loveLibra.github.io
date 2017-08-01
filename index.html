@@ -165,6 +165,10 @@
 <p>类似<code>keys</code>，返回原型链上的所有属性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> keysIn = <span class="function"><span class="params">object</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">if</span> (object == <span class="literal">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> [];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    object = <span class="built_in">Object</span>(object);</div><div class="line"></div><div class="line">    <span class="keyword">let</span> attrs = [];</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> attr <span class="keyword">in</span> object) &#123;</div><div class="line">		attrs.push(attr);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> attrs;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h2 id="pick"><a href="#pick" class="headerlink" title="pick"></a>pick</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.pick(object, [paths])</div></pre></td></tr></table></figure>
 <p>pick出obejct中对应path（字符串或数组）的键值对，返回pick到的新对象<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> pick = <span class="function">(<span class="params">object, paths</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">if</span> (object == <span class="literal">null</span> || paths === <span class="literal">undefined</span>) &#123;</div><div class="line">        <span class="keyword">return</span> &#123;&#125;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(paths)) &#123;</div><div class="line">        paths = [<span class="built_in">String</span>(paths)];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">let</span> result = &#123;&#125;;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; paths.length; i++) &#123;</div><div class="line">        <span class="keyword">let</span> key = paths[i];</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (object[key] === <span class="literal">undefined</span>) &#123;</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">		result[key] = object[key];</div><div class="line">    &#125;</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="omit"><a href="#omit" class="headerlink" title="omit"></a>omit</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.omit(object, [paths])</div></pre></td></tr></table></figure>
+<p>pick的逆操作，排除某些paths(字符串或数组)指定的属性(自身属性和继承属性)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> omit = <span class="function">(<span class="params">object, paths</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">if</span> (object == <span class="literal">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> &#123;&#125;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (paths === <span class="literal">undefined</span>) &#123;</div><div class="line">        <span class="keyword">return</span> object;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(paths)) &#123;</div><div class="line">        paths = [<span class="built_in">String</span>(paths)];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">let</span> result = &#123;&#125;;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> attr <span class="keyword">in</span> object) &#123;</div><div class="line">        <span class="keyword">if</span> (paths.indexOf(attr) &lt; <span class="number">0</span>) &#123;</div><div class="line">            result[attr] = object[attr];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="omitBy"><a href="#omitBy" class="headerlink" title="omitBy"></a>omitBy</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.omitBy(object, [predicate=_.identity])</div></pre></td></tr></table></figure>
+<p>排除<strong>不</strong>满足predicate的object的属性，predicate接受两个参数(value, key)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> omitBy = <span class="function">(<span class="params">object, predicate</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">if</span> (object == <span class="literal">null</span> || predicate === <span class="literal">undefined</span>) &#123;</div><div class="line">        <span class="keyword">return</span> &#123;&#125;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> predicate !== <span class="string">'function'</span>) &#123;</div><div class="line">        <span class="keyword">return</span> object;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">let</span> result = &#123;&#125;;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> attr <span class="keyword">in</span> object) &#123;</div><div class="line">        <span class="keyword">if</span> (predicate(object[attr], attr)) &#123;</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line">        result[attr] = object[attr];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h2 id="has"><a href="#has" class="headerlink" title="has"></a>has</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.has(object, path)</div></pre></td></tr></table></figure>
 <p>object<strong>自身</strong>是否包含path所提供的属性。path可以是字符串(单个属性或者以<code>.</code>分割的路径)，也可以是数组<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> has = <span class="function">(<span class="params">object, path</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">if</span> (object == <span class="literal">null</span> || !path) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    path = <span class="built_in">Array</span>.isArray(path) ? path : path.split(<span class="string">'.'</span>);</div><div class="line"></div><div class="line">    <span class="keyword">let</span> index = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">while</span> (++index &lt; path.length) &#123;</div><div class="line">        <span class="keyword">let</span> attr = path[index];</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (object.hasOwnProperty(attr)) &#123;</div><div class="line">            object = object[attr];</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h2 id="hasIn"><a href="#hasIn" class="headerlink" title="hasIn"></a>hasIn</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.hasIn(object, path)</div></pre></td></tr></table></figure>
@@ -182,7 +186,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/07/20/lodash-object/" data-id="cj5qti4rv000j7x8ao35pob8r" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/20/lodash-object/" data-id="cj5tltdrz000osv8awxy9c28r" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/07/20/lodash-object/#ds-thread" class="article-comment-link">评论</a>
       
@@ -239,7 +243,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/07/12/lodash-array/" data-id="cj5qti4rx000k7x8axm0tupvc" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-array/" data-id="cj5tltdrw000lsv8agy2tutm3" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/07/12/lodash-array/#ds-thread" class="article-comment-link">评论</a>
       
@@ -293,7 +297,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/07/12/lodash-date/" data-id="cj5qti4rz000l7x8adsyj5m8c" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-date/" data-id="cj5tltdrp000gsv8asldy2sl2" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/07/12/lodash-date/#ds-thread" class="article-comment-link">评论</a>
       
@@ -351,7 +355,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/07/12/lodash-collection/" data-id="cj5qti4ru000g7x8aeflj8wt3" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-collection/" data-id="cj5tltdru000ksv8ay9a4tl3c" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/07/12/lodash-collection/#ds-thread" class="article-comment-link">评论</a>
       
@@ -408,7 +412,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/07/12/lodash-math/" data-id="cj5qti4s4000n7x8as0w86qso" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-math/" data-id="cj5tltdrs000jsv8a4k9un1nk" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/07/12/lodash-math/#ds-thread" class="article-comment-link">评论</a>
       
@@ -465,7 +469,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/07/12/lodash-number/" data-id="cj5qti4s5000o7x8av8bg5l7r" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-number/" data-id="cj5tltdry000nsv8a4w0lm8rx" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/07/12/lodash-number/#ds-thread" class="article-comment-link">评论</a>
       
@@ -522,7 +526,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/07/12/lodash-string/" data-id="cj5qti4s9000t7x8ahtgziejh" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-string/" data-id="cj5tltds0000rsv8asmzqx1ic" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/07/12/lodash-string/#ds-thread" class="article-comment-link">评论</a>
       
@@ -580,7 +584,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/07/12/lodash-lang/" data-id="cj5qti4rs000e7x8admo29384" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-lang/" data-id="cj5tltdrn000esv8atp12v9sg" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/07/12/lodash-lang/#ds-thread" class="article-comment-link">评论</a>
       
@@ -638,7 +642,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/10/09/https-config/" data-id="cj5qti4rp000c7x8aiaxvqq5w" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2016/10/09/https-config/" data-id="cj5tltdrb0005sv8a4y3bbm0e" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2016/10/09/https-config/#ds-thread" class="article-comment-link">评论</a>
       
@@ -694,7 +698,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/09/25/destructuring/" data-id="cj5qti4rm00097x8abndvqsp8" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2016/09/25/destructuring/" data-id="cj5tltdrh000bsv8aumhu3jk4" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2016/09/25/destructuring/#ds-thread" class="article-comment-link">评论</a>
       
