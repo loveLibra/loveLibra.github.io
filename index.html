@@ -198,11 +198,16 @@
 <p>类似于<code>values</code>，可返回继承属性的值<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> valuesIn = <span class="function"><span class="params">object</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">if</span> (object == <span class="literal">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> [];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    object = <span class="built_in">Object</span>(object);</div><div class="line"></div><div class="line">    <span class="keyword">let</span> index = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">let</span> res = [];</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> index <span class="keyword">in</span> object) &#123;</div><div class="line">        res.push(object[index]);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h2 id="unset"><a href="#unset" class="headerlink" title="unset"></a>unset</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.unset(object, path)</div></pre></td></tr></table></figure>
 <p>删除置顶路径的属性，如果删除成功，则返回true，否则返回false<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> unset = <span class="function">(<span class="params">object, path</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">if</span> (object == <span class="literal">null</span> || path === <span class="literal">undefined</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    object = <span class="built_in">Object</span>(object);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(path)) &#123;</div><div class="line">        path = path.join(<span class="string">'.'</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    path = <span class="built_in">String</span>(path).replace(<span class="regexp">/\[([^\]]*)\]/g</span>, <span class="string">'.$1'</span>).split(<span class="string">'.'</span>);</div><div class="line"></div><div class="line">    <span class="keyword">let</span> index = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">let</span> nest = object;</div><div class="line"></div><div class="line">	<span class="keyword">let</span> length = path.length;</div><div class="line">    <span class="keyword">while</span> (++index &lt; length) &#123;</div><div class="line">        <span class="keyword">let</span> cur = path[index];</div><div class="line"></div><div class="line">        <span class="keyword">let</span> val = nest[cur];</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (val === <span class="literal">undefined</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (index === length - <span class="number">1</span>) &#123;</div><div class="line">			<span class="keyword">delete</span> nest[cur];</div><div class="line">		&#125;</div><div class="line"></div><div class="line">        nest = nest[cur];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="at"><a href="#at" class="headerlink" title="at"></a>at</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.at(object, [paths])</div></pre></td></tr></table></figure>
+<p>构建一个对应path数组中各path在object中的值的数组，主要还是path的解析，与上面get类似<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> at = <span class="function">(<span class="params">object, paths</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">if</span> (object == <span class="literal">null</span> || !<span class="built_in">Array</span>.isArray(paths) || paths.length === <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> [];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">let</span> res = [];</div><div class="line">    paths.forEach(<span class="function">(<span class="params">path, index</span>) =&gt;</span> &#123;</div><div class="line">        res[index] = get(object, path);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="create"><a href="#create" class="headerlink" title="create"></a>create</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.create(prototype, [properties])</div></pre></td></tr></table></figure>
+<p>Object.create功能，创建对象，prototype指定原型继承，若properties为空，则返回控对象<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> create = <span class="function">(<span class="params">prototype, properties</span>) =&gt;</span> &#123;</div><div class="line">    <span class="comment">// 保证prototype是对象</span></div><div class="line">    prototype = prototype === <span class="literal">null</span> ? <span class="literal">null</span> : <span class="built_in">Object</span>(prototype);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>.create(prototype, properties);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>Object.create</code>的详细解释&amp;Polyfill的实现：<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create" target="_blank" rel="external">基本功传送门</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/07/20/lodash-object/" data-id="cj6268oze000qhf8a9fftsmze" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/20/lodash-object/" data-id="cj6c9syo7000rtt8aamka1j1c" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/07/20/lodash-object/#ds-thread" class="article-comment-link">评论</a>
       
@@ -259,7 +264,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/07/12/lodash-array/" data-id="cj6268oz7000khf8akkxqi0za" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-array/" data-id="cj6c9synt000gtt8a5x6utpwf" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/07/12/lodash-array/#ds-thread" class="article-comment-link">评论</a>
       
@@ -313,7 +318,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/07/12/lodash-date/" data-id="cj6268oz4000hhf8aaaocjeq6" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-date/" data-id="cj6c9synv000jtt8aargs5d7b" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/07/12/lodash-date/#ds-thread" class="article-comment-link">评论</a>
       
@@ -371,7 +376,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/07/12/lodash-collection/" data-id="cj6268oz6000jhf8aj63gi9cq" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-collection/" data-id="cj6c9syno000ett8a63wo4k91" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/07/12/lodash-collection/#ds-thread" class="article-comment-link">评论</a>
       
@@ -428,7 +433,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/07/12/lodash-math/" data-id="cj6268oz1000fhf8a2x4wkxt4" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-math/" data-id="cj6c9syo3000ott8abrli3box" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/07/12/lodash-math/#ds-thread" class="article-comment-link">评论</a>
       
@@ -485,7 +490,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/07/12/lodash-number/" data-id="cj6268oza000lhf8acwtxp0yq" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-number/" data-id="cj6c9syo0000mtt8atzlomgg0" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/07/12/lodash-number/#ds-thread" class="article-comment-link">评论</a>
       
@@ -542,7 +547,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/07/12/lodash-string/" data-id="cj6268ozf000shf8argxp1v66" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-string/" data-id="cj6c9syo5000ptt8a3townn6f" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/07/12/lodash-string/#ds-thread" class="article-comment-link">评论</a>
       
@@ -600,7 +605,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2017/07/12/lodash-lang/" data-id="cj6268ozc000ohf8aqopaxiu5" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2017/07/12/lodash-lang/" data-id="cj6c9synx000ltt8a8tm3psl1" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2017/07/12/lodash-lang/#ds-thread" class="article-comment-link">评论</a>
       
@@ -658,7 +663,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/10/09/https-config/" data-id="cj6268oyw000bhf8a0krmq18u" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2016/10/09/https-config/" data-id="cj6c9synj0009tt8aobjwgmtp" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2016/10/09/https-config/#ds-thread" class="article-comment-link">评论</a>
       
@@ -714,7 +719,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/09/25/destructuring/" data-id="cj6268oyk0003hf8a1laljfc4" class="article-share-link">分享到</a>
+      <a data-url="http://www.i0011.com/2016/09/25/destructuring/" data-id="cj6c9synf0005tt8a52yzt0zp" class="article-share-link">分享到</a>
       
         <a href="http://www.i0011.com/2016/09/25/destructuring/#ds-thread" class="article-comment-link">评论</a>
       
