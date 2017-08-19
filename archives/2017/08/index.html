@@ -3,27 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>React server side render | Sagittarius Love Libra</title>
+  <title>Archives: 2017/8 | Sagittarius Love Libra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="如何使用React开发高效可装B用的WEB应用:) … 融合React以及React-ssr、koa、Es6、Postcss，绽放吧，骚年…
-DEMO传送门&amp;gt;&amp;gt;&amp;gt;&amp;gt;
-
-JSX支持Runtimerequire(&amp;#39;node-jsx&amp;#39;).install({harmony: true});。添加harmony选项可在JSX中使用部分ES6的特性，但是未完全支持.">
-<meta property="og:type" content="article">
-<meta property="og:title" content="React server side render">
-<meta property="og:url" content="http://www.i0011.com/2016/01/24/react-ssr/index.html">
+  <meta name="description" content="xuqi&apos;s Blog">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sagittarius Love Libra">
+<meta property="og:url" content="http://www.i0011.com/archives/2017/08/index.html">
 <meta property="og:site_name" content="Sagittarius Love Libra">
-<meta property="og:description" content="如何使用React开发高效可装B用的WEB应用:) … 融合React以及React-ssr、koa、Es6、Postcss，绽放吧，骚年…
-DEMO传送门&amp;gt;&amp;gt;&amp;gt;&amp;gt;
-
-JSX支持Runtimerequire(&amp;#39;node-jsx&amp;#39;).install({harmony: true});。添加harmony选项可在JSX中使用部分ES6的特性，但是未完全支持.">
-<meta property="og:updated_time" content="2016-11-25T00:34:34.000Z">
+<meta property="og:description" content="xuqi&apos;s Blog">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="React server side render">
-<meta name="twitter:description" content="如何使用React开发高效可装B用的WEB应用:) … 融合React以及React-ssr、koa、Es6、Postcss，绽放吧，骚年…
-DEMO传送门&amp;gt;&amp;gt;&amp;gt;&amp;gt;
-
-JSX支持Runtimerequire(&amp;#39;node-jsx&amp;#39;).install({harmony: true});。添加harmony选项可在JSX中使用部分ES6的特性，但是未完全支持.">
+<meta name="twitter:title" content="Sagittarius Love Libra">
+<meta name="twitter:description" content="xuqi&apos;s Blog">
   
   
     <link rel="icon" href="favicon.png">
@@ -127,99 +117,49 @@ JSX支持Runtimerequire(&amp;#39;node-jsx&amp;#39;).install({harmony: true});。
 </aside>
 
       
-      <section id="main"><article id="post-react-ssr" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
+      <section id="main">
+      <div class="archive-year-wrap">
+        <a href="/archives/2017" class="archive-year">2017</a>
+      </div>
+      <section class="archives-wrap">
+        <div class="archives">
     
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
     
-    
-      <header class="article-header">
-        
+    <div class="archive-article-thumbnail">
+      <a href="/2017/08/17/lodash-util/" class="thumbnail">
   
-    <h1 class="article-title" itemprop="name">
-      React server side render
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+    </div>
+    
+    <header class="archive-article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/08/17/lodash-util/">Lodash源码祭「Util」</a>
     </h1>
   
 
-        <div class="article-meta">
-          
-  <div class="article-date">
+      
+        
+  <div class="archive-article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2016/01/24/react-ssr/">
-      <time datetime="2016-01-24T12:20:17.000Z" itemprop="datePublished">2016-01-24</time>
+    <a href="/2017/08/17/lodash-util/">
+      <time datetime="2017-08-17T13:32:26.000Z" itemprop="datePublished">8月 17</time>
     </a>
   </div>
 
 
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-                
-        <p>如何使用React开发高效可<del>装B</del>用的WEB应用:) … 融合React以及React-ssr、koa、Es6、Postcss，绽放吧，骚年…</p>
-<p><a href="https://github.com/loveLibra/React-ssr-demo" target="_blank" rel="external">DEMO传送门&gt;&gt;&gt;&gt;</a></p>
-<ol>
-<li><p>JSX支持Runtime<br><code>require(&#39;node-jsx&#39;).install({harmony: true});</code>。添加harmony选项可在JSX中使用部分ES6的特性，但是未完全支持.</p>
-</li>
-<li><p>browserify打包客户端脚本</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">browserify(<span class="string">'./js/index.js'</span>)</div><div class="line">    .transform(babelify, &#123;</div><div class="line">        <span class="attr">presets</span>: [<span class="string">'es2015'</span>, <span class="string">'react'</span>]</div><div class="line">    &#125;)</div><div class="line">    .bundle()</div><div class="line">    .pipe(fs.createWriteStream(<span class="string">'dist/bundle.js'</span>));</div></pre></td></tr></table></figure>
-</li>
-<li><p>React服务端渲染<br>将一个纯View用在此处其实有点别扭，但是为了SEO以及一些页面渲染性能的考虑，需要服务端渲染。React-SSR就是通过<code>ReactDOMServer.renderToString</code>得到HTML渲染到页面中，然后在客户端重新初始化组件，React并不会蠢的去重新渲染页面，所以此处可以忽略前端再次初始化带来的性能和使用体验的问题…前端初始化组件也是需要带数据的，所以在后端渲染组件时，我们将数据也带带页面中，然后再前端初始化后再删除数据DOM即可.<br>另外，在渲染字符串到页面中时，<code>views/partials/content.html</code>中放置渲染好的HTML的标签:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 不能有换行，否则客户端渲染时因为识别空白节点的问题在前端初始化失败。--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"yoho-container"</span>&gt;</span>&#123;&#123;&#123;content&#125;&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>Koa<br>koa + yield真的是太明智了，让代码不再一层层的去嵌套回调，棒！路由，接口取数据，数据格式化，页面渲染能对程序员展现以同步的形式去实现，跳出恶魔金字塔吧，Koa带你飞~</p>
-</li>
-<li>Postcss<br>Postcss相对于Compass的优势，在于其灵活性和轻便性，需要什么功能，扩展postcss插件就行了，autoprefixer，sprite-image应有尽有，Get what You Need…</li>
-</ol>
-<p>后记：前端现在愈发膨胀和夸张，无数的轮子和框架来方便你的开发，然而得有度，别让自己的程序失去控制…前端现在就像一匹飞奔的马，跑的很快，但是跑到哪你却不知道，你唯一能做的就是练好骑马的技术，别从马上摔下来。夯实基础，成就你的精湛马术吧</p>
-<p>精彩的参考资料:<br><a href="http://www.crmarsh.com/react-ssr/" target="_blank" rel="external">Rendering React Components on the Server</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2016/01/24/react-ssr/" data-id="cj6jh8ptn000wz58at6qmdnkc" class="article-share-link">分享到</a>
-      
-        <a href="http://www.i0011.com/2016/01/24/react-ssr/#ds-thread" class="article-comment-link">评论</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Browserify/">Browserify</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Es6/">Es6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Koa/">Koa</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Postcss/">Postcss</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ssr/">Ssr</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2016/01/28/what-the-fuck-of-postcss/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          What the f**k of Postcss
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2016/01/11/js-oop/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">js-oop</div>
-    </a>
-  
-</nav>
-
-
-  
 </article>
-
-
-  <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="http://www.i0011.com/2016/01/24/react-ssr/" data-title="React server side render" data-url="http://www.i0011.com/2016/01/24/react-ssr/">
-      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by DuoShuo.</a></noscript>
-      </div>
+  
+    </div></section>
   </section>
-
-</section>
       
         <aside id="sidebar">
   
