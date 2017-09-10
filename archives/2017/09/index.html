@@ -3,30 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Way To Pjax | Sagittarius Love Libra</title>
+  <title>Archives: 2017/9 | Sagittarius Love Libra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Pjax = PushState + AjaxPjax使用在链接跳转页面的情形下，可以将跳转页面转化为页面内异步更新内容，并且同时浏览器URL、Title以及浏览器的回退等功能都能无异于页面跳转。效果可以参考Github上的文件/目录跳转加载，Github就是采用Pjax的方式去实现的。
-Pjax的好处：
-
-用户体验提升无刷新页面极大的提升了用户的体验
-减少资源加载只更新页面中需要替换的那部分资源">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Way To Pjax">
-<meta property="og:url" content="http://www.i0011.com/2015/03/16/way-to-pjax/index.html">
+  <meta name="description" content="xuqi&apos;s Blog">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sagittarius Love Libra">
+<meta property="og:url" content="http://www.i0011.com/archives/2017/09/index.html">
 <meta property="og:site_name" content="Sagittarius Love Libra">
-<meta property="og:description" content="Pjax = PushState + AjaxPjax使用在链接跳转页面的情形下，可以将跳转页面转化为页面内异步更新内容，并且同时浏览器URL、Title以及浏览器的回退等功能都能无异于页面跳转。效果可以参考Github上的文件/目录跳转加载，Github就是采用Pjax的方式去实现的。
-Pjax的好处：
-
-用户体验提升无刷新页面极大的提升了用户的体验
-减少资源加载只更新页面中需要替换的那部分资源">
-<meta property="og:updated_time" content="2016-11-25T00:34:34.000Z">
+<meta property="og:description" content="xuqi&apos;s Blog">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Way To Pjax">
-<meta name="twitter:description" content="Pjax = PushState + AjaxPjax使用在链接跳转页面的情形下，可以将跳转页面转化为页面内异步更新内容，并且同时浏览器URL、Title以及浏览器的回退等功能都能无异于页面跳转。效果可以参考Github上的文件/目录跳转加载，Github就是采用Pjax的方式去实现的。
-Pjax的好处：
-
-用户体验提升无刷新页面极大的提升了用户的体验
-减少资源加载只更新页面中需要替换的那部分资源">
+<meta name="twitter:title" content="Sagittarius Love Libra">
+<meta name="twitter:description" content="xuqi&apos;s Blog">
   
   
     <link rel="icon" href="favicon.png">
@@ -130,268 +117,49 @@ Pjax的好处：
 </aside>
 
       
-      <section id="main"><article id="post-way-to-pjax" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
+      <section id="main">
+      <div class="archive-year-wrap">
+        <a href="/archives/2017" class="archive-year">2017</a>
+      </div>
+      <section class="archives-wrap">
+        <div class="archives">
     
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
     
-    
-      <header class="article-header">
-        
+    <div class="archive-article-thumbnail">
+      <a href="/2017/09/05/decorator/" class="thumbnail">
   
-    <h1 class="article-title" itemprop="name">
-      Way To Pjax
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+    </div>
+    
+    <header class="archive-article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/09/05/decorator/">decorator</a>
     </h1>
   
 
-        <div class="article-meta">
-          
-  <div class="article-date">
+      
+        
+  <div class="archive-article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/03/16/way-to-pjax/">
-      <time datetime="2015-03-16T05:11:37.000Z" itemprop="datePublished">2015-03-16</time>
+    <a href="/2017/09/05/decorator/">
+      <time datetime="2017-09-05T14:59:08.000Z" itemprop="datePublished">9月 5</time>
     </a>
   </div>
 
 
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-                
-        <h3 id="Pjax-PushState-Ajax"><a href="#Pjax-PushState-Ajax" class="headerlink" title="Pjax = PushState + Ajax"></a>Pjax = <strong>P</strong>ushState + A<strong>jax</strong></h3><p>Pjax使用在链接跳转页面的情形下，可以将跳转页面转化为页面内异步更新内容，并且同时浏览器URL、Title以及浏览器的回退等功能都能无异于页面跳转。效果可以参考Github上的文件/目录跳转加载，Github就是采用Pjax的方式去实现的。</p>
-<p>Pjax的好处：</p>
-<ul>
-<li>用户体验提升<br>无刷新页面极大的提升了用户的体验</li>
-<li>减少资源加载<br>只更新页面中需要替换的那部分资源，layout框架部分不用重新加载</li>
-<li>浏览器支持处理<br>在不支持PushState或者Ajax的浏览器中，Pjax的功能不被支持，但是不影响正常使用，Pjax会使用原始的页面跳转来处理这种情况<a id="more"></a>
-Pjax的实现原理：<br>pajx阻止链接的点击默认事件，转为通过ajax从服务器端抓取html并把html填充到需要变更内容的容器中，然后通过PushState更新页面URL。(easy to understand,uh？But we are not the first one to eat crab ~~)</li>
-</ul>
-<p>以上属于思想层面的东西，因为jquery.pjax的存在，下面将针对jquery.pjax做出使用说明。</p>
-<hr>
-<p><a href="https://github.com/defunkt/jquery-pjax" target="_blank" rel="external">Jquery.pjax</a></p>
-<p>Start By An Example:</p>
-<pre><code>//page1.html
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-    &lt;head&gt;
-        &lt;meta charset=&quot;utf8&quot;&gt;
-        &lt;title&gt;Pjax Example&lt;/title&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        &lt;div id=&quot;container&quot;&gt;
-            Nothing
-            &lt;a id=&quot;switch-to-two&quot; href=&quot;page2.html&quot;&gt;Go to page2&lt;/a&gt;
-        &lt;/div&gt;
-        &lt;div&gt;Other parts&lt;/div&gt;
-        &lt;script src=&quot;bower_components/jquery/dist/jquery.min.js&quot;&gt;&lt;/script&gt;
-        &lt;script src=&quot;bower_components/jquery-pjax/jquery.pjax.js&quot;&gt;&lt;/script&gt;
-        &lt;script&gt;
-            $(document).pjax(&apos;#switch-to-two&apos;, &apos;#container&apos;);
-        &lt;/script&gt;
-    &lt;/body&gt;
-&lt;/html&gt;
-
-
-//page2.html
-&lt;p&gt;I am page2&lt;/p&gt;
-&lt;a id=&quot;switch-to-one&quot; href=&quot;page1.html&quot;&gt;Go to pag1&lt;/a&gt;
-</code></pre><p>Tip：使用前bower安装一下jquery和jquery.pjax或者cdn引入下。动手运行感受下吧~</p>
-<p>Usage:</p>
-<ul>
-<li>$.fn.pjax<br>初始化Pjax，可通过下述方法实现链接的pjax页面加载：</li>
-</ul>
-<pre><code>$(document).pjax(selector, [container], options)
-</code></pre><p>selector可以指定为a[data-pjax]，然后html中a标签中指定data-pjax为container即可省略列表中container参数。</p>
-<p>还有另外一种方法初始化，但是不推荐：</p>
-<pre><code>$(&apos;a[data-pjax]&apos;).pjax();
-</code></pre><p>因为源码中初始化的过程是这样的：</p>
-<pre><code>function fnPjax(selector, container, options) {
-    var context = this
-    return this.on(&apos;click.pjax&apos;, selector, function(event) {
-        var opts = $.extend({}, optionsFor(container, options))
-
-        if (!opts.container)
-            opts.container = $(this).attr(&apos;data-pjax&apos;) || context
-        handleClick(event, opts) 
-    })
-}
-</code></pre><p>在上下文环境（此处为document）中为selector绑定click.pjax事件并执行回调，回调中会首先拼接opts即将container和options两个参数合并成一个对象（<code>{container: &#39;#container&#39;, otherOpt: ...}</code>）。<br>如果参数列表中没有传入container则会去读上下文环境中的data-pjax属性（上述不推荐的例子就是属于这种情况）或者直接将上下文环境当成container。由代码可以看到，如果采用不推荐的那种写法，基本功能虽然可以实现，但是此时如果我在列表中传入了一个options对象，其实这个时候options是无效的（会被当成selector），或者传入一个字符串选择器（本意是container），但是会被绑定一个原来链接元素才会有的事件。上述所有情况都会造成不预期的错误，虽然仍然以跳转页面进行处理，但这不是我们想要的结果。所以，尽量避免…（我看到好多stackoverflow上的都是这么写的，难道是我技术拙劣得不能理解了…如果你很知道的话一定要不吝指教啊）</p>
-<p>options：</p>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th style="text-align:center">Default</th>
-<th style="text-align:right">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>timeout</td>
-<td style="text-align:center">650</td>
-<td style="text-align:right"><em>timeout</em>毫秒后的强制刷新</td>
-</tr>
-<tr>
-<td>push</td>
-<td style="text-align:center">true</td>
-<td style="text-align:right">使用pushState添加一个浏览器记录</td>
-</tr>
-<tr>
-<td>replace</td>
-<td style="text-align:center">false</td>
-<td style="text-align:right">url替换而不是添加(类比replaceState)</td>
-</tr>
-<tr>
-<td>maxCacheLength</td>
-<td style="text-align:center">20</td>
-<td style="text-align:right">缓存以前container内容最大数目</td>
-</tr>
-<tr>
-<td>version</td>
-<td style="text-align:center"></td>
-<td style="text-align:right">string/function，当前pjax版本</td>
-</tr>
-<tr>
-<td>scrollTo</td>
-<td style="text-align:center">0</td>
-<td style="text-align:right">页面“刷新”后定位的scrollTop</td>
-</tr>
-<tr>
-<td>type</td>
-<td style="text-align:center">‘GET’</td>
-<td style="text-align:right"></td>
-</tr>
-<tr>
-<td>dataType</td>
-<td style="text-align:center">‘html’</td>
-<td style="text-align:right"></td>
-</tr>
-<tr>
-<td>container</td>
-<td style="text-align:center"></td>
-<td style="text-align:right"></td>
-</tr>
-<tr>
-<td>url</td>
-<td style="text-align:center">link.href</td>
-<td style="text-align:right">string/function，URL for ajax request</td>
-</tr>
-<tr>
-<td>target</td>
-<td style="text-align:center">link</td>
-<td style="text-align:right">事件relatedTarget属性的值</td>
-</tr>
-<tr>
-<td>fragment</td>
-<td style="text-align:center"></td>
-<td style="text-align:right">指定返回数据中某一段代码进行填充</td>
-</tr>
-</tbody>
-</table>
-<p>另外，pjax允许你通过<code>$.pjax.defaults.xx</code>去修改默认值。<br>Ps: relatedTarget是当前事件涉及到的相关联的其他元素。比如mouseover会涉及到多个元素，从元素1离开然后进入元素2，此时relatedTarget就是元素1…你明白了吗？反正我明白了…涉及到这个属性的事件比较少，列如下：mouseenter，mouseout，mouseover，mouseleave，focus，blur。</p>
-<ul>
-<li><p>$.pjax.click<br>pajx的底层函数，功能是手动去把链接click事件转移到pjax实现，可以增加一些使用者对事件句柄event的控制。</p>
-<pre><code>if ($.support.pjax) {//使用前应该判断浏览器是否支持pjax
-    $(document).on(&apos;click&apos;, &apos;#switch&apos;, function(event) {
-        $.pjax.click(event, {
-            container: $(&apos;#container&apos;)
-        });
-    });
-}
-</code></pre><p>通过上述可以同样实现上述例子的功能</p>
-</li>
-<li><p>$.pjax.submit<br>用于实现通过Pjax提交表单数据</p>
-<pre><code>$(document).on(&apos;submit&apos;, &apos;#form&apos;, function(e) {
-    $.pjax.submit(e, &apos;#container&apos;);
-});
-</code></pre></li>
-<li><p>$.pjax.reload<br>使用当前URL通过pjax机制向服务端请求数据并替换#container内的内容</p>
-<pre><code>$.pjax.reload(&apos;#container&apos;, options);
-</code></pre></li>
-<li><p>$.pjax<br>手动触发pjax，用于非click事件触发的一个请求</p>
-<pre><code>$.pjax({
-    url: url,
-    container: &apos;#container&apos;
-});
-</code></pre></li>
-<li><p>pjax event<br>pjax提供了很多事件来供我们实现Pjax过程中需要处理的细节功能，比如，上述例子中，在pjax请求完成后我打印一个’Complete’，就可以这样实现：</p>
-<pre><code>$(document).on(&apos;pjax:complete&apos;, function() {
-    console.log(&apos;Compelete&apos;);
-});
-</code></pre></li>
-</ul>
-<p>另外，pjax:send和pjax:complete是一对基友，可以帮我们实现类似于loading图标正确的显示和隐藏的功能，send时显示，complete时隐藏，语法同上，不赘述。</p>
-<p>events list：<br>Ps：pjax:click和pjax:clicked是由链接元素触发的，其他事件由容器触发。</p>
-<ul>
-<li><code>pjax:click</code></li>
-<li><code>pjax:beforeSend</code></li>
-<li><code>pjax:start</code></li>
-<li><code>pjax:send</code></li>
-<li><code>pjax:clicked</code></li>
-<li><code>pjax:beforeReplace</code></li>
-<li><code>pjax:success</code></li>
-<li><code>pjax:timeout</code></li>
-<li><code>pjax:error</code></li>
-<li><code>pjax:complete</code></li>
-<li><code>pjax:end</code></li>
-</ul>
-<p>下列事件会在浏览器后退/前进按钮时触发</p>
-<ul>
-<li><code>pjax:popstate</code></li>
-<li><code>pjax:start</code> – 内容替换前</li>
-<li><code>pjax:beforeReplace</code> – 从缓存中读取HTML替换之前</li>
-<li><code>pjax:end</code> – 内容替换后</li>
-</ul>
-<hr>
-<p>另外，如果你使用spm，jquery.pjax也被简单了封装了一下放在了上面，你可以通过<code>spm install jquery-pjax --save</code>获取。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.i0011.com/2015/03/16/way-to-pjax/" data-id="cj7e83jfc0010hj8ar24qrg57" class="article-share-link">分享到</a>
-      
-        <a href="http://www.i0011.com/2015/03/16/way-to-pjax/#ds-thread" class="article-comment-link">评论</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HandBook/">HandBook</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2015/04/13/compatibility-case/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          兼容性解决方案
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2015/03/06/console-what-u-need/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">console what u need</div>
-    </a>
-  
-</nav>
-
-
-  
 </article>
-
-
-  <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="http://www.i0011.com/2015/03/16/way-to-pjax/" data-title="Way To Pjax" data-url="http://www.i0011.com/2015/03/16/way-to-pjax/">
-      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by DuoShuo.</a></noscript>
-      </div>
+  
+    </div></section>
   </section>
-
-</section>
       
         <aside id="sidebar">
   

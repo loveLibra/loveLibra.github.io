@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.i0011.com/"/>
-  <updated>2017-08-24T09:22:20.000Z</updated>
+  <updated>2017-09-10T04:01:40.000Z</updated>
   <id>http://www.i0011.com/</id>
   
   <author>
@@ -14,6 +14,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>decorator</title>
+    <link href="http://www.i0011.com/2017/09/05/decorator/"/>
+    <id>http://www.i0011.com/2017/09/05/decorator/</id>
+    <published>2017-09-05T14:59:08.000Z</published>
+    <updated>2017-09-10T04:01:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>Decorator</strong>修饰器 </p>
+<p>类和属性的decorator目前在<a href="https://github.com/tc39/proposal-decorators" target="_blank" rel="external">Stage2</a>，babel转义需要在<code>.babelrc</code>中加入Plugin支持此功能:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install babel-plugin-transform-decorators-legacy --save-dev</div></pre></td></tr></table></figure></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"plugins"</span>: [<span class="string">"transform-decorators-legacy"</span>]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="类的修饰器"><a href="#类的修饰器" class="headerlink" title="类的修饰器"></a>类的修饰器</h2><p>先来个修饰器babel编译前后的对比，看看decorator到底是个啥<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// souce</span></div><div class="line">@test</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">target</span>) </span>&#123;</div><div class="line">  target.isTestable = <span class="literal">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// compiled</span></div><div class="line"><span class="keyword">var</span> _class;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">_classCallCheck</span>(<span class="params">instance, Constructor</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (!(instance <span class="keyword">instanceof</span> Constructor)) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">"Cannot call a class as a function"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> A = test(_class = <span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  _classCallCheck(<span class="keyword">this</span>, A);</div><div class="line">&#125;) || _class;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">target</span>) </span>&#123;</div><div class="line">  target.isTestable = <span class="literal">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>说白了，类的修饰器就是个函数，类会被扔到decorator中进行2次处理</p>
+<h2 id="方法修饰器"><a href="#方法修饰器" class="headerlink" title="方法修饰器"></a>方法修饰器</h2><p>不仅可以对类定义修饰器，也可以对类的属性或者方法定义<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</div><div class="line">    @readonly name() &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">'hello world'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"> * @param target 目标属性／方法</div><div class="line"> * @param name 属性名</div><div class="line"> * @param descriptor 属性描述对象</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">readonly</span>(<span class="params">target, name, descriptor</span>) </span>&#123;</div><div class="line">    descriptor.writable = <span class="literal">false</span>;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> descriptor;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="函数修饰器"><a href="#函数修饰器" class="headerlink" title="函数修饰器"></a>函数修饰器</h2><p>函数因hoist的因素，无法实现decorator的功能，可以使用高阶函数替代<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> decorator = <span class="function">(<span class="params">target</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="comment">// do something else</span></div><div class="line">        target.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;Decorator&lt;/strong&gt;修饰器 &lt;/p&gt;
+&lt;p&gt;类和属性的decorator目前在&lt;a href=&quot;https://github.com/tc39/proposal-decorators&quot; target=&quot;_blank&quot; rel=&quot;externa
+    
+    </summary>
+    
+    
+      <category term="ES6" scheme="http://www.i0011.com/tags/ES6/"/>
+    
+  </entry>
   
   <entry>
     <title>Lodash源码祭「Util」</title>
@@ -719,7 +748,7 @@
     <link href="http://www.i0011.com/2016/09/25/destructuring/"/>
     <id>http://www.i0011.com/2016/09/25/destructuring/</id>
     <published>2016-09-25T03:48:01.000Z</published>
-    <updated>2016-11-25T00:34:34.000Z</updated>
+    <updated>2017-09-05T14:59:41.000Z</updated>
     
     <content type="html"><![CDATA[<p><strong>destructuring</strong>，解构，可以方便coder们从Object/Array中提取想要的数据，Es6大杀器…</p>
 <p>按照阮老师的说法，解构其实就属于一种数据结构的模式匹配，匹配上的模式对应的值会从表达式右侧赋值给表达式左侧，比如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> &#123;name, <span class="attr">info</span>: &#123;age&#125;&#125; = &#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'xuqi'</span>,</div><div class="line">    <span class="attr">info</span>: &#123;</div><div class="line">        <span class="attr">age</span>: <span class="number">27</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">name; <span class="comment">// 'xuqi'</span></div><div class="line">age; <span class="comment">// 27</span></div></pre></td></tr></table></figure></p>
@@ -754,7 +783,7 @@
     </summary>
     
     
-      <category term="Es6" scheme="http://www.i0011.com/tags/Es6/"/>
+      <category term="ES6" scheme="http://www.i0011.com/tags/ES6/"/>
     
   </entry>
   
@@ -910,9 +939,9 @@
     
       <category term="Js Basic" scheme="http://www.i0011.com/tags/Js-Basic/"/>
     
-      <category term="Es6" scheme="http://www.i0011.com/tags/Es6/"/>
-    
       <category term="OOP" scheme="http://www.i0011.com/tags/OOP/"/>
+    
+      <category term="Es6" scheme="http://www.i0011.com/tags/Es6/"/>
     
   </entry>
   
@@ -1190,217 +1219,6 @@ color: rgba(0,0,0,.5);
       <category term="IE8" scheme="http://www.i0011.com/tags/IE8/"/>
     
       <category term="兼容性" scheme="http://www.i0011.com/tags/%E5%85%BC%E5%AE%B9%E6%80%A7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Way To Pjax</title>
-    <link href="http://www.i0011.com/2015/03/16/way-to-pjax/"/>
-    <id>http://www.i0011.com/2015/03/16/way-to-pjax/</id>
-    <published>2015-03-16T05:11:37.000Z</published>
-    <updated>2016-11-25T00:34:34.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="Pjax-PushState-Ajax"><a href="#Pjax-PushState-Ajax" class="headerlink" title="Pjax = PushState + Ajax"></a>Pjax = <strong>P</strong>ushState + A<strong>jax</strong></h3><p>Pjax使用在链接跳转页面的情形下，可以将跳转页面转化为页面内异步更新内容，并且同时浏览器URL、Title以及浏览器的回退等功能都能无异于页面跳转。效果可以参考Github上的文件/目录跳转加载，Github就是采用Pjax的方式去实现的。</p>
-<p>Pjax的好处：</p>
-<ul>
-<li>用户体验提升<br>无刷新页面极大的提升了用户的体验</li>
-<li>减少资源加载<br>只更新页面中需要替换的那部分资源，layout框架部分不用重新加载</li>
-<li>浏览器支持处理<br>在不支持PushState或者Ajax的浏览器中，Pjax的功能不被支持，但是不影响正常使用，Pjax会使用原始的页面跳转来处理这种情况<a id="more"></a>
-Pjax的实现原理：<br>pajx阻止链接的点击默认事件，转为通过ajax从服务器端抓取html并把html填充到需要变更内容的容器中，然后通过PushState更新页面URL。(easy to understand,uh？But we are not the first one to eat crab ~~)</li>
-</ul>
-<p>以上属于思想层面的东西，因为jquery.pjax的存在，下面将针对jquery.pjax做出使用说明。</p>
-<hr>
-<p><a href="https://github.com/defunkt/jquery-pjax" target="_blank" rel="external">Jquery.pjax</a></p>
-<p>Start By An Example:</p>
-<pre><code>//page1.html
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-    &lt;head&gt;
-        &lt;meta charset=&quot;utf8&quot;&gt;
-        &lt;title&gt;Pjax Example&lt;/title&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        &lt;div id=&quot;container&quot;&gt;
-            Nothing
-            &lt;a id=&quot;switch-to-two&quot; href=&quot;page2.html&quot;&gt;Go to page2&lt;/a&gt;
-        &lt;/div&gt;
-        &lt;div&gt;Other parts&lt;/div&gt;
-        &lt;script src=&quot;bower_components/jquery/dist/jquery.min.js&quot;&gt;&lt;/script&gt;
-        &lt;script src=&quot;bower_components/jquery-pjax/jquery.pjax.js&quot;&gt;&lt;/script&gt;
-        &lt;script&gt;
-            $(document).pjax(&apos;#switch-to-two&apos;, &apos;#container&apos;);
-        &lt;/script&gt;
-    &lt;/body&gt;
-&lt;/html&gt;
-
-
-//page2.html
-&lt;p&gt;I am page2&lt;/p&gt;
-&lt;a id=&quot;switch-to-one&quot; href=&quot;page1.html&quot;&gt;Go to pag1&lt;/a&gt;
-</code></pre><p>Tip：使用前bower安装一下jquery和jquery.pjax或者cdn引入下。动手运行感受下吧~</p>
-<p>Usage:</p>
-<ul>
-<li>$.fn.pjax<br>初始化Pjax，可通过下述方法实现链接的pjax页面加载：</li>
-</ul>
-<pre><code>$(document).pjax(selector, [container], options)
-</code></pre><p>selector可以指定为a[data-pjax]，然后html中a标签中指定data-pjax为container即可省略列表中container参数。</p>
-<p>还有另外一种方法初始化，但是不推荐：</p>
-<pre><code>$(&apos;a[data-pjax]&apos;).pjax();
-</code></pre><p>因为源码中初始化的过程是这样的：</p>
-<pre><code>function fnPjax(selector, container, options) {
-    var context = this
-    return this.on(&apos;click.pjax&apos;, selector, function(event) {
-        var opts = $.extend({}, optionsFor(container, options))
-
-        if (!opts.container)
-            opts.container = $(this).attr(&apos;data-pjax&apos;) || context
-        handleClick(event, opts) 
-    })
-}
-</code></pre><p>在上下文环境（此处为document）中为selector绑定click.pjax事件并执行回调，回调中会首先拼接opts即将container和options两个参数合并成一个对象（<code>{container: &#39;#container&#39;, otherOpt: ...}</code>）。<br>如果参数列表中没有传入container则会去读上下文环境中的data-pjax属性（上述不推荐的例子就是属于这种情况）或者直接将上下文环境当成container。由代码可以看到，如果采用不推荐的那种写法，基本功能虽然可以实现，但是此时如果我在列表中传入了一个options对象，其实这个时候options是无效的（会被当成selector），或者传入一个字符串选择器（本意是container），但是会被绑定一个原来链接元素才会有的事件。上述所有情况都会造成不预期的错误，虽然仍然以跳转页面进行处理，但这不是我们想要的结果。所以，尽量避免…（我看到好多stackoverflow上的都是这么写的，难道是我技术拙劣得不能理解了…如果你很知道的话一定要不吝指教啊）</p>
-<p>options：</p>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th style="text-align:center">Default</th>
-<th style="text-align:right">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>timeout</td>
-<td style="text-align:center">650</td>
-<td style="text-align:right"><em>timeout</em>毫秒后的强制刷新</td>
-</tr>
-<tr>
-<td>push</td>
-<td style="text-align:center">true</td>
-<td style="text-align:right">使用pushState添加一个浏览器记录</td>
-</tr>
-<tr>
-<td>replace</td>
-<td style="text-align:center">false</td>
-<td style="text-align:right">url替换而不是添加(类比replaceState)</td>
-</tr>
-<tr>
-<td>maxCacheLength</td>
-<td style="text-align:center">20</td>
-<td style="text-align:right">缓存以前container内容最大数目</td>
-</tr>
-<tr>
-<td>version</td>
-<td style="text-align:center"></td>
-<td style="text-align:right">string/function，当前pjax版本</td>
-</tr>
-<tr>
-<td>scrollTo</td>
-<td style="text-align:center">0</td>
-<td style="text-align:right">页面“刷新”后定位的scrollTop</td>
-</tr>
-<tr>
-<td>type</td>
-<td style="text-align:center">‘GET’</td>
-<td style="text-align:right"></td>
-</tr>
-<tr>
-<td>dataType</td>
-<td style="text-align:center">‘html’</td>
-<td style="text-align:right"></td>
-</tr>
-<tr>
-<td>container</td>
-<td style="text-align:center"></td>
-<td style="text-align:right"></td>
-</tr>
-<tr>
-<td>url</td>
-<td style="text-align:center">link.href</td>
-<td style="text-align:right">string/function，URL for ajax request</td>
-</tr>
-<tr>
-<td>target</td>
-<td style="text-align:center">link</td>
-<td style="text-align:right">事件relatedTarget属性的值</td>
-</tr>
-<tr>
-<td>fragment</td>
-<td style="text-align:center"></td>
-<td style="text-align:right">指定返回数据中某一段代码进行填充</td>
-</tr>
-</tbody>
-</table>
-<p>另外，pjax允许你通过<code>$.pjax.defaults.xx</code>去修改默认值。<br>Ps: relatedTarget是当前事件涉及到的相关联的其他元素。比如mouseover会涉及到多个元素，从元素1离开然后进入元素2，此时relatedTarget就是元素1…你明白了吗？反正我明白了…涉及到这个属性的事件比较少，列如下：mouseenter，mouseout，mouseover，mouseleave，focus，blur。</p>
-<ul>
-<li><p>$.pjax.click<br>pajx的底层函数，功能是手动去把链接click事件转移到pjax实现，可以增加一些使用者对事件句柄event的控制。</p>
-<pre><code>if ($.support.pjax) {//使用前应该判断浏览器是否支持pjax
-    $(document).on(&apos;click&apos;, &apos;#switch&apos;, function(event) {
-        $.pjax.click(event, {
-            container: $(&apos;#container&apos;)
-        });
-    });
-}
-</code></pre><p>通过上述可以同样实现上述例子的功能</p>
-</li>
-<li><p>$.pjax.submit<br>用于实现通过Pjax提交表单数据</p>
-<pre><code>$(document).on(&apos;submit&apos;, &apos;#form&apos;, function(e) {
-    $.pjax.submit(e, &apos;#container&apos;);
-});
-</code></pre></li>
-<li><p>$.pjax.reload<br>使用当前URL通过pjax机制向服务端请求数据并替换#container内的内容</p>
-<pre><code>$.pjax.reload(&apos;#container&apos;, options);
-</code></pre></li>
-<li><p>$.pjax<br>手动触发pjax，用于非click事件触发的一个请求</p>
-<pre><code>$.pjax({
-    url: url,
-    container: &apos;#container&apos;
-});
-</code></pre></li>
-<li><p>pjax event<br>pjax提供了很多事件来供我们实现Pjax过程中需要处理的细节功能，比如，上述例子中，在pjax请求完成后我打印一个’Complete’，就可以这样实现：</p>
-<pre><code>$(document).on(&apos;pjax:complete&apos;, function() {
-    console.log(&apos;Compelete&apos;);
-});
-</code></pre></li>
-</ul>
-<p>另外，pjax:send和pjax:complete是一对基友，可以帮我们实现类似于loading图标正确的显示和隐藏的功能，send时显示，complete时隐藏，语法同上，不赘述。</p>
-<p>events list：<br>Ps：pjax:click和pjax:clicked是由链接元素触发的，其他事件由容器触发。</p>
-<ul>
-<li><code>pjax:click</code></li>
-<li><code>pjax:beforeSend</code></li>
-<li><code>pjax:start</code></li>
-<li><code>pjax:send</code></li>
-<li><code>pjax:clicked</code></li>
-<li><code>pjax:beforeReplace</code></li>
-<li><code>pjax:success</code></li>
-<li><code>pjax:timeout</code></li>
-<li><code>pjax:error</code></li>
-<li><code>pjax:complete</code></li>
-<li><code>pjax:end</code></li>
-</ul>
-<p>下列事件会在浏览器后退/前进按钮时触发</p>
-<ul>
-<li><code>pjax:popstate</code></li>
-<li><code>pjax:start</code> – 内容替换前</li>
-<li><code>pjax:beforeReplace</code> – 从缓存中读取HTML替换之前</li>
-<li><code>pjax:end</code> – 内容替换后</li>
-</ul>
-<hr>
-<p>另外，如果你使用spm，jquery.pjax也被简单了封装了一下放在了上面，你可以通过<code>spm install jquery-pjax --save</code>获取。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;Pjax-PushState-Ajax&quot;&gt;&lt;a href=&quot;#Pjax-PushState-Ajax&quot; class=&quot;headerlink&quot; title=&quot;Pjax = PushState + Ajax&quot;&gt;&lt;/a&gt;Pjax = &lt;strong&gt;P&lt;/strong&gt;ushState + A&lt;strong&gt;jax&lt;/strong&gt;&lt;/h3&gt;&lt;p&gt;Pjax使用在链接跳转页面的情形下，可以将跳转页面转化为页面内异步更新内容，并且同时浏览器URL、Title以及浏览器的回退等功能都能无异于页面跳转。效果可以参考Github上的文件/目录跳转加载，Github就是采用Pjax的方式去实现的。&lt;/p&gt;
-&lt;p&gt;Pjax的好处：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;用户体验提升&lt;br&gt;无刷新页面极大的提升了用户的体验&lt;/li&gt;
-&lt;li&gt;减少资源加载&lt;br&gt;只更新页面中需要替换的那部分资源，layout框架部分不用重新加载&lt;/li&gt;
-&lt;li&gt;浏览器支持处理&lt;br&gt;在不支持PushState或者Ajax的浏览器中，Pjax的功能不被支持，但是不影响正常使用，Pjax会使用原始的页面跳转来处理这种情况
-    
-    </summary>
-    
-    
-      <category term="HandBook" scheme="http://www.i0011.com/tags/HandBook/"/>
     
   </entry>
   
